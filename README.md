@@ -13,4 +13,7 @@ A user-friendly way to form study groups based on customer input
 4. SSH (or use Putty) to the machine at 192.168.10.10
 	Username: vagrant
 	Password: vagrant
-5. Develop all the cool things. 
+5. From the SSH session run: sudo apt-get install lamp-server^
+6. Pick a SQL password when prompted 
+7. To test the installation, when everything is complete run: mysql -u root -p
+	Then type in the password. If it worked you'll have a sql prompt. 
