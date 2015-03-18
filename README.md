@@ -17,3 +17,6 @@ A user-friendly way to form study groups based on customer input
 6. Pick a SQL password when prompted 
 7. To test the installation, when everything is complete run: mysql -u root -p
 	Then type in the password. If it worked you'll have a sql prompt. 
+8. Run: sudo apt-get install git
+9. From /var/www type: git clone -b dev https://github.com/AlyssaR/StudyNetwork.git
+10. Code all the codez!!
