@@ -34,7 +34,7 @@ if ($database->connect_errno)
 		$duplicateCheck = $database->query("SELECT email FROM Users WHERE email = '$email' LIMIT 1");
 		$checkResults = $duplicateCheck->fetch_assoc();
 		if(!($checkResults === NULL))
-			$outputJSON = array ('uid'=>-1);
+			echo "You are the only user with this email";
 		else
 		{
 			$prevUser = $database->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1");
