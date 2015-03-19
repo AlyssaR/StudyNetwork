@@ -1,15 +1,17 @@
 <DOCUMENT html>
-
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> Homepage </title>
-	
+</head>
 			
 		<div id = formData>
 		
 				<h1> The StudyNetwork</h1>
 		
-				<form action = "">
-				<input type ="text" id="ClientName" name="Login" value= "Your Login Email Here">
-				<input type ="password" id="ClientPass" name="Password" value= "Your Pass Here">
+				<form action = "javascript:signIn()" method = "post">
+				<input type ="text" id="email" name="Login" value= "Your Login Email Here">
+				<input type ="password" id="password" name="Password" value= "Your Pass Here">
 				<button type = "button" onclick = "validate()"> Login</button>
 				</form>
 			
@@ -33,8 +35,8 @@ function validate()
 	var regexName = /\w*@smu\.edu/;
 	var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 
-	var UserName = document.getElementById("ClientName").value;
-	var UserPass = document.getElementById("ClientPass").value;
+	var UserName = document.getElementById("email").value;
+	var UserPass = document.getElementById("password").value;
 	
 	var test1 = regexName.test(UserName);
 	var test2 = regexPass.test(UserPass);

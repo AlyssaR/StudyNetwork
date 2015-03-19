@@ -6,9 +6,12 @@ function signIn() {
             "email":$("#email").val(), 
             "password":$("#password").val()
         },
+        dataType: "json",
         success: function(data) {
-            var json = getJSON(data);
-            alert(json.f_name);
+            if(data.success)
+                alert("Welcome, " + data.f_name);
+            else
+                alert("Go away!");
         }
     });
 }
