@@ -13,9 +13,9 @@ $app->post('/login', function () {
     $result = $mysqli->query("SELECT f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
     
     if($result === NULL)
-    	$response = array('status'=>"Failure", "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
+    	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
 	else {
-		$response = array ('status'=>"Success", "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
 	}
 
     mysqli_free_result($result);

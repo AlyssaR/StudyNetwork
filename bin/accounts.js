@@ -1,31 +1,29 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
-function signIn(event){
-    event.preventDefault();
-    $.ajax({
+$(document).ready(function() {
+    $("#signIn").submit(function(event){
+        $("#result").html('');
+
+        /* Get some values from elements on the page: */
+        var values = $(this).serialize();
+
+        /* Send the data using post and put the results in a div */
+        $.ajax({
             type: "POST",
             url: "api/login",
-            data: {
-                email: $("#email").val(),
-                password: $("#password").val()
-            },
-            dataType:'json',
+            data: loginForm,
             success: function(data){
-                alert("The information entered was not correct. Try Again.");
-
-                /*else{
-                    $.each(data, function(index, element) {
-                        $('body').append($('<div>', {
-                            text: element.name
-                        }));
-                    });
-                    //$("#email").val("");
-                    //$("#password").val("");
-
-                    //alert(json);
-                    //window.location = "index.html";
-                }
-*/
+                if(!data.success)
+                    alert("login failed");
+                else
+                    alert("request succeeded");
+                //$("#result").html('Submitted successfully');
+            },
+            error:function(){
+                alert("request failed");
+                //$("#result").html('There is error while submit');
             }
+        });
+        event.preventDefault();
     });
-}
-
+});
