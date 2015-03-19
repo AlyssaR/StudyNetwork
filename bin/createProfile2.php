@@ -26,6 +26,18 @@ if ($database->connect_errno)
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
 	$uid = $_POST['uid'];
+
+	$dataInserted = $database->query("SELECT * FROM Users");
+
+	if($dataInserted == NULL)
+		//$response = array("success"=>false, "id"=>0, )
+		echo "There is no data";
+	else
+	{
+		$response = array("success"=>true, "f_name"=>$dataInserted['fName'], "l_name"=>$dataInserted['lName'], "uid"=>$dataInserted['uid'], "email"=>$dataInserted['email'], "passwd"=>$dataInserted['password']);
+		//echo json_encode($response);
+	}
+
 	if($fName === "" || $lName === "" || $email === "" || $password === "" || uid === ""){
 		echo "Please enter data in all of the fields";
 		
@@ -59,7 +71,7 @@ if ($database->connect_errno)
 	Last Name: <input type = "text" name = "l_name" /><br />
 	SMU ID: <input type = "text" name = "uid" /><br />
 	Email: <input type = "text" name = "email" /><br />
-	Password: <input type = "text" name = "passwd" /><br />
+	Password: <input type = "password" name = "passwd" /><br />
 	<input type = "submit" class = "button" id = "CreateAccount">
 </form>
 </body>
