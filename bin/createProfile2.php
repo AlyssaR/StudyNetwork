@@ -27,15 +27,23 @@ if ($database->connect_errno)
 	$password = $_POST['passwd'];
 	$uid = $_POST['uid'];
 
-	$dataInserted = $database->query("SELECT * FROM Users");
+	//$dataInserted = $database->query("SELECT * FROM Users");
+	$sqlRes = $database->query("SELECT * FROM Users");
+	//$result = mysql_query($sqlRes)
 
-	if($dataInserted == NULL)
+	if($sqlRes === NULL)
 		//$response = array("success"=>false, "id"=>0, )
 		echo "There is no data";
 	else
 	{
-		$response = array("success"=>true, "f_name"=>$dataInserted['fName'], "l_name"=>$dataInserted['lName'], "uid"=>$dataInserted['uid'], "email"=>$dataInserted['email'], "passwd"=>$dataInserted['password']);
-		//echo json_encode($response);
+		echo "There is SOMETHING in the query";
+		while($row = $sqlRes->fetch_assoc())
+		{
+			echo "id: " . $row["uid"]. " -- Name: " . $row["f_name"]. " " . $row["l_name"]. " --Email: " . $row["email"]."
+			<br>";
+		}
+		//$response = array("success"=>true, "f_name"=>$sqlRes['f_name'], "l_name"=>$sqlRes['l_name'], "uid"=>$sqlRes['uid'], "email"=>$sqlRes['email'], "password"=>$sqlRes['passwd']);
+		//print_r ($response)
 	}
 
 	if($fName === "" || $lName === "" || $email === "" || $password === "" || uid === ""){
