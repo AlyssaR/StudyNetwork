@@ -8,18 +8,22 @@ function signIn(){
                 email: $("#email").val(),
                 password: $("#password").val()
             },
-            success: function(json){
-                console.log(json);
-                if(json === null){
-                    alert("The information entered was not correct. Try Again.");
-                }
-                else{
-                    $("#email").val("");
-                    $("#password").val("");
+            dataType:'json',
+            success: function(data){
+                alert("The information entered was not correct. Try Again.");
+                /*else{
+                    $.each(data, function(index, element) {
+                        $('body').append($('<div>', {
+                            text: element.name
+                        }));
+                    });
+                    //$("#email").val("");
+                    //$("#password").val("");
 
-                    window.location = "index.html";
+                    //alert(json);
+                    //window.location = "index.html";
                 }
-
+*/
             }
     });
 }

@@ -2,30 +2,56 @@
 require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
-$database = mysql_connect("localhost", "web", "wearegeniuses");
-if(!$database) {
-    die('Could not connect:'.mysql_error());
-}   
-mysql_select_db("StudyNetwork",$database);
-    
+$database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
+if ($database->connect_errno)
+    die("Connection failed: " . $database->connect_error);
 
 $app->post('/login', function () {
-    if(isset($_POST['email'])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-        $result = mysql_query("select uid, f_name, l_name from Users where email='" . $email . "' and passwd = '" . $password . "';");
-        $row = mysql_fetch_array($result);
-        if(!empty($row)) {
-            $response = array ('status'=>"Success", "id"=>$row['uid'],"f_name"=>$row['f_name'],"l_name"=>$row['l_name']);
-        }
-        else {
-            $response = array('status'=>"Failure", "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
-        }
-        
-        echo json_encode($response);
-    }
+    $result = $mysqli->query("SELECT f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+    
+    if($result === NULL)
+    	$response = array('status'=>"Failure", "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
+	else {
+		$response = array ('status'=>"Success", "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+	}
+
+    mysqli_free_result($result);
+    echo json_encode($response);
 });
 
-mysql_close($database);
+$app->post('/createUserAccount', function () {
+	global $mysqli;
+	$fName = $POST['f_name'];
+	$lName = $POST['l_name'];
+	$email = $_POST['email'];
+	$password = $_POST['passwd'];
+	$uid = $_POST['uid'];
+	if($fName === "" || $lName === "" || $email === "" || $password === "" || uid === "")
+		$outputJSON = array ('uid'=>-2);
+	else{
+		$duplicateCheck = $mysqli->query("SELECT email FROM Users WHERE email = '$email' LIMIT 1");
+		$checkResults = $duplicateCheck->fetch_assoc();
+		if(!($checkResults === NULL))
+			$outputJSON = array ('uid'=>-1);
+		else
+		{
+			$prevUser = $mysqli->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1");
+			$row = $prevUser->fetch_assoc();
+			if($row === NULL){
+				$outputJSON = array ('uid' => $uid);
+				$insertion = $mysqli->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($uid, $fName, $lName, $email, $password)");
+			}
+			else{
+				$newID = $row['uid']+1;
+				$outputJSON = array ('uid'=>$newID);
+				$insertion = $mysqli->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
+			}
+		}
+	}
+});
+
+$app->run();
 ?>
