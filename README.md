@@ -20,3 +20,23 @@ A user-friendly way to form study groups based on customer input
 8. Run: sudo apt-get install git
 9. From /var/www type: git clone -b dev https://github.com/AlyssaR/StudyNetwork.git
 10. Code all the codez!!
+
+--------------------
+| Testing for users|
+--------------------
+~This is from your vagrant. (If you have not, clone the StudyNetwork dev repo) and install lamp
+1. Pull from git, you should be pulling from origin dev
+2. Go into your mysql root and create a database called 'StudyNetwork'
+3. Log out and go to /var/www/StudyNetwork/database
+4. From here type:
+	mysql -u root -p StudyNetwork < studyNetBackup.sql
+	--- you will be prompted to give a password, it's just your mysql root password
+5.Log back into mysql root from the topmost directory
+6. Type:
+	create user 'web'@'localhost' identified by 'wearegeniuses';
+	grant all privileges on StudyNetwork.* to web@localhost with grant option;
+7. *optional* log into mysql -u web -p just to make sure it works
+8. go back to the StudyNetwork/database directory and type:
+	mysql -u web -pwearegeniuses StudyNetwork < populateScript.sql
+9. In your browser:
+	192.168.10.10/StudyNetwork/bin/test.php
