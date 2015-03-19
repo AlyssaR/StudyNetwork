@@ -1,29 +1,21 @@
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+$("#signIn").submit(function(event){
+    var $form = $( this ),
+        email = $form.find("input[name='email']").val(),
+        password = $form.find("input[name='password']").val(),
+        url = $form.attr("action");
 
-$(document).ready(function() {
-    $("#signIn").submit(function(event){
-        $("#result").html('');
+    // Send the data using post
+    var posting = $.post( url, { s: term } );
 
-        /* Get some values from elements on the page: */
-        var values = $(this).serialize();
-
-        /* Send the data using post and put the results in a div */
-        $.ajax({
-            type: "POST",
-            url: "api/login",
-            data: loginForm,
-            success: function(data){
-                if(!data.success)
-                    alert("login failed");
-                else
-                    alert("request succeeded");
-                //$("#result").html('Submitted successfully');
-            },
-            error:function(){
-                alert("request failed");
-                //$("#result").html('There is error while submit');
-            }
-        });
-        event.preventDefault();
+    // Put the results in a div
+    posting.done(function( data ) {
+    var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( content );
     });
+
+    $.post( "api/login", function(data) {
+        alert( "Data Loaded: " + data );
+    });
+    
+    event.preventDefault();
 });
