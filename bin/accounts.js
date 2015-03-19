@@ -1,21 +1,15 @@
-$("#signIn").submit(function(event){
-    var $form = $( this ),
-        email = $form.find("input[name='email']").val(),
-        password = $form.find("input[name='password']").val(),
-        url = $form.attr("action");
-
-    // Send the data using post
-    var posting = $.post( url, { s: term } );
-
-    // Put the results in a div
-    posting.done(function( data ) {
-    var content = $( data ).find( "#content" );
-    $( "#result" ).empty().append( content );
-    });
-
-    $.post( "api/login", function(data) {
-        alert( "Data Loaded: " + data );
-    });
+function signIn() {
+    var creds = {"email":$("#email").val(), "password":$("#password").val()},
+        url = "api/login";
     
-    event.preventDefault();
-});
+    $.ajax({
+        url: "api/login",
+        type: "post",
+        data: creds,
+        success: function(data) {
+            alert(data);
+        }
+    })
+
+//    event.preventDefault();
+}
