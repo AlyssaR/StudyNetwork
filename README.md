@@ -31,7 +31,7 @@ A user-friendly way to form study groups based on customer input
 4. From here type:
 	mysql -u root -p StudyNetwork < studyNetBackup.sql
 	--- you will be prompted to give a password, it's just your mysql root password
-5.Log back into mysql root from the topmost directory
+5. Log back into mysql root from the topmost directory
 6. Type:
 	create user 'web'@'localhost' identified by 'wearegeniuses';
 	grant all privileges on StudyNetwork.* to web@localhost with grant option;
