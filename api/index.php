@@ -6,24 +6,24 @@ $database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
 if ($database->connect_errno)
     die("Connection failed: " . $database->connect_error);
 
-$app->post('/login', function () {
+$app->post('/login', function () use ($database) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = $mysqli->query("SELECT f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
-    
+    //Remove duplicates
+    $runQuery = $database->query("SELECT f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+    $result = $runQuery->fetch_assoc();
+
+    //Frame response
     if($result === NULL)
     	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
 	else {
 		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
 	}
-
-    mysqli_free_result($result);
     echo json_encode($response);
 });
 
-$app->post('/createUserAccount', function () {
-	global $mysqli;
+$app->post('/createUserAccount', function () use ($database) {
 	$fName = $POST['f_name'];
 	$lName = $POST['l_name'];
 	$email = $_POST['email'];
@@ -42,12 +42,12 @@ $app->post('/createUserAccount', function () {
 			$row = $prevUser->fetch_assoc();
 			if($row === NULL){
 				$outputJSON = array ('uid' => $uid);
-				$insertion = $mysqli->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($uid, $fName, $lName, $email, $password)");
+				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($uid, $fName, $lName, $email, $password)");
 			}
 			else{
 				$newID = $row['uid']+1;
 				$outputJSON = array ('uid'=>$newID);
-				$insertion = $mysqli->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
+				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
 			}
 		}
 	}
