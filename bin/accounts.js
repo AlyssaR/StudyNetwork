@@ -1,5 +1,5 @@
 
-function signIn(){
+function signIn(event){
     event.preventDefault();
     $.ajax({
             type: "POST",
@@ -11,6 +11,7 @@ function signIn(){
             dataType:'json',
             success: function(data){
                 alert("The information entered was not correct. Try Again.");
+
                 /*else{
                     $.each(data, function(index, element) {
                         $('body').append($('<div>', {
