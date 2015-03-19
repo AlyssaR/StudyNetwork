@@ -20,7 +20,7 @@
                 $response = array ('status'=>"Success", "id"=>$row['uid'],"f_name"=>$row['f_name'],"l_name"=>$row['l_name']);
             }
             else {
-                $response = array('status'=>"Failure", "id"=>0,"f_name"=>"N/A","l_name"=>"N/A");
+                $response = array('status'=>"Failure", "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
             }
             
             echo json_encode($response);
