@@ -1,11 +1,20 @@
+<html>
+<head><title>Nothing works</title></head>
+</html>
+
 <?php
+	echo "Something worked!"
 	$con = mysql_connect("localhost", "web", "wearegeniuses");
+	echo "Something worked!"
 	if(!$con) {
 		die('Could not connect:'.mysql_error());
 	}	
+	echo "Something worked!"
 
 	mysql_select_db("StudyNetwork",$con);
 	
+	echo "Something worked!"
+
 	if(isset($_POST['email'])){
 		$email = $_POST['email'];
 		$password = $_POST['password'];
@@ -18,9 +27,9 @@
 		else {
 			$response = array('status'=>"Failure", "id"=>0,"f_name"=>"N/A","l_name"=>"N/A");
 		}
-    	
-    	echo json_encode($response);
+    	echo $response['status'];
+    	#echo json_encode($response);
 	}
-
+	echo "Maybe?"
 	mysql_close($con);
 ?>
