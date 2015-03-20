@@ -17,11 +17,8 @@ $app->post('/login', function () use ($database) {
     //Frame response
     if($result === NULL)
     	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
-	else {
-		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
-		session_start();
-		$_SESSION["loggedin"] = $result['uid'];
-	}
+	else
+		$response = array ("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
     echo json_encode($response);
 });
 
