@@ -70,5 +70,9 @@ mysql_select_db("StudyNetwork", $con);
 	Professor: <input type = "text" name = "professor"/><br />
 	<input type = "submit" class = "button" id = "CreateAccount">
 </form>
+
+	<h2>Form a Study Group</h2>
+	<form method="post" action="profilePage.php" id = "newStudyGroup" name = "newStudyGroup">
+	Enter a Group Name:
 </body>
 </html>

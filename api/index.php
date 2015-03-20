@@ -49,5 +49,32 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('/addClass', function() use ($database)){
+	$dept = $_POST['dept'];
+	$class_num = $_POST['class_num'];
+	$time2 = $_POST['time2'];
+	$professor = $_POST['professor'];
+	//$cid = $_POST['class_num'];
+	$error = "None";
+	$success = true;
+
+	$database->query("INSERT INTO Classes (cid, dept, class_num, time2, professor) VALUES (, '$dept', '$class_num', '$time2', '$professor');");
+		$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
+	echo json_encode($response);
+});
+
+$app->post('/addGroup', function() use ($database)){
+	$gname = $_POST['gname'];
+	$time1= $_POST['time1'];
+	$loc = $_POST['loc'];
+	$num_members = $_POST['num_members'];
+	$error = "None";
+	$success = true;
+
+	$database->query("INSERT INTO Classes (gid, cid, admin, gname, time1, loc, num_members) VALUES (, , , '$gname', '$time1', '$loc', '$num_members');");
+		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+	echo json_encode($response);
+});
+
 $app->run();
 ?>
