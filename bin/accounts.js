@@ -51,7 +51,7 @@ function register() {
         dataType: "json",
         success: function(data) {
             if(data.success)
-                alert("Welcome, " + data.f_name + " " + data.dups);
+                alert("Welcome, " + data.f_name + "!");
             else
                 alert("Error: " + data.errorType);
         }
