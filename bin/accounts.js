@@ -37,8 +37,20 @@ function validate() {
     }
 }
 
-function redirect() {
-console.log("You pushed the register button");
-
-//add redirect logic here, takes you to the REGISTER.HTML (createprofile2.php) page
+function register() {
+    $.ajax({
+        url: "api/login",
+        type: "post",
+        data: {
+            "email":$("#email").val(), 
+            "password":$("#password").val()
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success)
+                alert("Welcome, " + data.f_name);
+            else
+                alert("Go away!");
+        }
+    });
 }
