@@ -1,21 +1,19 @@
 function authenticate() {
+    var result = "";
     $.ajax({
         url: "api/login",
         type: "post",
+        async: false,
         data: {
             "email":$("#email").val(), 
             "password":$("#password").val()
         },
         dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Welcome, " + data.f_name);
-                signIn(data.uid);
-            }
-            else
-                alert("Error logging in. Please check your email/password or create an account.");
+        success:function(data) {
+            result = data;
         }
     });
+    return result;
 }
 
 function getID() {
@@ -54,26 +52,30 @@ function redirect() {
 }
 
 function register() {
-    $.ajax({
-        url: "api/register",
-        type: "post",
-        data: {
-            "f_name":$("#f_name").val(), 
-            "l_name":$("#l_name").val(), 
-            "uid":$("#uid").val(), 
-            "email":$("#email").val(), 
-            "passwd":$("#passwd").val()
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Welcome, " + data.f_name + "!");
-                signIn(data.uid);
+    if(valid()) {
+        $.ajax({
+            url: "api/register",
+            type: "post",
+            data: {
+                "f_name":$("#f_name").val(), 
+                "l_name":$("#l_name").val(), 
+                "uid":$("#uid").val(), 
+                "email":$("#email").val(), 
+                "passwd":$("#password").val()
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Welcome, " + data.f_name + "!");
+                    signIn(data.uid);
+                }
+                else
+                    alert("Error: " + data.errorType);
             }
-            else
-                alert("Error: " + data.errorType);
-        }
-    });
+        });
+    }
+    else
+        alert("Your email/password are not in valid form. Please try again.");
 }
 
 function signIn(value) {
@@ -85,7 +87,21 @@ function signIn(value) {
     window.location = "editprofile.html";
 }
 
-function validate() {
+function login() {
+    if(valid()) {
+        var data = authenticate();
+        if(data.success) {
+            alert("Welcome, " + data.f_name);
+            signIn(data.uid);
+        }
+        else
+            alert("Error logging in. Please check your email/password or create an account.");
+    }
+    else
+        alert("Your email/password is not in valid form. Please try again.")
+}
+
+function valid() {
     var regexName = /\w*@smu\.edu/;
     var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 
@@ -98,9 +114,8 @@ function validate() {
     console.log(test1);
     console.log(test2);
     
-    if(test1 && test2) {
-        authenticate();
-    }
-    else
-        alert("Your email or password is not valid.");
+    if(test1 && test2) 
+        return true;
+    else 
+        return false;
 }
