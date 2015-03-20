@@ -33,7 +33,7 @@ $app->post('/register', function () use ($database) {
 	$success = true;
 	
 	//Check for duplicates
-	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid';");
+	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid' OR email = '$email';");
 	if($results->num_rows > 0) {
 		$error = "User already exists";
 		$success = false;
