@@ -74,8 +74,6 @@ function register() {
             }
         });
     }
-    else
-        alert("Your email/password are not in valid form. Please try again.");
 }
 
 function signIn(value) {
@@ -95,10 +93,8 @@ function login() {
             signIn(data.uid);
         }
         else
-            alert("Error logging in. Please check your email/password or create an account.");
+            alert("Error logging in.\nPlease check your email/password or create an account.");
     }
-    else
-        alert("Your email/password is not in valid form. Please try again.")
 }
 
 function valid() {
@@ -114,8 +110,14 @@ function valid() {
     console.log(test1);
     console.log(test2);
     
-    if(test1 && test2) 
-        return true;
-    else 
+    if(!test1) {
+    	alert("You must enter an SMU email address.");
+    	return false;
+    }
+    if(!test2) {
+    	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
         return false;
+    }
+    else 
+        return true;
 }
