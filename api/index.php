@@ -11,7 +11,7 @@ $app->post('/login', function () use ($database) {
     $password = $_POST['password'];
 
     //Remove duplicates
-    $runQuery = $database->query("SELECT f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
     $result = $runQuery->fetch_assoc();
 
     //Frame response
@@ -19,6 +19,8 @@ $app->post('/login', function () use ($database) {
     	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
 	else {
 		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+		session_start();
+		$_SESSION["loggedin"] = $result['uid'];
 	}
     echo json_encode($response);
 });

@@ -50,8 +50,10 @@ function register() {
         },
         dataType: "json",
         success: function(data) {
-            if(data.success)
+            if(data.success) {
                 alert("Welcome, " + data.f_name + "!");
+                window.location = "index.html";
+            }
             else
                 alert("Error: " + data.errorType);
         }
