@@ -23,34 +23,14 @@ $app->post('/login', function () use ($database) {
     echo json_encode($response);
 });
 
-$app->post('/createUserAccount', function () use ($database) {
-	$fName = $POST['f_name'];
-	$lName = $POST['l_name'];
+$app->post('/register', function () use ($database) {
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
+	$uid = $_POST['uid'];
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
-	$uid = $_POST['uid'];
-	if($fName === "" || $lName === "" || $email === "" || $password === "" || uid === "")
-		$outputJSON = array ('uid'=>-2);
-	else{
-		$duplicateCheck = $mysqli->query("SELECT email FROM Users WHERE email = '$email' LIMIT 1");
-		$checkResults = $duplicateCheck->fetch_assoc();
-		if(!($checkResults === NULL))
-			$outputJSON = array ('uid'=>-1);
-		else
-		{
-			$prevUser = $mysqli->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1");
-			$row = $prevUser->fetch_assoc();
-			if($row === NULL){
-				$outputJSON = array ('uid' => $uid);
-				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($uid, $fName, $lName, $email, $password)");
-			}
-			else{
-				$newID = $row['uid']+1;
-				$outputJSON = array ('uid'=>$newID);
-				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
-			}
-		}
-	}
+
+	$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
 });
 
 $app->run();

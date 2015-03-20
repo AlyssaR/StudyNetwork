@@ -27,8 +27,8 @@ if (!$con)
 mysql_select_db("StudyNetwork", $con);
 
 
-	$fName = $POST['f_name'];
-	$lName = $POST['l_name'];
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
 	$uid = $_POST['uid'];
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
@@ -36,7 +36,7 @@ mysql_select_db("StudyNetwork", $con);
 
 	$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');";
 	mysql_query($insertion);
-	echo "<h2>Thank you for yor information</h2>";
+	echo "<h2>Thank you for your information</h2>";
 
 	$newQuery = "SELECT * FROM Users";
 	$results = mysql_query($newQuery);
@@ -44,7 +44,7 @@ mysql_select_db("StudyNetwork", $con);
 	echo "<h1>Users Entered</h1>";
 	while($row = mysql_fetch_array($results, MYSQL_ASSOC))
 	{
-		echo "User: " . $row['fName']. " ". $row['lName']. "      Email: " . $row['email']. "     Id #: " . $row['uid']. "  Password: ". $row['passwd'] . "<br>";
+		echo "User: " . $row['f_name']. " ". $row['l_name']. "      Email: " . $row['email']. "     Id #: " . $row['uid']. "  Password: ". $row['passwd'] . "<br>";
 	}
 
 	/*$sqlRes = $con->query("SELECT * FROM Users");
