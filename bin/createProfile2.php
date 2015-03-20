@@ -18,18 +18,35 @@ p {
 
 
 <?php
-$database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
-if (!$database)
-    die("Connection failed: " . $database->connect_error);
+
+if($_POST){
+
+$con = mysql_connect("localhost", "web", "wearegeniuses");
+if (!$con)
+    die("Connection failed: " . mysql_error());
+mysql_select_db("StudyNetwork", $con);
 
 
 	$fName = $POST['f_name'];
 	$lName = $POST['l_name'];
+	$uid = $_POST['uid'];
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
-	$uid = $_POST['uid'];
 
-	$sqlRes = $database->query("SELECT * FROM Users");
+	$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$newID', '$fName', '$lName', '$email', '$password');";
+	mysql_query($insertion);
+	echo "<h2>Thank you for yor information</h2>";
+
+	$newQuery = "SELECT * FROM Users";
+	$results = mysql_query($newQuery);
+
+	echo "<h1>Users Entered</h1>";
+	while($row = mysql_fetch_array($results, MYSQL_ASSOC))
+	{
+		echo "User: " . $row['fName']. " ". $row['lName']. "      Email: " . $row['email']. "     Id #: " . $row['uid']. "  Password: ". $row['passwd'] . "<br>";
+	}
+
+	/*$sqlRes = $con->query("SELECT * FROM Users");
 
 	if($sqlRes === NULL)
 		echo "There is no data";
@@ -48,7 +65,7 @@ if (!$database)
 		
 	}
 	else{
-		$duplicateCheck = $database->query("SELECT * FROM Users WHERE (uid = '$uid') AND (email = '$email') LIMIT 1");
+		$duplicateCheck = $con->query("SELECT * FROM Users WHERE (uid = '$uid') AND (email = '$email') LIMIT 1");
 		$num_rows = mysql_fetch_array($duplicateCheck);
 		if($num_rows > 0)
 		{
@@ -56,7 +73,9 @@ if (!$database)
 		}
 		else
 		{
-			$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
+			$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$newID', '$fName', '$lName', '$email', '$password');";
+			//mysql_query($insertion);
+			//echo "<h2>Thank you for yor information</h2>";
 		}
 
 		/*$duplicateCheck = $database->query("SELECT email, uid FROM Users WHERE email = '$email' AND uid = '$uid' LIMIT 1");
@@ -77,15 +96,18 @@ if (!$database)
 				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
 			}
 		}*/
-	}
+	//}*/
+
+}
+
 ?>
 	<h2><font color = rgb(51,102,153)> Please enter the following information </font></h2>
 	<form method="post" action="createProfile2.php" id = "createAccount" name = "createAccount">
 	First Name: <input type = "text" name = "f_name" /><br />
-	Last Name: <input type = "text" name = "l_name" /><br />
-	SMU ID: <input type = "text" name = "uid" /><br />
-	Email: <input type = "text" name = "email" /><br />
-	Password: <input type = "password" name = "passwd" /><br />
+	Last Name: <input type = "text" name = "l_name"/><br />
+	SMU ID: <input type = "text" name = "uid"/><br />
+	Email: <input type = "text" name = "email"/><br />
+	Password: <input type = "password" name = "passwd"/><br />
 	<input type = "submit" class = "button" id = "CreateAccount">
 </form>
 </body>
