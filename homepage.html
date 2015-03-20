@@ -9,10 +9,10 @@
 		
 				<h1> The StudyNetwork</h1>
 		
-				<form action = "javascript:signIn()" method = "post">
+				<form method = "post">
 				<input type ="text" id="email" name="Login" value= "Your Login Email Here">
 				<input type ="password" id="password" name="Password" value= "Your Pass Here">
-				<button type = "button" onclick = "validate()"> Login</button>
+				<button type = "button" onclick = "javascript:validate()"> Login</button>
 				</form>
 			
 		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
@@ -20,42 +20,11 @@
 	<div>
 		<p> Need an account? : </p>
 		<form action = "">
-		<button type = "button" onclick ="redirect()"> Register </button>
+		<button type = "button" onclick ="javascript:redirect()"> Register </button>
 		</form>
 	
 	</div>
 </html>
-
-<script>
-
-function validate()
-{
-	console.log("You pushed the login button");
-	
-	var regexName = /\w*@smu\.edu/;
-	var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
-
-	var UserName = document.getElementById("email").value;
-	var UserPass = document.getElementById("password").value;
-	
-	var test1 = regexName.test(UserName);
-	var test2 = regexPass.test(UserPass);
-	
-	console.log(test1);
-	console.log(test2);
-	
-	if(test1 && test2)
-		console.log("PostCall");
-};
-
-function redirect()
-{
-console.log("You pushed the register button");
-
-//add redirect logic here, takes you to the REGISTER.HTML (createprofile2.php) page
-}
-
-</script>
 
 <style>
 #formData {
