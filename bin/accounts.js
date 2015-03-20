@@ -10,10 +10,10 @@ function signIn() {
         success: function(data) {
             if(data.success) {
                 alert("Welcome, " + data.f_name);
-                window.location = "bin/profilePage.php";
+                window.location = "editprofile.html";
             }
             else
-                alert("Go away!");
+                alert("Error logging in. Please check your email/password or create an account.");
         }
     });
 }
