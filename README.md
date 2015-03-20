@@ -8,12 +8,12 @@ A user-friendly way to form study groups based on customer input
 | IMPORTANT: To configure dev with API |
 ----------------------------------------
 1. Edit: /etc/apache2/sites-available by changing AllowOverride to All so it looks like the following:
-	<Directory /var/www/>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride All
-		Order allow,deny
-		allow from all
-	</Directory>
+	\<Directory /var/www/><br />
+		Options Indexes FollowSymLinks MultiViews<br />
+		AllowOverride All<br />
+		Order allow,deny<br />
+		allow from all<br />
+	\</Directory><br />
 2. Run: sudo a2enmod rewrite && sudo service apache2 restart
 
 -----------
@@ -36,19 +36,19 @@ A user-friendly way to form study groups based on customer input
 --------------------
 | Testing for users|
 --------------------
-~This is from your vagrant. (If you have not, clone the StudyNetwork dev repo) and install lamp
-1. Pull from git, you should be pulling from origin dev
-2. Go into your mysql root and create a database called 'StudyNetwork'
-3. Log out and go to /var/www/StudyNetwork/database
-4. From here type:
-	mysql -u root -p StudyNetwork < studyNetBackup.sql
-	--- you will be prompted to give a password, it's just your mysql root password
-5. Log back into mysql root from the topmost directory
-6. Type:
-	create user 'web'@'localhost' identified by 'wearegeniuses';
-	grant all privileges on StudyNetwork.* to web@localhost with grant option;
-7. *optional* log into mysql -u web -p just to make sure it works
-8. go back to the StudyNetwork/database directory and type:
-	mysql -u web -pwearegeniuses StudyNetwork < populateScript.sql
-9. In your browser:
-	192.168.10.10/StudyNetwork/bin/test.php
+~This is from your vagrant. (If you have not, clone the StudyNetwork dev repo) and install lamp<br />
+1. Pull from git, you should be pulling from origin dev<br />
+2. Go into your mysql root and create a database called 'StudyNetwork'<br />
+3. Log out and go to /var/www/StudyNetwork/database<br />
+4. From here type:<br />
+	mysql -u root -p StudyNetwork < studyNetBackup.sql<br />
+	--- you will be prompted to give a password, it's just your mysql root password<br />
+5. Log back into mysql root from the topmost directory<br />
+6. Type:<br />
+	create user 'web'@'localhost' identified by 'wearegeniuses';<br />
+	grant all privileges on StudyNetwork.* to web@localhost with grant option;<br />
+7. *optional* log into mysql -u web -p just to make sure it works<br />
+8. go back to the StudyNetwork/database directory and type:<br />
+	mysql -u web -pwearegeniuses StudyNetwork < populateScript.sql<br />
+9. In your browser:<br />
+	192.168.10.10/StudyNetwork/bin/test.php<br />
