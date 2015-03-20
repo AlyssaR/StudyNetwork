@@ -87,7 +87,7 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
-// searches only with first index of array for now
+// expects array of values, returns json array of results from first value (for now)
 $app->post('/search', function() use ($database) {
   $search = array();
   if (!empty($_POST['json'])) {
@@ -103,7 +103,7 @@ $app->post('/search', function() use ($database) {
   }
 });
 
-// adds passed class id with session user to ClassEnroll table
+// send it json in format {"cid":<cid>}
 $app->post('/joinClass', function() use ($database) {
   if (!empty($_POST['json'])) {
     $classID = json_decode($_POST['json'], true)["cid"];
