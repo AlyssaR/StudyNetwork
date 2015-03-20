@@ -86,8 +86,6 @@ function signIn(value) {
 }
 
 function validate() {
-    console.log("You pushed the login button");
-    
     var regexName = /\w*@smu\.edu/;
     var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 
@@ -101,7 +99,8 @@ function validate() {
     console.log(test2);
     
     if(test1 && test2) {
-        console.log("PostCall");
         authenticate();
     }
+    else
+        alert("Your email or password is not valid.");
 }
