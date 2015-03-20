@@ -8,8 +8,10 @@ function signIn() {
         },
         dataType: "json",
         success: function(data) {
-            if(data.success)
+            if(data.success) {
                 alert("Welcome, " + data.f_name);
+                window.location = "bin/profilePage.php";
+            }
             else
                 alert("Go away!");
         }
