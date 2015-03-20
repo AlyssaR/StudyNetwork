@@ -10,6 +10,7 @@ function authorize() {
         success: function(data) {
             if(data.success) {
                 alert("Welcome, " + data.f_name);
+                signIn(data.uid);
                 window.location = "editprofile.html";
             }
             else
@@ -74,8 +75,8 @@ function signIn(value) {
     document.cookie = "sn_uid=" + value + expires + "; path=/";
 }
 
-function readCookie(name) {
-    var nameEQ = name + "=";
+function readCookie() {
+    var name = "sn_uid=";
     var ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
@@ -85,6 +86,6 @@ function readCookie(name) {
     return null;
 }
 
-function eraseCookie(name) {
-    createCookie(name,"",-1);
+function eraseCookie() {
+    createCookie("sn_uid","",-1);
 }
