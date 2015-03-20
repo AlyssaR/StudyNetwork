@@ -11,7 +11,6 @@ function authenticate() {
             if(data.success) {
                 alert("Welcome, " + data.f_name);
                 signIn(data.uid);
-                window.location = "editprofile.html";
             }
             else
                 alert("Error logging in. Please check your email/password or create an account.");
@@ -73,6 +72,7 @@ function signIn(value) {
     var expires = "; expires=" + date.toGMTString();
 
     document.cookie = "sn_uid=" + value + expires + "; path=/";
+    window.location = "editprofile.html";
 }
 
 function getID() {
