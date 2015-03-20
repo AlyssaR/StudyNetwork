@@ -88,10 +88,10 @@ $app->post('/register', function () use ($database) {
 });
 
 // searches only with first index of array for now
-$app->get('/search', function() use ($database) {
+$app->post('/search', function() use ($database) {
   $search = array();
-  if (!empty($_GET['json'])) {
-    $search = json_decode($_GET['json'], true);
+  if (!empty($_POST['json'])) {
+    $search = json_decode($_POST['json'], true);
     // perform the search
     $response = $database->query("SELECT * FROM StudyGroups WHERE * = " . $search[0]);
     echo json_encode($response);
@@ -99,9 +99,9 @@ $app->get('/search', function() use ($database) {
 });
 
 // adds passed class id with session user to ClassEnroll table
-$app->get('/joinClass', function() use ($database) {
-  if (!empty($_GET['json'])) {
-    $classID = json_decode($_GET['json'], true)["cid"];
+$app->post('/joinClass', function() use ($database) {
+  if (!empty($_POST['json'])) {
+    $classID = json_decode($_POST['json'], true)["cid"];
     $database->query("INSERT INTO ClassEnroll (cid, uid) VALUES (" . $classID . ", " . $_SESSION["loggedin"] . ")");
   }
 });
