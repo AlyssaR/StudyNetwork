@@ -108,7 +108,6 @@ $app->post('/joinStudyGroup', function() use ($database) {
     $gid = $_POST['gid'];
     $role = $_POST['role'];
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
-  }
 });
 
 $app->run();

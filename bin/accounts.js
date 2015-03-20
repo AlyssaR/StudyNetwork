@@ -114,7 +114,7 @@ function valid() {
     	alert("You must enter an SMU email address.");
     	return false;
     }
-    if(!test2) {
+    else if(!test2) {
     	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
         return false;
     }
