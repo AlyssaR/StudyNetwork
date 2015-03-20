@@ -93,7 +93,12 @@ $app->post('/search', function() use ($database) {
   if (!empty($_POST['json'])) {
     $search = json_decode($_POST['json'], true);
     // perform the search
-    $response = $database->query("SELECT * FROM StudyGroups WHERE * = " . $search[0]);
+    $response = $database->query("SELECT * FROM StudyGroups WHERE gid = " . $search[0] . " OR cid = " . $search[0]
+    . " OR creator = " . $search[0]
+    . " OR gname = " . $search[0]
+    . " OR time1 = " . $search[0]
+    . " OR loc = " . $search[0]
+    . " OR num_members = " . $search[0]);
     echo json_encode($response);
   }
 });
