@@ -35,7 +35,7 @@ $app->post('/addGroup', function() use ($database){
 
 $app->post('/getUserInfo', function () use ($database) {
     $uid = $_POST['uid'];
-    
+
     $runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid' LIMIT 1");
     $result = $runQuery->fetch_assoc();
 
@@ -71,7 +71,7 @@ $app->post('/register', function () use ($database) {
 	$password = $_POST['passwd'];
 	$error = "None";
 	$success = true;
-	
+
 	//Check for duplicates
 	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid' OR email = '$email';");
 	if($results->num_rows > 0) {
@@ -85,6 +85,25 @@ $app->post('/register', function () use ($database) {
 	//Respond
 	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "errorType"=>$error);
 	echo json_encode($response);
+});
+
+// searches only with first index of array for now
+$app->get('/search', function() use ($database) {
+  $search = array();
+  if (!empty($_GET['json'])) {
+    $search = json_decode($_GET['json'], true);
+    // perform the search
+    $response = $database->query("SELECT * FROM StudyGroups WHERE * = " . $search[0]);
+    echo json_encode($response);
+  }
+});
+
+// adds passed class id with session user to ClassEnroll table
+$app->get('/joinClass', function() use ($database) {
+  if (!empty($_GET['json'])) {
+    $classID = json_decode($_GET['json'], true)["cid"];
+    $database->query("INSERT INTO ClassEnroll (cid, uid) VALUES (" . $classID . ", " . $_SESSION["loggedin"] . ")");
+  }
 });
 
 $app->run();
