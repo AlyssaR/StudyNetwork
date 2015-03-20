@@ -27,8 +27,8 @@ if (!$con)
 mysql_select_db("StudyNetwork", $con);
 
 
-	$fName = $POST['f_name'];
-	$lName = $POST['l_name'];
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
 	$uid = $_POST['uid'];
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
