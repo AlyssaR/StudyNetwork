@@ -33,71 +33,36 @@ mysql_select_db("StudyNetwork", $con);
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
 
+	$checkDup = "SELECT * FROM Users WHERE(uid = '$uid' OR email = '$email')";
+	$dupraw = mysql_query($checkDup);
 
-	$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');";
-	mysql_query($insertion);
-	echo "<h2>Thank you for your information</h2>";
-
-	$newQuery = "SELECT * FROM Users";
-	$results = mysql_query($newQuery);
-
-	echo "<h1>Users Entered</h1>";
-	while($row = mysql_fetch_array($results, MYSQL_ASSOC))
+	if(mysql_num_rows($dupraw) > 0)
 	{
-		echo "User: " . $row['f_name']. " ". $row['l_name']. "      Email: " . $row['email']. "     Id #: " . $row['uid']. "  Password: ". $row['passwd'] . "<br>";
+		echo "This user already exists";
 	}
-
-	/*$sqlRes = $con->query("SELECT * FROM Users");
-
-	if($sqlRes === NULL)
-		echo "There is no data";
 	else
 	{
-		echo "There is SOMETHING in the query";
-		while($row = $sqlRes->fetch_assoc())
-		{
-			echo "id: " . $row["uid"]. " -- Name: " . $row["f_name"]. " " . $row["l_name"]. " --Email: " . $row["email"]."
-			<br>";
-		}
-	}
 
-	if($fName === "" || $lName === "" || $email === "" || $password === "" || uid === ""){
-		echo "Please enter data in all of the fields";
-		
-	}
-	else{
-		$duplicateCheck = $con->query("SELECT * FROM Users WHERE (uid = '$uid') AND (email = '$email') LIMIT 1");
-		$num_rows = mysql_fetch_array($duplicateCheck);
-		if($num_rows > 0)
-		{
-			echo "User Already Exists";
-		}
-		else
-		{
-			$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$newID', '$fName', '$lName', '$email', '$password');";
-			//mysql_query($insertion);
-			//echo "<h2>Thank you for yor information</h2>";
-		}
+		$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');";
+		mysql_query($insertion);
+		$newFName = "SELECT f_name FROM Users WHERE (f_name = '$fName')";
+		//$newFName = mysql_result($newFName, 0);
+		$newLName = "SELECT l_name FROM Users WHERE (l_name = '$lName')";
+		//$newLName = mysql_query($newLName);
 
-		/*$duplicateCheck = $database->query("SELECT email, uid FROM Users WHERE email = '$email' AND uid = '$uid' LIMIT 1");
-		$checkResults = $duplicateCheck->fetch_assoc();
-		if(!($checkResults === NULL))
-			echo "You are the only user with this email";
-		else
-		{
-			//$prevUser = $database->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1");
-			//$row = $prevUser->fetch_assoc();
-			//if($row === NULL){
-				//$outputJSON = array ('uid' => $uid);
-				//$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($uid, $fName, $lName, $email, $password)");
-			}
-			else{
-				$newID = $row['uid']+1;
-				$outputJSON = array ('uid'=>$newID);
-				$insertion = $database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ($newID, $fName, $lName, $email, $password");
-			}
-		}*/
-	//}*/
+		//echo $newFName. " ". $newLName. " your account has been created". "<br>";
+		echo "<h2>Thank you for your information</h2>";
+
+		$newQuery = "SELECT * FROM Users";
+		$results = mysql_query($newQuery);
+
+
+		//echo "<h1>Users Entered</h1>";
+		//while($row = mysql_fetch_array($results, MYSQL_ASSOC))
+		//{
+			//echo "User: " . $row['f_name']. " ". $row['l_name']. "      Email: " . $row['email']. "     Id #: " . $row['uid']. "  Password: ". $row['passwd'] . "<br>";
+		//}
+	}
 
 }
 
