@@ -87,11 +87,11 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
-// expects array of values, returns json array of results from first value (for now)
+// expects array of values, returns json array named 'search' of results from first value (for now)
 $app->post('/search', function() use ($database) {
   $search = array();
-  if (!empty($_POST['json'])) {
-    $search = json_decode($_POST['json'], true);
+  if (!empty($_POST['search'])) {
+    $search = json_decode($_POST['search'], true);
     // perform the search
     $response = $database->query("SELECT * FROM StudyGroups WHERE gid = " . $search[0] . " OR cid = " . $search[0]
     . " OR creator = " . $search[0]
@@ -103,11 +103,11 @@ $app->post('/search', function() use ($database) {
   }
 });
 
-// send it json in format {"cid":<cid>}
-$app->post('/joinClass', function() use ($database) {
-  if (!empty($_POST['json'])) {
-    $classID = json_decode($_POST['json'], true)["cid"];
-    $database->query("INSERT INTO ClassEnroll (cid, uid) VALUES (" . $classID . ", " . $_SESSION["loggedin"] . ")");
+//
+$app->post('/joinStudyGroup', function() use ($database) {
+    $gid = $_POST['gid'];
+    $role = $_POST['role'];
+    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
   }
 });
 
