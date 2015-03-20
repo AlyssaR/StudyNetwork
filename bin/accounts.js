@@ -68,7 +68,7 @@ function register() {
         success: function(data) {
             if(data.success) {
                 alert("Welcome, " + data.f_name + "!");
-                window.location = "index.html";
+                signIn(data.uid);
             }
             else
                 alert("Error: " + data.errorType);

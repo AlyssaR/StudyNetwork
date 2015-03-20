@@ -83,7 +83,7 @@ $app->post('/register', function () use ($database) {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
 
 	//Respond
-	$response = array("success"=>$success, "f_name"=>$fName, "errorType"=>$error);
+	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "errorType"=>$error);
 	echo json_encode($response);
 });
 
