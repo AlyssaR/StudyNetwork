@@ -51,9 +51,9 @@ function register() {
         dataType: "json",
         success: function(data) {
             if(data.success)
-                alert("Welcome, " + data.f_name);
+                alert("Welcome, " + data.f_name + " " + data.dups);
             else
-                alert("Error. You could not be added.");
+                alert("Error: " + data.errorType);
         }
     });
 }

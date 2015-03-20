@@ -29,9 +29,21 @@ $app->post('/register', function () use ($database) {
 	$uid = $_POST['uid'];
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
+	$error = "None";
+	$success = true;
+	
+	//Check for duplicates
+	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid';");
+	if($results->num_rows > 0) {
+		$error = "User already exists";
+		$success = false;
+	}
+	//Add user
+	else
+		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
 
-	$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
-	$response = array("success"=>true, "f_name"=>$fName);
+	//Respond
+	$response = array("success"=>$success, "f_name"=>$fName, "errorType"=>$error);
 	echo json_encode($response);
 });
 
