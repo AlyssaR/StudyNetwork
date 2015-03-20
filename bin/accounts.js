@@ -15,3 +15,30 @@ function signIn() {
         }
     });
 }
+
+function validate() {
+    console.log("You pushed the login button");
+    
+    var regexName = /\w*@smu\.edu/;
+    var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
+
+    var UserName = document.getElementById("email").value;
+    var UserPass = document.getElementById("password").value;
+    
+    var test1 = regexName.test(UserName);
+    var test2 = regexPass.test(UserPass);
+    
+    console.log(test1);
+    console.log(test2);
+    
+    if(test1 && test2) {
+        console.log("PostCall");
+        signIn();
+    }
+}
+
+function redirect() {
+console.log("You pushed the register button");
+
+//add redirect logic here, takes you to the REGISTER.HTML (createprofile2.php) page
+}
