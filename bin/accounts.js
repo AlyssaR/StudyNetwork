@@ -1,4 +1,4 @@
-function authorize() {
+function authenticate() {
     $.ajax({
         url: "api/login",
         type: "post",
@@ -36,7 +36,7 @@ function validate() {
     
     if(test1 && test2) {
         console.log("PostCall");
-        authorize();
+        authenticate();
     }
 }
 
@@ -75,17 +75,34 @@ function signIn(value) {
     document.cookie = "sn_uid=" + value + expires + "; path=/";
 }
 
-function readCookie() {
+function getID() {
     var name = "sn_uid=";
     var ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return null;
 }
 
-function eraseCookie() {
-    createCookie("sn_uid","",-1);
+function getName() {
+    $.ajax({
+        url: "api/getUserInfo",
+        type: "post",
+        data: { "uid":getID() },
+        dataType: "json",
+        success: function(data) {
+            if(data.success)
+                $('#name').text(data.f_name + " " + data.l_name);
+            else
+                alert("Error retrieving your information. Please log in.");
+        }
+    });
+}
+
+function logout() {
+    alert("Goodbye, " + getName() + "!");
+    document.cookie = "sn_uid=;expires=-1;path=/";
+    window.location = "index.html";
 }

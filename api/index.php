@@ -6,6 +6,20 @@ $database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
 if ($database->connect_errno)
     die("Connection failed: " . $database->connect_error);
 
+$app->post('/getUserInfo', function () use ($database) {
+    $uid = $_POST['uid'];
+    
+    $runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid' LIMIT 1");
+    $result = $runQuery->fetch_assoc();
+
+    //Frame response
+    if($result === NULL)
+    	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid", "error"=>"User ID not valid.");
+	else
+		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
+    echo json_encode($response);
+});
+
 $app->post('/login', function () use ($database) {
     $email = $_POST['email'];
     $password = $_POST['password'];
