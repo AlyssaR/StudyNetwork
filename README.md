@@ -4,6 +4,17 @@
 A user-friendly way to form study groups based on customer input
 
 
+----------------------------------------
+| IMPORTANT: To configure dev with API |
+----------------------------------------
+1. Edit: /etc/apache2/sites-available by changing AllowOverride to All so it looks like the following:
+	<Directory /var/www/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+	</Directory>
+2. Run: sudo a2enmod rewrite && sudo service apache2 restart
 -----------
 | Vagrant |
 -----------
