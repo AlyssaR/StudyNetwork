@@ -20,6 +20,28 @@ function createClass() {
     });
 }
 
+function createGroup() {
+    $.ajax({
+        url: "api/addGroup",
+        type: "post",
+        data: {
+            "gname":$("#gname").val(), 
+            "time1":$("#time1").val(),
+            "loc":$("#loc").val(), 
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("Group added successfully!");
+                window.location = "editprofile.html";
+            }
+            else
+                alert("Error: " + data.errorType);
+        }
+    });
+
+}
+
 function redirectToClass() {
     window.location = "createClassForm.html";
 }

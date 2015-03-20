@@ -66,11 +66,11 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
-	$num_members = $_POST['num_members'];
+	//$num_members = $_POST['num_members'];
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (gid, cid, admin, gname, time1, loc, num_members) VALUES (, , , '$gname', '$time1', '$loc', '$num_members');");
+	$database->query("INSERT INTO Classes (gid, cid, admin, gname, time1, loc, num_members) VALUES (, , , '$gname', '$time1', '$loc', ,);");
 		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
 });

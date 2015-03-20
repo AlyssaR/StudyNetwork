@@ -2,7 +2,7 @@
 
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="bin/accounts.js"></script>
+	<script type="text/javascript" src="bin/helper.js"></script>
 	<title>Create a Study Group</title>
 	<style>
 	body {
@@ -20,7 +20,7 @@
 	
 	<div id=classForm>
 			<h2><br/><br/>Create A Study Group</h2>
-		<form method = "post">
+		<form method = "post" action = "javascript:createGroup()">
 			<p>
 				Group Name:
 				<input type ="text" id="groupName" name="groupName">  <br/><br/>
@@ -28,7 +28,7 @@
 				<input type ="time" id="meetingTime" name="meetingTime"> <br/><br/>
 				Meeting Location:
 				<input type="text" id="meetingLocation" name="meetingLocation"> <br/><br/>
-				<button type = "button">Create Study Group</button>
+				<input type = "submit" value = "Create Group">
 			</p>
 		</form>
 	<div>
