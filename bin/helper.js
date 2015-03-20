@@ -4,7 +4,7 @@ function createClass() {
         type: "post",
         data: {
             "dept":$("#dept").val(), 
-            "class_num":$("#class_num").val()
+            "class_num":$("#class_num").val(),
             "time2":$("#time2").val(), 
             "professor":$("#professor").val(), 
         },
@@ -15,7 +15,7 @@ function createClass() {
                 window.location = "editprofile.html";
             }
             else
-                alert("Error:" + data.errorType);
+                alert("Error: " + data.errorType);
         }
     });
 }
