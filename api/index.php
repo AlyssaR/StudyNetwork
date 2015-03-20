@@ -35,7 +35,7 @@ $app->post('/addGroup', function() use ($database){
 
 $app->post('/getUserInfo', function () use ($database) {
     $uid = $_POST['uid'];
-    
+
     $runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid' LIMIT 1");
     $result = $runQuery->fetch_assoc();
 
@@ -71,7 +71,7 @@ $app->post('/register', function () use ($database) {
 	$password = $_POST['passwd'];
 	$error = "None";
 	$success = true;
-	
+
 	//Check for duplicates
 	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid' OR email = '$email';");
 	if($results->num_rows > 0) {
@@ -85,6 +85,30 @@ $app->post('/register', function () use ($database) {
 	//Respond
 	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "errorType"=>$error);
 	echo json_encode($response);
+});
+
+// expects array of values, returns json array named 'search' of results from first value (for now)
+$app->post('/search', function() use ($database) {
+  $search = array();
+  if (!empty($_POST['search'])) {
+    $search = json_decode($_POST['search'], true);
+    // perform the search
+    $response = $database->query("SELECT * FROM StudyGroups WHERE gid = " . $search[0] . " OR cid = " . $search[0]
+    . " OR creator = " . $search[0]
+    . " OR gname = " . $search[0]
+    . " OR time1 = " . $search[0]
+    . " OR loc = " . $search[0]
+    . " OR num_members = " . $search[0]);
+    echo json_encode($response);
+  }
+});
+
+//
+$app->post('/joinStudyGroup', function() use ($database) {
+    $gid = $_POST['gid'];
+    $role = $_POST['role'];
+    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+  }
 });
 
 $app->run();
