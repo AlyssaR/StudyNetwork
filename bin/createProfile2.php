@@ -33,6 +33,7 @@ mysql_select_db("StudyNetwork", $con);
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
 
+
 	$insertion = "INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');";
 	mysql_query($insertion);
 	echo "<h2>Thank you for yor information</h2>";
