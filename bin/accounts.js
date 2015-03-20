@@ -102,7 +102,6 @@ function getName() {
 }
 
 function logout() {
-    alert("Goodbye, " + getName() + "!");
     document.cookie = "sn_uid=;expires=-1;path=/";
     window.location = "index.html";
 }
