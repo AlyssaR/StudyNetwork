@@ -15,6 +15,7 @@ A user-friendly way to form study groups based on customer input
 		allow from all
 	</Directory>
 2. Run: sudo a2enmod rewrite && sudo service apache2 restart
+
 -----------
 | Vagrant |
 -----------
