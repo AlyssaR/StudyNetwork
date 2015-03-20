@@ -31,6 +31,8 @@ $app->post('/register', function () use ($database) {
 	$password = $_POST['passwd'];
 
 	$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
+	$response = array("success"=>true, "f_name"=>$fName);
+	echo json_encode($response);
 });
 
 $app->run();

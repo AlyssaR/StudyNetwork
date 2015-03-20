@@ -39,18 +39,25 @@ function validate() {
 
 function register() {
     $.ajax({
-        url: "api/login",
+        url: "api/register",
         type: "post",
         data: {
+            "f_name":$("#f_name").val(), 
+            "l_name":$("#l_name").val(), 
+            "uid":$("#uid").val(), 
             "email":$("#email").val(), 
-            "password":$("#password").val()
+            "passwd":$("#passwd").val()
         },
         dataType: "json",
         success: function(data) {
             if(data.success)
                 alert("Welcome, " + data.f_name);
             else
-                alert("Go away!");
+                alert("Error. You could not be added.");
         }
     });
+}
+
+function redirect() {
+    window.location = "register.html";
 }
