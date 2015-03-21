@@ -1,0 +1,75 @@
+<DOCUMENT html>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="bin/helper.js"></script>
+	<title>Create a Class</title>
+	<style>
+	body {
+		background-color:black;
+		color:lime;
+		text-align:center;
+		padding:100px;
+		font-family:courier;
+	}
+	</style>
+<head>
+
+<body>	
+	<h1>Study Network</h1>
+	
+	<div id=classForm>
+			<h2><br/><br/>Create A Class</h2>
+		<form method = "post" action = "javascript:createClass()">
+			<p>
+
+				<select id = "dept" name = "deptDropdown">
+				<option value="ACCT">ACCT</option>
+				<option value="ADPR">ADPR</option>
+				<option value="ADRE">ADRE</option>
+				<option value="AERO">AERO</option>
+				<option value="AMAE">AMAE</option>
+				<option value="ANTH">ANTH</option>
+				<option value="APSM">APSM</option>
+				<option value="ARBC">ARBC</option>
+				<option value="ARHS">ARHS</option>
+				<option value="ASAG">ASAG</option>
+				<option value="ASCE">ASCE</option>
+				<option value="ASDR">ASDR</option>
+				<option value="ASIM">ASIM</option>
+				<option value="ASPH">ASPH</option>
+				<option value="ASPR">ASPR</option>
+				<option value="ASPT">ASPT</option>
+				<option value="ASSC">ASSC</option>
+				<option value="BIOL">BIOL</option>
+				<option value="BL">BL</option>
+				<option value="BLI">BLI</option>
+				<option value="BSSN">BSSN</option>
+				<option value="BUSE">BUSE</option>
+				<option value="CEE">CEE</option>
+				<option value="CELL">CELL</option>
+				<option value="CF">CF</option>
+				<option value="CFA">CFA</option>
+				<option value="CFB">CFB</option>
+				<option value="CHEM">CHEM</option>
+				<option value="CHIN">CHIN</option>
+				<option value="CISB">CISB</option>
+				<option value="CLAR">CLAR</option>
+				<option value="COMM">COMM</option>
+				<option value="CRCP">CRCP</option>
+				<option value="CSE">CSE</option>
+				</select><br/><br>	
+
+				<!--Course Department:
+				<input type ="text" id="dept" name="courseDepartment">  <br/><br/>-->
+				Course Number:
+				<input type ="number" id="class_num" name="courseNumber"> <br/><br/>
+				Class Time: <input type "time1" id="time2" name="time1"> <br/><br/>
+				Professor:
+				<input type="text" id="professor" name="professorName"> <br/><br/>
+				<input type = "submit" value = "Create Class">
+			</p>
+		</form>
+	<div>
+<body>
+
+</html>

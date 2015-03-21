@@ -1,0 +1,37 @@
+<DOCUMENT html>
+
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="bin/helper.js"></script>
+	<title>Create a Study Group</title>
+	<style>
+	body {
+		background-color:black;
+		color:lime;
+		text-align:center;
+		padding:100px;
+		font-family:courier;
+	}
+	</style>
+<head>
+
+<body>	
+	<h1>Study Network</h1>
+	
+	<div id=classForm>
+			<h2><br/><br/>Create A Study Group</h2>
+		<form method = "post" action = "javascript:createGroup()">
+			<p>
+				Group Name:
+				<input type ="text" id="gname" name="groupName">  <br/><br/>
+				Meeting Time:
+				<input type ="time" id="time1" name="meetingTime"> <br/><br/>
+				Meeting Location:
+				<input type="text" id="loc" name="meetingLocation"> <br/><br/>
+				<input type = "submit" value = "Create Group">
+			</p>
+		</form>
+	<div>
+<body>
+
+</html>

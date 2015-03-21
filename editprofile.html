@@ -1,0 +1,33 @@
+<DOCUMENT html>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="bin/helper.js"></script>
+	<script type="text/javascript" src="bin/accounts.js"></script>
+	<title> User Profile </title>
+</head>
+<body onload = "getName()" bgcolor="#000000" />
+			
+		<div id = formData>
+		
+				<h1>Welcome to the Study Network, <label id = "name"> Undefined </label> </h1>
+		
+				<form>
+					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
+					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
+
+					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
+				</form>
+			
+		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+	</div>
+</html>
+
+<style>
+#formData {
+    background-color:black;
+    color:lime;
+    text-align:center;
+    padding:100px;
+	font-family:courier;
+}
+</style>
