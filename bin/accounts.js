@@ -157,13 +157,15 @@ function validRegister() {
     var pass2=document.getElementById("password2").value;
 	var UserFName = document.getElementById("f_name").value;
 	var UserLName = document.getElementById("l_name").value;
+	var UserID = document.getElementById("uid").value;
 	
     
     var test1 = regexEmail.test(UserEmail);
     var test2 = regexPass.test(UserPass);
 	var test3 = regexName.test(UserFName);
 	var test4 = regexName.test(UserLName);
-	
+	var test5 = regexID.test(UserID);
+	console.log("Validating User Credentials");
 	if(!test1) {
     	alert("You must enter an SMU email address.");
     	return false;
@@ -184,6 +186,10 @@ function validRegister() {
         alert("Passwords must match.");
         return false;  
     } 
-    else 
+	else if (!test5) {
+		alert("Your SMU ID must be 8 numbers, no alpha characters or symbols.")
+		return false;
+	}
+	else 
         return true;
 }
