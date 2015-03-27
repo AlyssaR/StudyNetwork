@@ -98,7 +98,7 @@ function login() {
 }
 
 function valid() {
-    var regexName = /\w*@smu\.edu/;
+    var regexName = /\w+@smu\.edu/;
     var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 
     var UserName = document.getElementById("email").value;
