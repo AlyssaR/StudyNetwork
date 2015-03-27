@@ -139,9 +139,7 @@ function validLogin() {
     	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
         return false;
     }
-   /* else if (!validPass) {
-        alert("Passwords must match.");
-        return false; */ //To be uncommented if above password check isn't enough. 
+  
     }
     else 
         return true;
@@ -182,6 +180,9 @@ function validRegister() {
     	alert("Your last name must be an uppercase letter followed by lowercase letters");
         return false;
     }
+     /* else if (!validPass) {
+        alert("Passwords must match.");
+        return false; */ //To be uncommented if above password check isn't enough. 
     else 
         return true;
 }
