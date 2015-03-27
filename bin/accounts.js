@@ -96,6 +96,27 @@ function login() {
             alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
+function validPass() {
+    var pass1=document.getElementById('password');
+    var pass2=document.getElementById('password2');
+    var message=document.getElementById('validateMessage');
+    var matchColor="#66cc66";
+    var noMatch="#ff6666";
+    if (pass1.value == pass2.value) {
+        pass2.style.backgroundColor = matchColor;
+        message.style.color=matchColor;
+        message.innerHTML="Passwords match!";
+        document.getElementById('submit').disabled=false;
+        return true;
+    }
+    else {
+        pass2.style.backgroundColor = noMatch;
+        message.style.color=noMatch;
+        message.innerHTML = "Passwords do not match!";
+        document.getElementById('submit').disabled=true;
+        return false;
+    }
+}
 
 function validLogin() {
     var regexName = /\w+@smu\.edu/;
@@ -118,6 +139,10 @@ function validLogin() {
     	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
         return false;
     }
+   /* else if (!validPass) {
+        alert("Passwords must match.");
+        return false; */ //To be uncommented if above password check isn't enough. 
+    }
     else 
         return true;
 }
@@ -131,6 +156,7 @@ function validRegister() {
 	
 	var UserEmail = document.getElementById("email").value;
     var UserPass = document.getElementById("password").value;
+    var RetypePass = document.getElementById("validatePassword").value;
 	var UserFName = document.getElementById("f_name").value;
 	var UserLName = document.getElementById("l_name").value;
 	
@@ -147,14 +173,15 @@ function validRegister() {
     else if(!test2) {
     	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
         return false;
+    }
 	else if(!test3) {
     	alert("Your first name must be an uppercase letter followed by lowercase letters");
         return false;
+    }
 	else if(!test4) {
     	alert("Your last name must be an uppercase letter followed by lowercase letters");
         return false;
     }
     else 
         return true;
-	
 }
