@@ -106,14 +106,14 @@ function validPass() {
         pass2.style.backgroundColor = matchColor;
         message.style.color=matchColor;
         message.innerHTML="Passwords match!";
-        document.getElementById('submit').disabled=false;
+        //document.getElementById('submit').disabled=false;
         return true;
     }
     else {
         pass2.style.backgroundColor = noMatch;
         message.style.color=noMatch;
         message.innerHTML = "Passwords do not match!";
-        document.getElementById('submit').disabled=true;
+        //document.getElementById('submit').disabled=true;
         return false;
     }
 }
@@ -154,7 +154,7 @@ function validRegister() {
 	
 	var UserEmail = document.getElementById("email").value;
     var UserPass = document.getElementById("password").value;
-    var RetypePass = document.getElementById("validatePassword").value;
+    var pass2=document.getElementById("password2").value;
 	var UserFName = document.getElementById("f_name").value;
 	var UserLName = document.getElementById("l_name").value;
 	
@@ -180,9 +180,10 @@ function validRegister() {
     	alert("Your last name must be an uppercase letter followed by lowercase letters");
         return false;
     }
-     /* else if (!validPass) {
+    else if (UserPass != pass2) {
         alert("Passwords must match.");
-        return false; */ //To be uncommented if above password check isn't enough. 
+        return false;  
+    } 
     else 
         return true;
 }
