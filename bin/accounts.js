@@ -140,7 +140,7 @@ function validLogin() {
         return false;
     }
   
-    }
+    
     else 
         return true;
 }
