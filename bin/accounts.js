@@ -52,7 +52,7 @@ function redirect() {
 }
 
 function register() {
-    if(valid()) {
+    if(validRegister()) {
         $.ajax({
             url: "api/register",
             type: "post",
@@ -86,7 +86,7 @@ function signIn(value) {
 }
 
 function login() {
-    if(valid()) {
+    if(validLogin()) {
         var data = authenticate();
         if(data.success) {
             alert("Welcome, " + data.f_name);
@@ -97,7 +97,7 @@ function login() {
     }
 }
 
-function valid() {
+function validLogin() {
     var regexName = /\w+@smu\.edu/;
     var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 
@@ -120,4 +120,41 @@ function valid() {
     }
     else 
         return true;
+}
+
+function validRegister() {
+	
+	var regexID = /[0123456789]{8}/;
+	var regexEmail = /\w+@smu\.edu/;
+	var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
+	var regexName = /[A-Z][a-z]+/;
+	
+	var UserEmail = document.getElementById("email").value;
+    var UserPass = document.getElementById("password").value;
+	var UserFName = document.getElementById("f_name").value;
+	var UserLName = document.getElementById("l_name").value;
+	
+    
+    var test1 = regexEmail.test(UserEmail);
+    var test2 = regexPass.test(UserPass);
+	var test3 = regexName.test(UserFName);
+	var test4 = regexName.test(UserLName);
+	
+	if(!test1) {
+    	alert("You must enter an SMU email address.");
+    	return false;
+    }
+    else if(!test2) {
+    	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+        return false;
+	else if(!test3) {
+    	alert("Your first name must be an uppercase letter followed by lowercase letters");
+        return false;
+	else if(!test4) {
+    	alert("Your last name must be an uppercase letter followed by lowercase letters");
+        return false;
+    }
+    else 
+        return true;
+	
 }
