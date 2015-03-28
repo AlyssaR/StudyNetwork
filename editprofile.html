@@ -5,12 +5,23 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> User Profile </title>
 </head>
-<body onload = "getName()" bgcolor="#000000" />
+<body onload = "getProfile()" bgcolor="#000000" />
 			
 		<div id = formData>
 		
-				<h1>Welcome to the Study Network, <label id = "name"> Undefined </label> </h1>
-		
+				<h1>Welcome to the Study Network!</h1>
+				
+				First name: 	<label id = "f_name"> Undefined </label>
+					<input type = "text" id = "new_f_name">
+					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br /> 
+				Last name:		<label id = "l_name"> Undefined </label>
+					<input type = "text" id = "new_l_name">
+					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
+				Email: 			<label id = "email"> Undefined </label>
+					<input type = "text" id = "new_email">
+					<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
+				
+				<br /><br />
 				<form>
 					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>

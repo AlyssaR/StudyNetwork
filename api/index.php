@@ -33,6 +33,33 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('/editprofile', function () use ($database) {
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
+	$email = $_POST['email'];
+	$uid = $_POST['uid'];
+	$success = true;
+
+	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+	if($fName === "ignore")
+		$fName = $result['f_name'];
+	if($lName === "ignore")
+		$lName = $result['l_name'];
+	if($email === "ignore")
+		$email = $result['email'];
+
+	$database->query("UPDATE Users SET f_name = '$fName' and l_name = '$lName' and email = '$email' WHERE uid = '$uid';");
+
+	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL || !($fName === $result['f_name'] && $lName === $result['l_name'] && $email === $result['email']))
+		$success = false;
+	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "l_name"=>$lName, "email"=>$email);
+	echo json_encode($response);
+});
+
 $app->post('/getUserInfo', function () use ($database) {
     $uid = $_POST['uid'];
 

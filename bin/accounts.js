@@ -16,6 +16,32 @@ function authenticate() {
     return result;
 }
 
+function editProfile(toChange) {
+    if (toChange === "first") {
+        $.ajax({
+        url: "api/editprofile",
+        type: "post",
+        data: { "uid":getID(),
+            "f_name":document.getElementById("new_f_name").value,
+            "l_name":"ignore",
+            "email":"ignore"},
+        dataType: "json",
+        success: function(data) {
+            if(data.success)
+                $('#f_name').text(data.f_name);
+            else
+                alert("Error changing your information. Name: " + data.f_name + " " + data.l_name + " Email: " + data.email);
+        }
+    });
+    }
+    else if (toChange === "last") {
+
+    }
+    else if (toChange === "email") {
+
+    }
+}
+
 function getID() {
     var name = "sn_uid=";
     var ca = document.cookie.split(';');
@@ -27,15 +53,18 @@ function getID() {
     return null;
 }
 
-function getName() {
+function getProfile() {
     $.ajax({
         url: "api/getUserInfo",
         type: "post",
         data: { "uid":getID() },
         dataType: "json",
         success: function(data) {
-            if(data.success)
-                $('#name').text(data.f_name + " " + data.l_name);
+            if(data.success) {
+                $('#f_name').text(data.f_name);
+                $('#l_name').text(data.l_name);
+                $('#email').text(data.email);
+            }
             else
                 alert("Error retrieving your information. Please log in.");
         }
