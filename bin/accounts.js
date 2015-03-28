@@ -17,21 +17,31 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore"};
+    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
     if (toChange === "first")
         theDeets['f_name'] = document.getElementById("new_f_name").value;
     else if (toChange === "last") 
         theDeets['l_name'] = document.getElementById("new_l_name").value;
-    else if (toChange === "email") 
+    else if (toChange === "email") {
         theDeets['email'] = document.getElementById("new_email").value;
-
-    var regexEmail = /\w+@smu\.edu/;
-    var testEmail = regexEmail.test(theDeets['email']);
-    if(!testEmail) {
-        alert("You must enter an SMU email.");
-        return;
+    
+        var regexEmail = /\w+@smu\.edu/;
+        var testEmail = regexEmail.test(theDeets['email']);
+        if(!testEmail) {
+            alert("You must enter an SMU email.");
+            return;
+        }
+    }
+    else if (toChange === "password") {
+        var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
+        theDeets['password'] = document.getElementById("password").value;
+        var testPass = regexPass.test(theDeets['password']);
+        if(!testPass || !validPass()) {
+            alert("Password is not valid. Check that they match and don't have illegal characters.");
+            return;
+        }
     }
     
     //Change profile
@@ -55,6 +65,8 @@ function editProfile(toChange) {
     $("#new_f_name").val('');
     $("#new_l_name").val('');
     $("#new_email").val('');
+    $("#password").val('');
+    $("#password2").val('');
 }
 
 function getID() {

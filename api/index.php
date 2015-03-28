@@ -37,10 +37,11 @@ $app->post('/editprofile', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
 	$email = $_POST['email'];
+	$pass = $_POST['password'];
 	$uid = $_POST['uid'];
 	$success = true;
 
-	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
+	$runQuery = $database->query("SELECT f_name, l_name, email, passwd FROM Users WHERE uid = '$uid';");
 	$result = $runQuery->fetch_assoc();
 	if($fName === "ignore")
 		$fName = $result['f_name'];
@@ -48,8 +49,10 @@ $app->post('/editprofile', function () use ($database) {
 		$lName = $result['l_name'];
 	if($email === "ignore")
 		$email = $result['email'];
+	if($pass === "ignore")
+		$pass = $result['passwd'];
 
-	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email' WHERE uid = '$uid';");
+	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email', passwd = '$pass' WHERE uid = '$uid';");
 
 	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
 	$result = $runQuery->fetch_assoc();
