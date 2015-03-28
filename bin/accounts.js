@@ -17,29 +17,37 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    if (toChange === "first") {
-        $.ajax({
+    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore"};
+
+    //Set variables
+    if (toChange === "first")
+        theDeets['f_name'] = document.getElementById("new_f_name").value;
+    else if (toChange === "last") 
+        theDeets['l_name'] = document.getElementById("new_l_name").value;
+    else if (toChange === "email") 
+        theDeets['email'] = document.getElementById("new_email").value;        
+    
+    //Change profile
+    $.ajax({
         url: "api/editprofile",
         type: "post",
-        data: { "uid":getID(),
-            "f_name":document.getElementById("new_f_name").value,
-            "l_name":"ignore",
-            "email":"ignore"},
+        data: theDeets,
         dataType: "json",
         success: function(data) {
-            if(data.success)
+            if(data.success) {
                 $('#f_name').text(data.f_name);
+                $('#l_name').text(data.l_name);
+                $('#email').text(data.email);    
+            }
             else
                 alert("Error changing your information. Name: " + data.f_name + " " + data.l_name + " Email: " + data.email);
         }
     });
-    }
-    else if (toChange === "last") {
 
-    }
-    else if (toChange === "email") {
-
-    }
+    //Clear input fields
+    $("#new_f_name").val('');
+    $("#new_l_name").val('');
+    $("#new_email").val('');
 }
 
 function getID() {
