@@ -25,7 +25,14 @@ function editProfile(toChange) {
     else if (toChange === "last") 
         theDeets['l_name'] = document.getElementById("new_l_name").value;
     else if (toChange === "email") 
-        theDeets['email'] = document.getElementById("new_email").value;        
+        theDeets['email'] = document.getElementById("new_email").value;
+
+    var regexEmail = /\w+@smu\.edu/;
+    var testEmail = regexEmail.test(theDeets['email']);
+    if(!testEmail) {
+        alert("You must enter an SMU email.");
+        return;
+    }
     
     //Change profile
     $.ajax({
@@ -133,6 +140,7 @@ function login() {
             alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
+
 function validPass() {
     var pass1=document.getElementById('password');
     var pass2=document.getElementById('password2');
