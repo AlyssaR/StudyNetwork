@@ -49,7 +49,7 @@ $app->post('/editprofile', function () use ($database) {
 	if($email === "ignore")
 		$email = $result['email'];
 
-	$database->query("UPDATE Users SET f_name = '$fName' and l_name = '$lName' and email = '$email' WHERE uid = '$uid';");
+	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email' WHERE uid = '$uid';");
 
 	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
 	$result = $runQuery->fetch_assoc();
