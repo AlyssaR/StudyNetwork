@@ -180,8 +180,8 @@ function validPass() {
         }
 
         var isValid = /[\w!@#$%&*;'"_]{8,64}/;
-        if(isValid.test(pass1)) {
-            console.log(pass1);
+        if(isValid.test(pass1.value)) {
+            console.log(pass1.value);
             return true;
         }
         else {
