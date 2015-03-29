@@ -95,7 +95,7 @@ function login() {
     if(validLogin()) {
         var data = authenticate();
         if(data.success) {
-            alert("Welcome, " + data.f_name);
+            alert("Welcome, " + data.f_name + "!");
             signIn(data.uid);
         }
         else
@@ -197,7 +197,6 @@ function validPass() {
     return false;
 }
 
-
 function validRegister() {
 	var regexID = /[0123456789]{8}/;
 	var regexName = /[A-Z][a-z]+/;
@@ -213,9 +212,8 @@ function validRegister() {
 	console.log("Validating User Credentials");
 	if(!validEmail())
     	return false;
-    else if(!validPass()) {
+    else if(!validPass())
         return false;
-    }
 	else if(!test3) {
     	alert("Your first name must be an uppercase letter followed by lowercase letters");
         return false;
