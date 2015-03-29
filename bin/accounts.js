@@ -21,27 +21,20 @@ function editProfile(toChange) {
 
     //Set variables
     if (toChange === "first")
-        theDeets['f_name'] = document.getElementById("new_f_name").value;
+        theDeets['f_name'] = document.getElementById("f_name").value;
     else if (toChange === "last") 
-        theDeets['l_name'] = document.getElementById("new_l_name").value;
+        theDeets['l_name'] = document.getElementById("l_name").value;
     else if (toChange === "email") {
-        theDeets['email'] = document.getElementById("new_email").value;
-    
-        var regexEmail = /\w+@smu\.edu/;
-        var testEmail = regexEmail.test(theDeets['email']);
-        if(!testEmail) {
-            alert("You must enter an SMU email.");
+        if(!validEmail())
             return;
-        }
+        else
+            theDeets['email'] = document.getElementById("email").value;
     }
     else if (toChange === "password") {
-        var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
-        theDeets['password'] = document.getElementById("password").value;
-        var testPass = regexPass.test(theDeets['password']);
-        if(!testPass || !validPass()) {
-            alert("Password is not valid. Check that they match and don't have illegal characters.");
+        if(!validPass())
             return;
-        }
+        else 
+            theDeets['password'] = document.getElementById("password").value;
     }
     
     //Change profile
@@ -52,9 +45,9 @@ function editProfile(toChange) {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                $('#f_name').text(data.f_name);
-                $('#l_name').text(data.l_name);
-                $('#email').text(data.email);    
+                $('#cur_f_name').text(data.f_name);
+                $('#cur_l_name').text(data.l_name);
+                $('#cur_email').text(data.email);    
             }
             else
                 alert("Error changing your information. Name: " + data.f_name + " " + data.l_name + " Email: " + data.email);
@@ -62,9 +55,9 @@ function editProfile(toChange) {
     });
 
     //Clear input fields
-    $("#new_f_name").val('');
-    $("#new_l_name").val('');
-    $("#new_email").val('');
+    $("#f_name").val('');
+    $("#l_name").val('');
+    $("#email").val('');
     $("#password").val('');
     $("#password2").val('');
 }
@@ -88,14 +81,26 @@ function getProfile() {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                $('#f_name').text(data.f_name);
-                $('#l_name').text(data.l_name);
-                $('#email').text(data.email);
+                $('#cur_f_name').text(data.f_name);
+                $('#cur_l_name').text(data.l_name);
+                $('#cur_email').text(data.email);
             }
             else
                 alert("Error retrieving your information. Please log in.");
         }
     });
+}
+
+function login() {
+    if(validLogin()) {
+        var data = authenticate();
+        if(data.success) {
+            alert("Welcome, " + data.f_name);
+            signIn(data.uid);
+        }
+        else
+            alert("Error logging in.\nPlease check your email/password or create an account.");
+    }
 }
 
 function logout() {
@@ -141,94 +146,76 @@ function signIn(value) {
     window.location = "editprofile.html";
 }
 
-function login() {
-    if(validLogin()) {
-        var data = authenticate();
-        if(data.success) {
-            alert("Welcome, " + data.f_name);
-            signIn(data.uid);
-        }
-        else
-            alert("Error logging in.\nPlease check your email/password or create an account.");
-    }
-}
-
-function validPass() {
-    var pass1=document.getElementById('password');
-    var pass2=document.getElementById('password2');
-    var message=document.getElementById('validateMessage');
-    var matchColor="#66cc66";
-    var noMatch="#ff6666";
-    if (pass1.value == pass2.value) {
-        pass2.style.backgroundColor = matchColor;
-        message.style.color=matchColor;
-        message.innerHTML="Passwords match!";
-        //document.getElementById('submit').disabled=false;
+function validEmail() {
+    var regex = /\w+@smu\.edu/;
+    var email = document.getElementById("email").value;
+    
+    if(regex.test(email))
         return true;
-    }
     else {
-        pass2.style.backgroundColor = noMatch;
-        message.style.color=noMatch;
-        message.innerHTML = "Passwords do not match!";
-        //document.getElementById('submit').disabled=true;
+        alert("You must enter an SMU email address.");
         return false;
     }
 }
 
 function validLogin() {
-    var regexName = /\w+@smu\.edu/;
-    var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
-
-    var UserName = document.getElementById("email").value;
-    var UserPass = document.getElementById("password").value;
-    
-    var test1 = regexName.test(UserName);
-    var test2 = regexPass.test(UserPass);
-    
-    console.log(test1);
-    console.log(test2);
-    
-    if(!test1) {
-    	alert("You must enter an SMU email address.");
-    	return false;
-    }
-    else if(!test2) {
-    	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
-        return false;
-    }
-  
-    
-    else 
-        return true;
+    return (validEmail() && validPass());
 }
 
+function validPass() {
+    var pass1=document.getElementById('password');
+    var pass2=document.getElementById('password2');
+    if(pass2 == null) 
+        pass2 = pass1;
+
+    var message=document.getElementById('validateMessage');
+    var matchColor="#66cc66";
+    var noMatch="#ff6666";
+    
+    if (pass1.value == pass2.value) {
+        if(message != null) {
+            pass2.style.backgroundColor = matchColor;
+            message.style.color=matchColor;
+            message.innerHTML="Passwords match!";
+        }
+
+        var isValid = /[\w!@#$%&*;'"_]{8,64}/;
+        if(isValid.test(pass1)) {
+            console.log("eez valid");
+            return true;
+        }
+        else {
+            alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+            return false;
+        }
+        //document.getElementById('submit').disabled=false;
+    }
+    else if (message != null) {
+        pass2.style.backgroundColor = noMatch;
+        message.style.color=noMatch;
+        message.innerHTML = "Passwords do not match!";
+        //document.getElementById('submit').disabled=true;
+    }
+    return false;
+}
+
+
 function validRegister() {
-	
 	var regexID = /[0123456789]{8}/;
-	var regexEmail = /\w+@smu\.edu/;
-	var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
 	var regexName = /[A-Z][a-z]+/;
 	
-	var UserEmail = document.getElementById("email").value;
-    var UserPass = document.getElementById("password").value;
-    var pass2=document.getElementById("password2").value;
 	var UserFName = document.getElementById("f_name").value;
 	var UserLName = document.getElementById("l_name").value;
 	var UserID = document.getElementById("uid").value;
 	
     
-    var test1 = regexEmail.test(UserEmail);
-    var test2 = regexPass.test(UserPass);
 	var test3 = regexName.test(UserFName);
 	var test4 = regexName.test(UserLName);
 	var test5 = regexID.test(UserID);
 	console.log("Validating User Credentials");
-	if(!test1) {
-    	alert("You must enter an SMU email address.");
+	if(!validEmail())
     	return false;
-    }
-    else if(!test2) {
-    	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+    else if(!validPass()) {
         return false;
     }
 	else if(!test3) {
@@ -239,10 +226,6 @@ function validRegister() {
     	alert("Your last name must be an uppercase letter followed by lowercase letters");
         return false;
     }
-    else if (UserPass != pass2) {
-        alert("Passwords must match.");
-        return false;  
-    } 
 	else if (!test5) {
 		alert("Your SMU ID must be 8 numbers, no alpha characters or symbols.")
 		return false;
