@@ -106,12 +106,10 @@ $app->post('/register', function () use ($database) {
 	$lName = $_POST['l_name'];
 	
 	$uidStart = $database->query("SELECT uid FROM Users ORDER BY DESC LIMIT 1;");
-	if($uidStart->num_rows === 0) {
-		$uid = 0
-	}
-	else{
-		$uid = $uidStart + 1
-	}
+	if($uidStart->num_rows === 0)
+		$uid = 0;
+	else
+		$uid = $uidStart + 1;
 
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
