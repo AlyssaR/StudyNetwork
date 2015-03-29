@@ -128,7 +128,6 @@ function register() {
             data: {
                 "f_name":$("#f_name").val(), 
                 "l_name":$("#l_name").val(), 
-                "uid":$("#uid").val(), 
                 "email":$("#email").val(), 
                 "passwd":$("#password").val()
             },
@@ -172,7 +171,7 @@ function validFName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your first name must be an uppercase letter followed by lowercase letters");
+        alert("Your first name must start with uppercase letter");
         return false;
     }
 }
@@ -183,7 +182,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name must be an uppercase letter followed by lowercase letters");
+        alert("Your last name start with an uppercase letter");
         return false;
     }
 }

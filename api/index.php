@@ -104,7 +104,15 @@ $app->post('/login', function () use ($database) {
 $app->post('/register', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
-	$uid = $_POST['uid'];
+	
+	$uidStart = $database->query("SELECT uid FROM Users ORDER BY DESC LIMIT 1;");
+	if($uidStart->num_rows === 0) {
+		$uid = 0
+	}
+	else{
+		$uid = $uidStart + 1
+	}
+
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
 	$error = "None";
@@ -121,7 +129,7 @@ $app->post('/register', function () use ($database) {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
 
 	//Respond
-	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "errorType"=>$error);
+	$response = array("success"=>$success, "f_name"=>$fName, "errorType"=>$error);
 	echo json_encode($response);
 });
 
