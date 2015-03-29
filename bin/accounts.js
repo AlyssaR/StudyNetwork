@@ -50,7 +50,7 @@ function editProfile(toChange) {
                 $('#cur_email').text(data.email);    
             }
             else
-                alert("Error changing your information. Name: " + data.f_name + " " + data.l_name + " Email: " + data.email);
+                alert(data.errorType);
         }
     });
 

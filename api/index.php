@@ -49,6 +49,14 @@ $app->post('/editprofile', function () use ($database) {
 		$lName = $result['l_name'];
 	if($email === "ignore")
 		$email = $result['email'];
+	else { //If email already exists in database
+		$runQuery = $database->query("SELECT COUNT(*) FROM Users WHERE email = '$email';");
+		if($runQuery->num_rows > 0) {
+			$response = array("success"=>false, "uid"=>0, "f_name"=>0, "l_name"=>0, "email"=>0, "errorType"=>"Error: Email is already associated with an account.");
+			echo json_encode($response);
+			return;
+		}
+	}
 	if($pass === "ignore")
 		$pass = $result['passwd'];
 
@@ -59,7 +67,7 @@ $app->post('/editprofile', function () use ($database) {
 
 	if($result === NULL || !($fName === $result['f_name'] && $lName === $result['l_name'] && $email === $result['email']))
 		$success = false;
-	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "l_name"=>$lName, "email"=>$email);
+	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "l_name"=>$lName, "email"=>$email, "errorType"=>"None");
 	echo json_encode($response);
 });
 
