@@ -33,6 +33,44 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('/editprofile', function () use ($database) {
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
+	$email = $_POST['email'];
+	$pass = $_POST['password'];
+	$uid = $_POST['uid'];
+	$success = true;
+
+	$runQuery = $database->query("SELECT f_name, l_name, email, passwd FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+	if($fName === "ignore")
+		$fName = $result['f_name'];
+	if($lName === "ignore")
+		$lName = $result['l_name'];
+	if($email === "ignore")
+		$email = $result['email'];
+	else { //If email already exists in database
+		$runQuery = $database->query("SELECT COUNT(*) FROM Users WHERE email = '$email';");
+		if($runQuery->num_rows > 0) {
+			$response = array("success"=>false, "uid"=>0, "f_name"=>0, "l_name"=>0, "email"=>0, "errorType"=>"Error: Email is already associated with an account.");
+			echo json_encode($response);
+			return;
+		}
+	}
+	if($pass === "ignore")
+		$pass = $result['passwd'];
+
+	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email', passwd = '$pass' WHERE uid = '$uid';");
+
+	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL || !($fName === $result['f_name'] && $lName === $result['l_name'] && $email === $result['email']))
+		$success = false;
+	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "l_name"=>$lName, "email"=>$email, "errorType"=>"None");
+	echo json_encode($response);
+});
+
 $app->post('/getUserInfo', function () use ($database) {
     $uid = $_POST['uid'];
 
