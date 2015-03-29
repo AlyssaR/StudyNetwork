@@ -104,7 +104,9 @@ $app->post('/login', function () use ($database) {
 $app->post('/register', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
-	$uid = 0;
+	$uid = 0; //First user
+
+	//Assign incremented ID
 	$uidStart = $database->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1;");
 	if($uidStart->num_rows > 0) {
 		$lastUID = $uidStart->fetch_assoc();
