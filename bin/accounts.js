@@ -180,10 +180,8 @@ function validPass() {
         }
 
         var isValid = /[\w!@#$%&*;'"_]{8,64}/;
-        if(isValid.test(pass1.value)) {
-            console.log(pass1.value);
+        if(isValid.test(pass1.value))
             return true;
-        }
         else {
             alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
             return false;
