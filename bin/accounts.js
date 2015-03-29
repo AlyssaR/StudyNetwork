@@ -20,10 +20,18 @@ function editProfile(toChange) {
     theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
-    if (toChange === "first")
-        theDeets['f_name'] = document.getElementById("f_name").value;
-    else if (toChange === "last") 
-        theDeets['l_name'] = document.getElementById("l_name").value;
+    if (toChange === "first") {
+        if(!validFName())
+            return;
+        else
+            theDeets['f_name'] = document.getElementById("f_name").value;            
+    }
+    else if (toChange === "last") {
+        if(!validLName())
+            return;
+        else
+            theDeets['l_name'] = document.getElementById("l_name").value;
+    }
     else if (toChange === "email") {
         if(!validEmail())
             return;
@@ -158,6 +166,28 @@ function validEmail() {
     }
 }
 
+function validFName() {
+    var regex = /[A-Z][a-z]+/;
+    var name = document.getElementById("f_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your first name must be an uppercase letter followed by lowercase letters");
+        return false;
+    }
+}
+
+function validLName() { 
+    var regex = /[A-Z][a-zA-Z]+/;
+    var name = document.getElementById("l_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your last name must be an uppercase letter followed by lowercase letters");
+        return false;
+    }
+}
+
 function validLogin() {
     return (validEmail() && validPass());
 }
@@ -198,34 +228,14 @@ function validPass() {
 }
 
 function validRegister() {
-	var regexID = /[0123456789]{8}/;
-	var regexName = /[A-Z][a-z]+/;
-	
-	var UserFName = document.getElementById("f_name").value;
-	var UserLName = document.getElementById("l_name").value;
-	var UserID = document.getElementById("uid").value;
-	
-    
-	var test3 = regexName.test(UserFName);
-	var test4 = regexName.test(UserLName);
-	var test5 = regexID.test(UserID);
-	console.log("Validating User Credentials");
 	if(!validEmail())
     	return false;
     else if(!validPass())
         return false;
-	else if(!test3) {
-    	alert("Your first name must be an uppercase letter followed by lowercase letters");
+	else if(!validFName())
+    	return false;
+	else if(!validLName())
         return false;
-    }
-	else if(!test4) {
-    	alert("Your last name must be an uppercase letter followed by lowercase letters");
-        return false;
-    }
-	else if (!test5) {
-		alert("Your SMU ID must be 8 numbers, no alpha characters or symbols.")
-		return false;
-	}
 	else 
         return true;
 }
