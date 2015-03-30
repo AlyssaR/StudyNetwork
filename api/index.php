@@ -14,13 +14,11 @@ $app->post('/addClass', function() use ($database){
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
-	$first = $_POST['prof_first'];
-	$last = $_POST['prof_last'];
-	$professor = strtolower($first + " " + $last);
+	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (cid, dept, class_num, time2, professor) VALUES (, '$dept', '$class_num', '$time2', '$professor');");
+	$database->query("INSERT INTO Classes (cid, dept, time2, professor) VALUES ('$class_num', '$dept', '$time2', '$professor');");
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
 	echo json_encode($response);
 });
