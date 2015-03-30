@@ -14,7 +14,9 @@ $app->post('/addClass', function() use ($database){
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
-	$professor = $_POST['professor'];
+	$first = $_POST['prof_first'];
+	$last = $_POST['prof_last'];
+	$professor = strtolower($first + " " + $last);
 	$error = "None";
 	$success = true;
 
@@ -113,7 +115,6 @@ $app->post('/login', function () use ($database) {
 
 $app->post('/logout', function () {
 	unset($_SESSION["uid"]);
-//	session_destroy();
 });
 
 $app->post('/register', function () use ($database) {
