@@ -1,6 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
+session_set_cookie_params(1800);
 session_cache_limiter(false);
 session_start();
 
