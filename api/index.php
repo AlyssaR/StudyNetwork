@@ -1,6 +1,9 @@
 <?php
 require 'vendor/autoload.php';
 
+session_cache_limiter(false);
+session_start();
+
 $app = new \Slim\Slim();
 $database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
 if ($database->connect_errno)
@@ -72,7 +75,12 @@ $app->post('/editprofile', function () use ($database) {
 });
 
 $app->post('/getUserInfo', function () use ($database) {
-    $uid = $_POST['uid'];
+    if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
 
     $runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid' LIMIT 1");
     $result = $runQuery->fetch_assoc();
@@ -81,7 +89,7 @@ $app->post('/getUserInfo', function () use ($database) {
     if($result === NULL)
     	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid", "error"=>"User ID not valid.");
 	else
-		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
+		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
     echo json_encode($response);
 });
 
@@ -95,10 +103,17 @@ $app->post('/login', function () use ($database) {
 
     //Frame response
     if($result === NULL)
-    	$response = array("success"=>false, "uid"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
-	else
+    	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
+	else {
 		$response = array("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+		$_SESSION["uid"] = $response["uid"];
+	}
     echo json_encode($response);
+});
+
+$app->post('/logout', function () {
+	unset($_SESSION["uid"]);
+//	session_destroy();
 });
 
 $app->post('/register', function () use ($database) {

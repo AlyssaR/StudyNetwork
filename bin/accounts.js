@@ -70,22 +70,10 @@ function editProfile(toChange) {
     $("#password2").val('');
 }
 
-function getID() {
-    var name = "sn_uid=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return null;
-}
-
 function getProfile() {
     $.ajax({
         url: "api/getUserInfo",
         type: "post",
-        data: { "uid":getID() },
         dataType: "json",
         success: function(data) {
             if(data.success) {
@@ -93,8 +81,10 @@ function getProfile() {
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);
             }
-            else
-                alert("Error retrieving your information. Please log in.");
+            else {
+                alert("Error: Could not retrieve your profile. Please log in.")
+                window.location = "index.html";
+            }
         }
     });
 }
@@ -104,7 +94,7 @@ function login() {
         var data = authenticate();
         if(data.success) {
             alert("Welcome, " + data.f_name + "!");
-            signIn(data.uid);
+            window.location = "editProfile.html";
         }
         else
             alert("Error logging in.\nPlease check your email/password or create an account.");
@@ -112,8 +102,14 @@ function login() {
 }
 
 function logout() {
-    document.cookie = "sn_uid=;expires=-1;path=/";
-    window.location = "index.html";
+    $.ajax({
+        url: "api/logout",
+        type: "post",
+        dataType: "json",
+        success:function() {
+            window.location = "index.html";
+        }
+    });
 }
 
 function redirect() {
@@ -135,22 +131,13 @@ function register() {
             success: function(data) {
                 if(data.success) {
                     alert("Welcome, " + data.f_name + "!");
-                    signIn(data.uid);
+                    window.location = "editprofile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
             }
         });
     }
-}
-
-function signIn(value) {
-    var date = new Date();
-    date.setTime(date.getTime() + (30*60*1000)); //Login expires in 30 minutes
-    var expires = "; expires=" + date.toGMTString();
-
-    document.cookie = "sn_uid=" + value + expires + "; path=/";
-    window.location = "editprofile.html";
 }
 
 function validEmail() {
