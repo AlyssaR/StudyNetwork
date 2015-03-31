@@ -43,6 +43,35 @@ function createGroup() {
 
 }
 
+function editGroup(changes) { //need to figure out what changes is
+    editS = {"gname":"ignore", "time1":"ignore", "loc":"ignore"};
+
+    //Change variables
+    if (changes === "GroupName") { //also "GroupName is probably tied to HTML"
+        editS['gname'] = document.getElementById("gname").value;
+    }
+    else if(changes === "time1") {
+        editS['time1'] = document.getElementById("time1").value;
+    }
+    else if(changes === "loc") {
+        editS['loc'] = document.getElementById("loc").value;
+    }
+
+    //update StudyGroups
+    $.ajax({
+        url: "api/editGroup",
+        type: "post",
+        data: editS,
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                
+            }
+        }
+    })
+
+}
+
 function redirectToClass() {
     window.location = "createClassForm.html";
 }
