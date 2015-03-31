@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.22, for osx10.8 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: StudyNetwork
 -- ------------------------------------------------------
--- Server version	5.6.22
+-- Server version	5.5.41-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,8 +23,9 @@ DROP TABLE IF EXISTS `ClassEnroll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ClassEnroll` (
-  `cid` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL
+  `uid` int(11) NOT NULL DEFAULT '0',
+  `cid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`,`cid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -45,11 +46,11 @@ DROP TABLE IF EXISTS `Classes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Classes` (
-  `cid` int(11) DEFAULT NULL,
-  `dept` varchar(6) DEFAULT NULL,
-  `class_num` int(11) DEFAULT NULL,
+  `dept` varchar(6) NOT NULL DEFAULT '',
+  `class_num` int(11) NOT NULL DEFAULT '0',
   `time2` time DEFAULT NULL,
-  `professor` varchar(50) DEFAULT NULL
+  `professor` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`dept`,`class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,9 +71,10 @@ DROP TABLE IF EXISTS `GroupEnroll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `GroupEnroll` (
-  `uid` int(11) DEFAULT NULL,
-  `gid` int(11) DEFAULT NULL,
-  `role` varchar(30) DEFAULT NULL
+  `uid` int(11) NOT NULL DEFAULT '0',
+  `gid` int(11) NOT NULL DEFAULT '0',
+  `role` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`uid`,`gid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,8 +95,9 @@ DROP TABLE IF EXISTS `OrgEnroll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `OrgEnroll` (
-  `oid` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL
+  `uid` int(11) NOT NULL DEFAULT '0',
+  `oid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`,`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,8 +118,9 @@ DROP TABLE IF EXISTS `Organizations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Organizations` (
-  `oid` int(11) DEFAULT NULL,
-  `org_name` varchar(50) DEFAULT NULL
+  `oid` int(11) NOT NULL,
+  `org_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,10 +141,11 @@ DROP TABLE IF EXISTS `Profile`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Profile` (
-  `uid` int(11) DEFAULT NULL,
+  `uid` int(11) NOT NULL,
   `oid` int(11) DEFAULT NULL,
   `gid` int(11) DEFAULT NULL,
-  `cid` int(11) DEFAULT NULL
+  `cid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -161,13 +166,14 @@ DROP TABLE IF EXISTS `StudyGroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `StudyGroups` (
-  `gid` int(11) DEFAULT NULL,
+  `gid` int(11) NOT NULL,
   `cid` int(11) DEFAULT NULL,
-  `creator_id` int(11) DEFAULT NULL,
-  `gname` varchar(20) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `gname` varchar(40) DEFAULT NULL,
   `time1` time DEFAULT NULL,
   `loc` varchar(40) DEFAULT NULL,
-  `num_members` int(11) DEFAULT NULL
+  `num_members` int(11) DEFAULT NULL,
+  PRIMARY KEY (`gid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -188,11 +194,12 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Users` (
-  `uid` int(11) DEFAULT NULL,
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
   `f_name` varchar(30) DEFAULT NULL,
   `l_name` varchar(30) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `passwd` varchar(64) DEFAULT NULL
+  `passwd` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -214,4 +221,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-18 20:51:46
+-- Dump completed on 2015-03-31  2:51:46

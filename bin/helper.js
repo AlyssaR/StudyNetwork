@@ -6,7 +6,8 @@ function createClass() {
             "dept":$("#dept").val(), 
             "class_num":$("#class_num").val(),
             "time2":$("#time2").val(), 
-            "professor":$("#professor").val(), 
+            "prof_first":$("#prof_first").val(), 
+            "prof_last":$("#prof_last").val(), 
         },
         dataType: "json",
         success: function(data) {

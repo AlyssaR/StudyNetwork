@@ -1,5 +1,11 @@
 <?php
 require 'vendor/autoload.php';
+;
+session_cache_limiter(false);
+$cookieParams = session_get_cookie_params(); // Gets current cookies params.
+session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
+session_name("StudyNetwork");
+session_start();
 
 $app = new \Slim\Slim();
 $database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
@@ -11,11 +17,11 @@ $app->post('/addClass', function() use ($database){
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
-	$professor = $_POST['professor'];
+	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (cid, dept, class_num, time2, professor) VALUES (, '$dept', '$class_num', '$time2', '$professor');");
+	$database->query("INSERT INTO Classes (cid, dept, time2, professor) VALUES ('$class_num', '$dept', '$time2', '$professor');");
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
 	echo json_encode($response);
 });
@@ -33,8 +39,51 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('/editprofile', function () use ($database) {
+	$fName = $_POST['f_name'];
+	$lName = $_POST['l_name'];
+	$email = $_POST['email'];
+	$pass = $_POST['password'];
+	$uid = $_POST['uid'];
+	$success = true;
+
+	$runQuery = $database->query("SELECT f_name, l_name, email, passwd FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+	if($fName === "ignore")
+		$fName = $result['f_name'];
+	if($lName === "ignore")
+		$lName = $result['l_name'];
+	if($email === "ignore")
+		$email = $result['email'];
+	else { //If email already exists in database
+		$runQuery = $database->query("SELECT COUNT(*) FROM Users WHERE email = '$email';");
+		if($runQuery->num_rows > 0) {
+			$response = array("success"=>false, "uid"=>0, "f_name"=>0, "l_name"=>0, "email"=>0, "errorType"=>"Error: Email is already associated with an account.");
+			echo json_encode($response);
+			return;
+		}
+	}
+	if($pass === "ignore")
+		$pass = $result['passwd'];
+
+	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email', passwd = '$pass' WHERE uid = '$uid';");
+
+	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL || !($fName === $result['f_name'] && $lName === $result['l_name'] && $email === $result['email']))
+		$success = false;
+	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "l_name"=>$lName, "email"=>$email, "errorType"=>"None");
+	echo json_encode($response);
+});
+
 $app->post('/getUserInfo', function () use ($database) {
-    $uid = $_POST['uid'];
+    if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
 
     $runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid' LIMIT 1");
     $result = $runQuery->fetch_assoc();
@@ -43,7 +92,7 @@ $app->post('/getUserInfo', function () use ($database) {
     if($result === NULL)
     	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid", "error"=>"User ID not valid.");
 	else
-		$response = array ("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
+		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
     echo json_encode($response);
 });
 
@@ -57,23 +106,42 @@ $app->post('/login', function () use ($database) {
 
     //Frame response
     if($result === NULL)
-    	$response = array("success"=>false, "uid"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid");
-	else
+    	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
+	else {
 		$response = array("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+		$_SESSION["uid"] = $response["uid"];
+	}
     echo json_encode($response);
+});
+
+$app->post('/logout', function () {
+	$_SESSION = array(); //Unsets all variables
+	$params = session_get_cookie_params(); //Expires/Deletes cookie
+    setcookie(session_name(), '', time() - 60,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]);
+	session_destroy(); //Ends session server side
 });
 
 $app->post('/register', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
-	$uid = $_POST['uid'];
+	$uid = 0; //First user
+
+	//Assign incremented ID
+	$uidStart = $database->query("SELECT uid FROM Users ORDER BY uid DESC LIMIT 1;");
+	if($uidStart->num_rows > 0) {
+		$lastUID = $uidStart->fetch_assoc();
+		$uid = $lastUID['uid'] + 1;
+	}
+
 	$email = $_POST['email'];
 	$password = $_POST['passwd'];
 	$error = "None";
 	$success = true;
 
 	//Check for duplicates
-	$results = $database->query("SELECT * FROM Users WHERE uid = '$uid' OR email = '$email';");
+	$results = $database->query("SELECT * FROM Users WHERE email = '$email';");
 	if($results->num_rows > 0) {
 		$error = "User already exists";
 		$success = false;
@@ -83,7 +151,7 @@ $app->post('/register', function () use ($database) {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
 
 	//Respond
-	$response = array("success"=>$success, "uid"=>$uid, "f_name"=>$fName, "errorType"=>$error);
+	$response = array("success"=>$success, "f_name"=>$fName, "uid"=>$uid, "errorType"=>$error);
 	echo json_encode($response);
 });
 
