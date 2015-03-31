@@ -1,8 +1,10 @@
 <?php
 require 'vendor/autoload.php';
-
-session_set_cookie_params(1800);
+;
 session_cache_limiter(false);
+$cookieParams = session_get_cookie_params(); // Gets current cookies params.
+session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
+session_name("StudyNetwork");
 session_start();
 
 $app = new \Slim\Slim();
@@ -113,7 +115,12 @@ $app->post('/login', function () use ($database) {
 });
 
 $app->post('/logout', function () {
-	unset($_SESSION["uid"]);
+	$_SESSION = array(); //Unsets all variables
+	$params = session_get_cookie_params(); //Expires/Deletes cookie
+    setcookie(session_name(), '', time() - 60,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]);
+	session_destroy(); //Ends session server side
 });
 
 $app->post('/register', function () use ($database) {
