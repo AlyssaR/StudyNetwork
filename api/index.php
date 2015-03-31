@@ -122,6 +122,18 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+$app->post('/getGroup', function () use ($database) {
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1");
+	$result = $runQuery->fetch_assoc();
+
+	//some response
+	if($result === NULL)
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+	else
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	echo json_encode($response);
+});
+
 //
 $app->post('/joinStudyGroup', function() use ($database) {
     $gid = $_POST['gid'];

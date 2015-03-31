@@ -65,11 +65,34 @@ function editGroup(changes) { //need to figure out what changes is
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                
+                $('cur_gname').text(data.gname);
+                $('cur_time1').text(data.time1);
+                $('cur_loc').text(data.loc); 
+            }
+            else
+                alert(data.errorType);
+        }
+    });
+
+}
+
+function getGroup() {
+    $.ajax({
+        url: "api/getGroup",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+               $('cur_gname').text(data.gname);
+               $('cur_time1').text(data.time1);
+               $('cur_loc').text(data.loc); 
+            }
+            else {
+                alert("Error: Could not retrieve your group.")
+                window.location = "editprofile.html";
             }
         }
-    })
-
+    });
 }
 
 function redirectToClass() {
