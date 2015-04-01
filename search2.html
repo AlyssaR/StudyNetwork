@@ -1,23 +1,21 @@
 <DOCUMENT html>
 <head>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="bin/accounts.js"></script>
+  <script type="text/javascript" src="bin/searchGroups.js"></script>
   <title> Search </title>
 </head>
 <body bgcolor="#000000" />
       
   <div id = formData>
-  
-    <h1>Please enter the following information:</h1>
 
-      <select>
+      <select method="post" action = "javascript:searchByClass()">
         <option value="class">Class</option>
         <option value="prof">Prof</option>
         <option value="group">Group</option>
       </select>
 
       <form>
-        <input type="text" name=" ">
+        <input type="text" name="searchValue">
       </form>
 
   </div>

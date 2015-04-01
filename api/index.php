@@ -182,14 +182,35 @@ $app->post('/search', function() use ($database) {
 
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
-	$results = array();
 	if(!empty($_POST['search'])) {
-		$search = json_decode($_POST['search'], true); 	
-  		$class = explode(" ", $_POST['search']; //split search into seperate dept and number
-  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])' " //get cid
-    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' " //use cid to get list of groups
+//		$search = json_decode($_POST['class'], true); 	
+  		$class = explode(" ", $_POST['class']; //split search into seperate dept and number
+  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num = '$class[1])' " //get cid
+  		if($cid == NULL)
+  			$result = "ERROR: No groups exist for that course.";
+  		else
+    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' ") //use cid to get list of groups
+    	echo json_encode($response);
     }
 });
+
+// $app->post('/login', function () use ($database) {
+//     $email = $_POST['email'];
+//     $password = $_POST['password'];
+
+//     //Remove duplicates
+//     $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+//     $result = $runQuery->fetch_assoc();
+
+//     //Frame response
+//     if($result === NULL)
+//     	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
+// 	else {
+// 		$response = array("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+// 		$_SESSION["uid"] = $response["uid"];
+// 	}
+//     echo json_encode($response);
+// });
 
 //
 $app->post('/joinStudyGroup', function() use ($database) {
