@@ -55,10 +55,10 @@ $app->post('editStudyGroup', function() use ($database){
 		$loc = $resultEG['loc'];
 
 	$database->query("UPDATE StudyGroups SET gname = '$gname', time1 = '$time1', loc = '$loc' WHERE gid = '$gid';");
-	$runQueryEG = $database->$query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
+	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
 	$resultEG = $runQueryEG->fetch_assoc();
 
-	if($resultEG == NULL || !($gname === $resultEG['gname'] && $time1 ==== $resultEG['time1'] && $loc === $resultEG['loc']))
+	if($resultEG === NULL || !($gname === $resultEG['gname'] && $time1 === $resultEG['time1'] && $loc === $resultEG['loc']))
 		$success = false;
 	$response = array("success"=>$success, "gid"=>$gid, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "errorType"=>"None");
 	echo json_encode($response);
