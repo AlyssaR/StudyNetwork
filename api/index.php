@@ -232,9 +232,9 @@ $app->post('/searchByClass', function() use ($database) {
 	$results = array();
 	if(!empty($_POST['search'])) {
 		$search = json_decode($_POST['search'], true); 	
-  		$class = explode(" ", $_POST['search']; //split search into seperate dept and number
-  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])' " //get cid
-    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' " //use cid to get list of groups
+  		$class = explode(" ", $_POST['search']); //split search into seperate dept and number
+  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])';"); //get cid
+    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
     }
 });
 
