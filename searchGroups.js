@@ -1,4 +1,5 @@
 function searchByClass() {
+    alert("!!!!")
     $.ajax({
         url: "api/searchByClass",
         type: "post",
@@ -15,9 +16,4 @@ function searchByClass() {
                 alert("Error: " + data.errorType);
         }
     });
-}
-
-
-function redirectToClass() {
-    window.location = "createClassForm.html";
 }
