@@ -1,8 +1,10 @@
 <?php
 require 'vendor/autoload.php';
-
-session_set_cookie_params(1800);
+;
 session_cache_limiter(false);
+$cookieParams = session_get_cookie_params(); // Gets current cookies params.
+session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
+session_name("StudyNetwork");
 session_start();
 
 $app = new \Slim\Slim();
@@ -160,7 +162,12 @@ $app->post('/login', function () use ($database) {
 });
 
 $app->post('/logout', function () {
-	unset($_SESSION["uid"]);
+	$_SESSION = array(); //Unsets all variables
+	$params = session_get_cookie_params(); //Expires/Deletes cookie
+    setcookie(session_name(), '', time() - 60,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]);
+	session_destroy(); //Ends session server side
 });
 
 $app->post('/register', function () use ($database) {
@@ -209,6 +216,26 @@ $app->post('/search', function() use ($database) {
     . " OR num_members = " . $search[0]);
     echo json_encode($response);
   }
+});
+/***************************************************
+*
+* Courtney's Section
+*						
+* Search By:
+* 	-Class
+*	-Professor
+*	-
+****************************************************/
+
+$app->post('/searchByClass', function() use ($database) {
+	$class = array();
+	$results = array();
+	if(!empty($_POST['search'])) {
+		$search = json_decode($_POST['search'], true); 	
+  		$class = explode(" ", $_POST['search']; //split search into seperate dept and number
+  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])' " //get cid
+    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' " //use cid to get list of groups
+    }
 });
 
 $app->run();
