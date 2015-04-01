@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-;
+
 session_cache_limiter(false);
 $cookieParams = session_get_cookie_params(); // Gets current cookies params.
 session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
@@ -185,9 +185,9 @@ $app->post('/searchByClass', function() use ($database) {
 	$results = array();
 	if(!empty($_POST['search'])) {
 		$search = json_decode($_POST['search'], true); 	
-  		$class = explode(" ", $_POST['search']; //split search into seperate dept and number
-  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])' " //get cid
-    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' " //use cid to get list of groups
+  		$class = explode(" ", $_POST['search']); //split search into seperate dept and number
+  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])';"); //get cid
+    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
     }
 });
 
