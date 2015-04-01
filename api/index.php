@@ -1,6 +1,5 @@
 <?php
 require 'vendor/autoload.php';
-;
 session_cache_limiter(false);
 $cookieParams = session_get_cookie_params(); // Gets current cookies params.
 session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
@@ -12,6 +11,9 @@ $database = new mysqli("localhost", "web", "wearegeniuses", "StudyNetwork");
 if ($database->connect_errno)
     die("Connection failed: " . $database->connect_error);
 
+$app->get('/test', function() use ($database) {
+  echo "Hello!!!";
+});
 
 $app->post('/addClass', function() use ($database){
 	$dept = $_POST['dept'];
@@ -155,48 +157,49 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
-// expects array of values, returns json array named 'search' of results from first value (for now)
-$app->post('/search', function() use ($database) {
-  $search = array();
-  if (!empty($_POST['search'])) {
-    $search = json_decode($_POST['search'], true);
-    // perform the search
-    $response = $database->query("SELECT * FROM StudyGroups WHERE gid = " . $search[0] . " OR cid = " . $search[0]
-    . " OR creator = " . $search[0]
-    . " OR gname = " . $search[0]
-    . " OR time1 = " . $search[0]
-    . " OR loc = " . $search[0]
-    . " OR num_members = " . $search[0]);
-    echo json_encode($response);
+// issue: search for classes v2
+$app->get('/searchForClasses', function() use ($database) {
+  $json = json_decode($_GET["search"], true);
+  // build query string
+  $query = "SELECT * FROM Classes WHERE";
+  for ($i = 0; $i < count($json); $i++) {
+    $query = $query . " dept LIKE " . $json[$i] . " OR class_num LIKE " . $json[$i] . " OR time2 LIKE " . $json[$i] . " OR professor LIKE " . $json[$i] . " ";
+    if ($i < count($json) - 1) {
+      $query = $query . "OR";
+    }
   }
+  $query = $query . ";";
+  $result = $database->query($query);
+  echo json_encode($query);
 });
+
+// issue: join study group
+$app->get('/joinStudyGroup', function() use ($database) {
+
+});
+
 /***************************************************
 *
 * Courtney's Section
-*						
+*
 * Search By:
 * 	-Class
 *	-Professor
 *	-
 ****************************************************/
 
+/*
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
 	$results = array();
 	if(!empty($_POST['search'])) {
-		$search = json_decode($_POST['search'], true); 	
+		$search = json_decode($_POST['search'], true);
   		$class = explode(" ", $_POST['search']; //split search into seperate dept and number
   		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])' " //get cid
     	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' " //use cid to get list of groups
     }
-});
+});*/
 
-//
-$app->post('/joinStudyGroup', function() use ($database) {
-    $gid = $_POST['gid'];
-    $role = $_POST['role'];
-    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
-});
 
 $app->run();
 ?>
