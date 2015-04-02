@@ -40,11 +40,16 @@ $app->post('/addGroup', function() use ($database){
 	}
 
 	//$num_members = $_POST['num_members'];
+	
+	$uid = $_SESSION["loggedin"];
+	$role = "member";
+
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO StudyGroups (gid, cid, admin, gname, time1, loc, num_members) VALUES ($'gid', , , '$gname', '$time1', '$loc', ,);");
+	$database->query("INSERT INTO StudyGroups (gid, gname, time1, loc, num_members) VALUES ('$gid', '$gname', '$time1', '$loc', 1);");
 		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$gid', '$uid', '$role');");
 	echo json_encode($response);
 });
 
