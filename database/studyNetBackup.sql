@@ -166,7 +166,7 @@ DROP TABLE IF EXISTS `StudyGroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `StudyGroups` (
-  `gid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) DEFAULT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `gname` varchar(40) DEFAULT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE `Users` (
   `email` varchar(50) DEFAULT NULL,
   `passwd` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,6 +209,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+INSERT INTO `Users` VALUES (1,'Quincy','Schurr','qschurr@smu.edu','qrstuvwx'),(2,'Tom','Brady','tbrady@smu.edu','patriots');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -221,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-31  2:51:46
+-- Dump completed on 2015-04-02 15:25:23

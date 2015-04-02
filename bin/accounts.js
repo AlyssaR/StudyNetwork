@@ -53,7 +53,7 @@ function editProfile(toChange) {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                $('#cur_f_name').text(data.f_name);
+                $('#cur_f_name').text(data.f_name); //#variable is HTML id and ther one is the php variable
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);    
             }
@@ -224,4 +224,3 @@ function validRegister() {
         return false;
 	else 
         return true;
-}

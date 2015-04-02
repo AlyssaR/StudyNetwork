@@ -1,0 +1,33 @@
+<DOCUMENT html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1min.js"></script>
+<script type="text/javascript" src="bin/helper.js"></script>
+</head>
+<body onload = "getGroup" bgcolor="#000000" />
+
+		<div id = formData>
+
+		<h1>Group Profile</h1>
+
+		Group Name:    <label id = "cur_gname"> Undefined </label>
+			<input type = "text" id = "gname" placeholder = "New Group Name">
+			<input type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
+		Time:          <label id = "cur_time1"> Undefined </label>
+			<input type = "text" id = "time1" placeholder = "New Meeting Time">
+			<input type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
+		Location:          <label id = "cur_loc"> Undefined </label>
+			<input type = "text" id = "time1" placeholder = "New Meeting Location">
+			<input type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
+
+		</div>
+</html>
+
+<style>
+#formData {
+    background-color:black;
+    color:lime;
+    text-align:center;
+    padding:100px;
+	font-family:courier;
+}
+</style>

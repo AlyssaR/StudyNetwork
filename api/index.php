@@ -30,13 +30,50 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
+	$gid = 0;
+
+	//Assign incremented ID
+	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
+	if($gidStart->num_rows > 0) {
+		$lastUID = $gidStart->fetch_assoc();
+		$gid = $lastGID['gid'] + 1;
+	}
+
 	//$num_members = $_POST['num_members'];
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (gid, cid, admin, gname, time1, loc, num_members) VALUES (, , , '$gname', '$time1', '$loc', ,);");
+	$database->query("INSERT INTO StudyGroups (gid, cid, admin, gname, time1, loc, num_members) VALUES ($'gid', , , '$gname', '$time1', '$loc', ,);");
 		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
+});
+
+//allows User to edit the studyGroup
+//Quincy Schurr
+$app->post('editStudyGroup', function() use ($database){
+	$gname = $_POST['gname'];
+	$time1 =  $_POST['time1'];
+	$loc = $_POST['loc'];
+	$success = true;
+
+	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
+	$resultEG = $runQueryEG->fetch_assoc();
+	if($gname === "ignore")
+		$gname = $resultEG['gname'];
+	if($time1 === "ignore")
+		$time1 = $resultEG['time1'];
+	if($loc === "ignore")
+		$loc = $resultEG['loc'];
+
+	$database->query("UPDATE StudyGroups SET gname = '$gname', time1 = '$time1', loc = '$loc' WHERE gid = '$gid';");
+	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
+	$resultEG = $runQueryEG->fetch_assoc();
+
+	if($resultEG === NULL || !($gname === $resultEG['gname'] && $time1 === $resultEG['time1'] && $loc === $resultEG['loc']))
+		$success = false;
+	$response = array("success"=>$success, "gid"=>$gid, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "errorType"=>"None");
+	echo json_encode($response);
+
 });
 
 $app->post('/editprofile', function () use ($database) {
@@ -96,6 +133,25 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+$app->post('/getGroup', function () use ($database) {
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1");
+	$result = $runQuery->fetch_assoc();
+
+	//some response
+	if($result === NULL)
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+	else
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	echo json_encode($response);
+});
+
+//
+$app->post('/joinStudyGroup', function() use ($database) {
+    $gid = $_POST['gid'];
+    $role = $_POST['role'];
+    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+});
+
 $app->post('/login', function () use ($database) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -147,8 +203,10 @@ $app->post('/register', function () use ($database) {
 		$success = false;
 	}
 	//Add user
-	else
+	else {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
+		$_SESSION["uid"] = $response["uid"];
+	}
 
 	//Respond
 	$response = array("success"=>$success, "f_name"=>$fName, "uid"=>$uid, "errorType"=>$error);
@@ -170,15 +228,6 @@ $app->post('/search', function() use ($database) {
     echo json_encode($response);
   }
 });
-/***************************************************
-*
-* Courtney's Section
-*						
-* Search By:
-* 	-Class
-*	-Professor
-*	-
-****************************************************/
 
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
@@ -186,17 +235,11 @@ $app->post('/searchByClass', function() use ($database) {
 	if(!empty($_POST['search'])) {
 		$search = json_decode($_POST['search'], true); 	
   		$class = explode(" ", $_POST['search']); //split search into seperate dept and number
-  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])';"); //get cid
+  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])';"); //get cid
     	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
     }
 });
 
-//
-$app->post('/joinStudyGroup', function() use ($database) {
-    $gid = $_POST['gid'];
-    $role = $_POST['role'];
-    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
-});
-
 $app->run();
+
 ?>
