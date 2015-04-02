@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-;
+
 session_cache_limiter(false);
 $cookieParams = session_get_cookie_params(); // Gets current cookies params.
 session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
@@ -203,8 +203,10 @@ $app->post('/register', function () use ($database) {
 		$success = false;
 	}
 	//Add user
-	else
+	else {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
+		$_SESSION["uid"] = $response["uid"];
+	}
 
 	//Respond
 	$response = array("success"=>$success, "f_name"=>$fName, "uid"=>$uid, "errorType"=>$error);
@@ -226,15 +228,6 @@ $app->post('/search', function() use ($database) {
     echo json_encode($response);
   }
 });
-/***************************************************
-*
-* Courtney's Section
-*						
-* Search By:
-* 	-Class
-*	-Professor
-*	-
-****************************************************/
 
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
@@ -248,4 +241,5 @@ $app->post('/searchByClass', function() use ($database) {
 });
 
 $app->run();
+
 ?>
