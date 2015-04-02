@@ -35,7 +35,7 @@ $app->post('/addGroup', function() use ($database){
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
 	if($gidStart->num_rows > 0) {
-		$lastUID = $gidStart->fetch_assoc();
+		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
 
