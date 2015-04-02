@@ -41,7 +41,7 @@ $app->post('/addGroup', function() use ($database){
 
 	//$num_members = $_POST['num_members'];
 	
-	$uid = $_SESSION["loggedin"];
+	$uid = $_SESSION["uid"];
 	$role = "member";
 
 	$error = "None";
