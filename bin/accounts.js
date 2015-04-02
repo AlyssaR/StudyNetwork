@@ -224,3 +224,4 @@ function validRegister() {
         return false;
 	else 
         return true;
+}
