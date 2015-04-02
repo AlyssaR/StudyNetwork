@@ -30,7 +30,15 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
-	$gid = $_POST['gid'];
+	$gid = 0;
+
+	//Assign incremented ID
+	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
+	if($gidStart->num_rows > 0) {
+		$lastUID = $gidStart->fetch_assoc();
+		$gid = $lastGID['gid'] + 1;
+	}
+
 	//$num_members = $_POST['num_members'];
 	$error = "None";
 	$success = true;
