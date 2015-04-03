@@ -48,8 +48,9 @@ $app->post('/addGroup', function() use ($database){
 	$success = true;
 
 	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', $gname', '$time1', '$loc', 1);");
-		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	
+	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
 });
 
