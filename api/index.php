@@ -47,7 +47,7 @@ $app->post('/addGroup', function() use ($database){
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO StudyGroups (gid, gname, time1, loc, num_members) VALUES ('$gid', '$gname', '$time1', '$loc', 1);");
+	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', $gname', '$time1', '$loc', 1);");
 		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
 	echo json_encode($response);
@@ -232,7 +232,7 @@ $app->post('/register', function () use ($database) {
 	//Add user
 	else {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
-		$_SESSION["uid"] = $response["uid"];
+		$_SESSION["uid"] = $uid;
 	}
 
 	//Respond
