@@ -49,7 +49,7 @@ $app->post('/addGroup', function() use ($database){
 
 	$database->query("INSERT INTO StudyGroups (gid, gname, time1, loc, num_members) VALUES ('$gid', '$gname', '$time1', '$loc', 1);");
 		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
-	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$gid', '$uid', '$role');");
+	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
 	echo json_encode($response);
 });
 
@@ -138,8 +138,9 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+//This is to get groups to redirect to group profile page
 $app->post('/getGroup', function () use ($database) {
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1");
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
 	//some response
@@ -150,11 +151,32 @@ $app->post('/getGroup', function () use ($database) {
 	echo json_encode($response);
 });
 
+/*//This is to get Groups for the user profile page
+$app->post('/getGroups', function () use ($database) {
+	$uid = $_SESSION["uid"];
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+	else
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	echo json_encode($response);
+});*/
+
 //
 $app->post('/joinStudyGroup', function() use ($database) {
     $gid = $_POST['gid'];
     $role = $_POST['role'];
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+});
+
+//allow User to leave a study group
+//Quincy Schurr
+$app->post('leaveStudyGroup', function() use ($database) {
+	//There is a lot that needs to go here
+
+
 });
 
 $app->post('/login', function () use ($database) {
