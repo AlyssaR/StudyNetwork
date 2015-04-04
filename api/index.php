@@ -176,8 +176,9 @@ $app->post('/joinStudyGroup', function() use ($database) {
 //Quincy Schurr
 $app->post('leaveStudyGroup', function() use ($database) {
 	//There is a lot that needs to go here
-
-
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
+	$result = $runQuery->fetch_assoc();
+	$gname = $result['gname'];
 });
 
 $app->post('/login', function () use ($database) {
