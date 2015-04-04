@@ -95,6 +95,25 @@ function getGroup() {
     });
 }
 
+function getGroups() {
+    $.ajax({
+        url: "api/getGroups",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+               $('cur_gname').text(data.gname);
+               $('cur_time1').text(data.time1);
+               $('cur_loc').text(data.loc); 
+            }
+            else {
+                alert("Error: Could not retrieve your groups.")
+                window.location = "editprofile.html";
+            }
+        }
+    });
+}
+
 function redirectToClass() {
     window.location = "createClassForm.html";
 }

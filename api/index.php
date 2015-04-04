@@ -152,10 +152,10 @@ $app->post('/getGroup', function () use ($database) {
 	echo json_encode($response);
 });
 
-/*//This is to get Groups for the user profile page
+//This is to get Groups for the user profile page
 $app->post('/getGroups', function () use ($database) {
 	$uid = $_SESSION["uid"];
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND uid = '$uid';");
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -163,7 +163,7 @@ $app->post('/getGroups', function () use ($database) {
 	else
 		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
 	echo json_encode($response);
-});*/
+});
 
 //
 $app->post('/joinStudyGroup', function() use ($database) {
