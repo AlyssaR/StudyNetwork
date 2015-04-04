@@ -175,10 +175,10 @@ $app->post('/joinStudyGroup', function() use ($database) {
 //allow User to leave a study group
 //Quincy Schurr
 $app->post('leaveStudyGroup', function() use ($database) {
-	//There is a lot that needs to go here
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
-	$result = $runQuery->fetch_assoc();
-	$gname = $result['gname'];
+	//need to add stuff
+	//how to get the gid here and such
+	$uid = $_SESSION["uid"];
+	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 });
 
 $app->post('/login', function () use ($database) {
