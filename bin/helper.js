@@ -117,8 +117,8 @@ function getGroups() {
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
-        type: "post"
-        dataType: "json"
+        type: "post",
+        dataType: "json",
         success: function(data) {
             if(data.success) {
                 alert("You have left the group.")
