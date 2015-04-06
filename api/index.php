@@ -35,16 +35,22 @@ $app->post('/addGroup', function() use ($database){
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
 	if($gidStart->num_rows > 0) {
-		$lastUID = $gidStart->fetch_assoc();
+		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
 
 	//$num_members = $_POST['num_members'];
+	
+	$uid = $_SESSION["uid"];
+	$role = "member";
+
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO StudyGroups (gid, cid, admin, gname, time1, loc, num_members) VALUES ($'gid', , , '$gname', '$time1', '$loc', ,);");
-		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
+	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	
+	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
 });
 
@@ -133,11 +139,25 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+//This is to get groups to redirect to group profile page
 $app->post('/getGroup', function () use ($database) {
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1");
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
 	//some response
+	if($result === NULL)
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+	else
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	echo json_encode($response);
+});
+
+//This is to get Groups for the user profile page
+$app->post('/getGroups', function () use ($database) {
+	$uid = $_SESSION["uid"];
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	$result = $runQuery->fetch_assoc();
+
 	if($result === NULL)
 		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
 	else
@@ -150,6 +170,15 @@ $app->post('/joinStudyGroup', function() use ($database) {
     $gid = $_POST['gid'];
     $role = $_POST['role'];
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+});
+
+//allow User to leave a study group
+//Quincy Schurr
+$app->post('leaveStudyGroup', function() use ($database) {
+	//need to add stuff
+	//how to get the gid here and such
+	$uid = $_SESSION["uid"];
+	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 });
 
 $app->post('/login', function () use ($database) {
@@ -205,7 +234,7 @@ $app->post('/register', function () use ($database) {
 	//Add user
 	else {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
-		$_SESSION["uid"] = $response["uid"];
+		$_SESSION["uid"] = $uid;
 	}
 
 	//Respond

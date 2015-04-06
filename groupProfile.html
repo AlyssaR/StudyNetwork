@@ -3,7 +3,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1min.js"></script>
 <script type="text/javascript" src="bin/helper.js"></script>
 </head>
-<body onload = "getGroup" bgcolor="#000000" />
+<body onload = "getGroup()" bgcolor = "#000000" />
 
 		<div id = formData>
 
@@ -18,6 +18,10 @@
 		Location:          <label id = "cur_loc"> Undefined </label>
 			<input type = "text" id = "time1" placeholder = "New Meeting Location">
 			<input type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
+
+			<br /><br />
+
+			<input type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group"><br />
 
 		</div>
 </html>

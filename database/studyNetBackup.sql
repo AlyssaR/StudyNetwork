@@ -84,6 +84,7 @@ CREATE TABLE `GroupEnroll` (
 
 LOCK TABLES `GroupEnroll` WRITE;
 /*!40000 ALTER TABLE `GroupEnroll` DISABLE KEYS */;
+INSERT INTO `GroupEnroll` VALUES (2,0,'member');
 /*!40000 ALTER TABLE `GroupEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +167,7 @@ DROP TABLE IF EXISTS `StudyGroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `StudyGroups` (
-  `gid` int(11) NOT NULL AUTO_INCREMENT,
+  `gid` int(11) NOT NULL,
   `cid` int(11) DEFAULT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `gname` varchar(40) DEFAULT NULL,
@@ -222,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-02 15:25:23
+-- Dump completed on 2015-04-03 22:11:14
