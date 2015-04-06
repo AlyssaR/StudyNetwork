@@ -6,6 +6,7 @@
 	<title> User Profile </title>
 </head>
 <body onload = "getProfile()" bgcolor="#000000" />
+<body onload = "getGroups()" bgcolor="#000000" />
 			
 		<div id = formData>
 		
@@ -25,6 +26,17 @@
 				Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/>
 					<input type = "submit" onclick = "javascript:editProfile('password')" value = "Change">
 				 <br /><span id="validateMessage"></span>
+
+				 <br /><br />
+
+				 <table width="100%" bgcolor="#909090">
+				 <tr>
+					<th>Group Name</th>
+					<th>Meeting Time</th>
+					<th>Meeting Location</th>
+				</tr>
+				</table>
+
 
 				<br /><br />
 				<form>
