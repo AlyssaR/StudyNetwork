@@ -73,6 +73,30 @@
 					$uid = $_SESSION['uid'];
 
 					echo "<table id='groups'>";
+					echo "<tr><th>Group Name</th><th>Meeting Time</th><th>Meeting Location</th></tr>";
+
+					$query = "SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';";
+					$result = mysql_query($query);
+					$numResults = mysql_num_rows($result);
+
+					if ($numResults != 0) {
+
+					while($row = mysql_fetch_assoc($result))
+						{
+						$gname = $row['gname'];
+						$time1 = $row['time1'];
+						$loc = $row['loc'];
+
+						echo "<tr><td><center>$gname</center></td><td><center>$time1</center></td><td><center>$loc</center></td></tr>";
+						}
+
+						echo "</table>";
+					}
+
+					else{
+						echo "</table>";
+						echo "<br><br>You have not joined any groups.<br><br><br><br>";
+					}
 
 					?>
 

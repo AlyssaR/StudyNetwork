@@ -100,6 +100,7 @@ function getGroups() {
         url: "api/getGroups",
         type: "post",
         dataType: "json",
+        //need to add a for loop
         success: function(data) {
             if(data.success) {
                $('cur_gname').text(data.gname);
