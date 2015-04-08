@@ -119,9 +119,9 @@ function populateStudyGroups()
 	var hasGroups = false;
 	if(!hasGroups)
 	{
-	document.getElementById("SG1").innerHTML= "Study Groups";
-	document.getElementById("SG2").innerHTML= "Displayed here";
-	document.getElementById("SG3").innerHTML= "Contact Sys Admin";
+	document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
+	document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
+	document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
 	}
 	else
 	{
