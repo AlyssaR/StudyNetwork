@@ -70,6 +70,11 @@ function editProfile(toChange) {
     $("#password2").val('');
 }
 
+function setEditable()
+{
+	document.getElementById('optDisp').style.visibility = "visible";
+}
+
 function getProfile() {
     $.ajax({
         url: "api/getUserInfo",
