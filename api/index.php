@@ -174,6 +174,16 @@ $app->post('/getGroups', function () use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('/getGroupsRow', function() use ($database) {
+	$uid = $_SESSION["uid"];
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+
+	$numRows = mysql_num_rows($runQuery);
+
+	echo $numRows;
+
+});
+
 //
 $app->post('/joinStudyGroup', function() use ($database) {
     $gid = $_POST['gid'];

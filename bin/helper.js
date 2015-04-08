@@ -95,8 +95,22 @@ function getGroup() {
     });
 }
 
+function getGroupsForProfile() {
+    $ajax({
+        url:"api/GetGroupsRow",
+        type: "post",
+        dataType: "integer",
+        success: function(data) {
+            if(data.success) {
+                var numRows = data.numRows;
+            }
+        }
 
-function getGroups() {
+    });
+
+}
+
+/*function getGroups() {
     $.ajax({
         url: "api/getGroups",
         type: "post",
@@ -108,11 +122,13 @@ function getGroups() {
                 tr.append(<"td"> + data[i].gname + "</td>");
                 tr.append("<td>" + data[i].time1 + "</td>");
                 tr.append("<td>" + data[i].loc + "</td>");
-                $('table').append(tr);*/
+                $('table').append(tr);
             }
         }
     });
-}
+}*/
+
+
 
 function leaveStudyGroup() {
     $.ajax({
