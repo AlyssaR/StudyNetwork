@@ -156,12 +156,21 @@ $app->post('/getGroup', function () use ($database) {
 $app->post('/getGroups', function () use ($database) {
 	$uid = $_SESSION["uid"];
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
-	$result = $runQuery->fetch_assoc();
+	
 
-	if($result === NULL)
-		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
-	else
-		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	if ($runQuery->num_rows != 0) {
+		$x = 0;
+
+		while($row = $runQuery->fetch_assoc()) {
+			$gname = $row['gname'];
+			$time1 = $row['time1'];
+			$loc = $row['loc'];
+
+			$response[$x] = array("success"=>true, "gname"=>$runQuery['gname'], "time1"=>$runQuery['time1'], "loc"=>$runQuery['loc'], "error"=>"None");
+			$x = $x + 1;
+		}
+	}
+
 	echo json_encode($response);
 });
 

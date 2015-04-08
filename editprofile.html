@@ -1,4 +1,4 @@
-<html>
+<DOCUMENT html>
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/helper.js"></script>
@@ -6,6 +6,7 @@
 	<title> User Profile </title>
 </head>
 <body onload = "getProfile()" bgcolor="#000000" />
+<body onload = add
 			
 		<div id = formData>
 		
@@ -28,53 +29,23 @@
 
 				 <br /><br />
 
-				 <!--<div id="Groups">
-				 <b>You are a member of these groups</b>
+				 <div id="Groups">
+				 <b>Groups You Are A Member Of</b>
 				 <table id="GroupData" width="100%" bgcolor="#909090">
 				 <tr>
 					<th>Group Name</th>
 					<th>Meeting Time</th>
 					<th>Meeting Location</th>
 				</tr>
+				<center><tr>
+					<td>Need data here</td>
+					<td>Yes</td>
+					<td>Can't get this to work</td>
+				</tr></center>
+				<label id="data"></label>
 				</table>
-				</div>-->
-
-				<center><div id = "title">Groups You Are A Member Of</div></center><br><br>
-
-				<script>
-					function getGroups() {
-						$.ajax({
-							type: "GET",
-							url: "api/getGroups",
-							data: "json",
-							success: function(msg){
-								console.log(msg)
-								if (msg === "success") {
-									location.reload();
-								}
-							}
-						});
-					}
-				</script>
-
-					<?php
-
-					session_start();
-
-					$con = mysql_connect("localhost", "web", "wearegeniuses");
-					if (!$con)
-					{
-						die('Could not connect: ' . mysql_error());
-					}
-
-					mysql_select_db("StudyNetwork", $con)
-						or die("Unable to select database:" . mysql_error());
-
-					$uid = $_SESSION['uid'];
-
-					echo "<table id='groups'>";
-
-					?>
+				<label id="results">You have not joined any groups</label>
+				</div>
 
 
 				<br /><br />

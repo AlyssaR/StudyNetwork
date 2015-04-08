@@ -66,5 +66,5 @@
 						echo "<br><br>You have not joined any groups.<br><br><br><br>";
 					}
 
-					?>
+	?>
 
