@@ -70,10 +70,7 @@ function editProfile(toChange) {
     $("#password2").val('');
 }
 
-function setEditable()
-{
-	document.getElementById('optDisp').style.visibility = "visible";
-}
+
 
 function getProfile() {
     $.ajax({
@@ -143,6 +140,14 @@ function register() {
             }
         });
     }
+}
+
+function setEditable()
+{
+	
+	document.getElementById('optDisp1').style.visibility = "visible";
+	document.getElementById('optDisp2').style.visibility = "visible";
+	document.getElementById('optDisp3').style.visibility = "visible";
 }
 
 function validEmail() {
