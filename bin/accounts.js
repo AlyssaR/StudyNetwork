@@ -114,6 +114,25 @@ function logout() {
     });
 }
 
+function populateStudyGroups()
+{
+	var hasGroups = false;
+	if(!hasGroups)
+	{
+	document.getElementById("SG1").innerHTML= "Study Groups";
+	document.getElementById("SG2").innerHTML= "Displayed here";
+	document.getElementById("SG3").innerHTML= "Contact Sys Admin";
+	}
+	else
+	{
+		document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
+		
+		
+	}
+}
+
+
+
 function redirect() {
     window.location = "register.html";
 }

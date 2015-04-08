@@ -5,7 +5,7 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> User Profile </title>
 </head>
-<body onload = "getProfile()" bgcolor="#000000" />
+<body onload = "getProfile(),populateStudyGroups()" bgcolor="#000000" />
 			
 		<div id = formData>
 		
@@ -34,6 +34,18 @@
 				 <br /><span id="validateMessage"></span>
 
 				<br /><br />
+				
+				
+				<div id="cur_study_grps">
+				<h3> Current Study Groups </h3>
+				<ul>
+				  <li id="SG1"> FILLER  </li>
+				  <li id="SG2"> FILLER  </li>
+				  <li id="SG3"> FILLER  </li>
+				</ul>
+				</div>
+				
+				
 				<form>
 					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
