@@ -12,18 +12,25 @@
 				<h1>Welcome to the Study Network!</h1>
 				
 				First name: 	<label id = "cur_f_name"> Undefined </label>
+				<option value ="1" id="optDisp" style= "visibility: hidden">
 					<input type = "text" id = "f_name" placeholder = "New First Name">
-					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br /> 
+					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br />
+				</option>
 				Last name:		<label id = "cur_l_name"> Undefined </label>
+				<option value ="1" id="optDisp" style= "visibility: hidden">
 					<input type = "text" id = "l_name" placeholder = "New Last Name">
 					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
+				</option>
 				Email: 			<label id = "cur_email"> Undefined </label>
+				<option value ="1" id="optDisp" style= "visibility: hidden">
 					<input type = "text" id = "email" placeholder = "New Email">
 					<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
 				
 				Change Password: <input type = "password" id = "password" placeholder = "New Password"/><br />
 				Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/>
+				
 					<input type = "submit" onclick = "javascript:editProfile('password')" value = "Change">
+				</option>
 				 <br /><span id="validateMessage"></span>
 
 				<br /><br />
@@ -32,6 +39,7 @@
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
 
 					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
+					<button type = "button" onclick = "javascript:setEditable()"> Edit Profile </button>
 				</form>
 			
 		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
