@@ -95,20 +95,6 @@ function getGroup() {
     });
 }
 
-/*function getGroupsForProfile() {
-    $ajax({
-        url:"api/GetGroupsRow",
-        type: "post",
-        dataType: "integer",
-        success: function(data) {
-            if(data.success) {
-                var numRows = data.numRows;
-            }
-        }
-
-    });
-
-}*/
 
 function getGroups() {
     $.ajax({
@@ -132,6 +118,14 @@ function getGroups() {
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
+                var element = document.createElement("button");
+                var addName = document.createTextNode("View Group");
+                element.appendChild(addName);
+                document.body.appendChild(element);
+                    //element.setAttribute("type", "button");
+                   // element.setAttribute("value", "button");
+                    //element.setAttribute("name", "ViewGroup");
+                    //element.setAttribute("onclick", getGroup());
             }
         }
     });
