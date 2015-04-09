@@ -208,7 +208,7 @@ $app->post('/login', function () use ($database) {
     $password = $_POST['password'];
 
     //Remove duplicates
-    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1;");
     $result = $runQuery->fetch_assoc();
 
     //Frame response
@@ -282,15 +282,17 @@ $app->post('/search', function() use ($database) {
 
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
-	$results = array();
-	if(!empty($_POST['search'])) {
-		$search = json_decode($_POST['search'], true); 	
-  		$class = explode(" ", $_POST['search']); //split search into seperate dept and number
-  		$cid = $database->quary("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num= '$class[1])';"); //get cid
-    	$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
+	if(!empty($_POST['class'])) {
+//		$search = json_decode($_POST['class'], true); 	
+  		$class = explode(" ", $_POST['class']); //split search into seperate dept and number
+  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num = '$class[1])';"); //get cid
+  		if($cid === NULL)
+  			$result = "ERROR: No groups exist for that course.";
+  		else
+    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
+    	echo json_encode($response);
     }
 });
-
 // issue: search for classes v2
 $app->get('/searchForClasses', function() use ($database) {
   $json = json_decode($_GET["search"], true);
