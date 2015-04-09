@@ -17,7 +17,7 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
+    theDeets = {"f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
     if (toChange === "first") {
@@ -114,8 +114,7 @@ function logout() {
     });
 }
 
-function populateStudyGroups()
-{
+function populateStudyGroups() {
 	var hasGroups = false;
 	if(!hasGroups)
 	{
@@ -130,8 +129,6 @@ function populateStudyGroups()
 		
 	}
 }
-
-
 
 function redirect() {
     window.location = "register.html";
@@ -161,8 +158,7 @@ function register() {
     }
 }
 
-function setEditable()
-{
+function setEditable() {
 	
 	document.getElementById('optDisp1').style.visibility = "visible";
 	document.getElementById('optDisp2').style.visibility = "visible";
