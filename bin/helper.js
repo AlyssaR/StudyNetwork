@@ -118,16 +118,20 @@ function getGroups() {
         success: function(data) {
             var table  = document.getElementById('GroupData');
             for(var i = 0; i < data.length; i++) {
+                $('#results').text("");
+                if(!data[i].success)
+                    continue;                
                 // Insert a row in the table at row index 0
-                var newRow = table.insertRow(i);
-                for(var j = 1; j < data[i].length - 1; j++) {
+                var newRow = table.insertRow(-1);
+                for(var key in data[i]) {
+                    if(key == "error" || key == "success")
+                        continue;
                     // Insert a cell in the row at index 0
-                    var newCell  = newRow.insertCell(j);
+                    var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
-                    var newText  = document.createTextNode(data[i][j]);
+                    var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
-                $('#results').text("");
             }
         }
     });

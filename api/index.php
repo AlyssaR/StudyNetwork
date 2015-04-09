@@ -170,21 +170,15 @@ $app->post('/getGroups', function () use ($database) {
 	}
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 	
-
+	$response = array();
 	if ($runQuery->num_rows != 0) {
-		$x = 0;
+		while($row = $runQuery->fetch_assoc()) 
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
 
-		while($row = $runQuery->fetch_assoc()) {
-			$gname = $row['gname'];
-			$time1 = $row['time1'];
-			$loc = $row['loc'];
-
-			$response[$x] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
-			$x = $x + 1;
-		}
+		echo json_encode($response);
 	}
-
-	echo json_encode($response);
+	else
+		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
 $app->post('/getGroupsRow', function() use ($database) {
