@@ -5,8 +5,7 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> User Profile </title>
 </head>
-<body onload = "getProfile(),populateStudyGroups()" bgcolor="#000000" />
-			
+<body onload = "getProfile(),populateStudyGroups()" bgcolor="#000000" />		
 		<div id = formData>
 		
 				<h1>Welcome to the Study Network!</h1>
@@ -32,6 +31,27 @@
 					<input type = "submit" onclick = "javascript:editProfile('password')" value = "Change">
 				</div>
 				 <br /><span id="validateMessage"></span>
+
+				 <br /><br />
+
+				 <div id="Groups">
+				 <b>Groups You Are A Member Of</b>
+				 <table id="GroupData" width="100%" bgcolor="#909090">
+				 <tr>
+					<th>Group Name</th>
+					<th>Meeting Time</th>
+					<th>Meeting Location</th>
+				</tr>
+				<center><tr>
+					<td>Need data here</td>
+					<td>Yes</td>
+					<td>Can't get this to work</td>
+				</tr></center>
+				<label id="data"></label>
+				</table>
+				<label id="results">You have not joined any groups</label>
+				</div>
+
 
 				<br /><br />
 				

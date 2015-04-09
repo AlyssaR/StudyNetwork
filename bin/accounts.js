@@ -17,7 +17,7 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
+    theDeets = {"f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
     if (toChange === "first") {
@@ -114,24 +114,21 @@ function logout() {
     });
 }
 
-function populateStudyGroups()
-{
-	var hasGroups = false;
-	if(!hasGroups)
-	{
-	document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
-	document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
-	document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
-	}
-	else
-	{
-		document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
-		
-		
-	}
+function populateStudyGroups() {
+    var hasGroups = false;
+    if(!hasGroups)
+    {
+    document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
+    document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
+    document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
+    }
+    else
+    {
+        document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
+        
+        
+    }
 }
-
-
 
 function redirect() {
     window.location = "register.html";
@@ -161,12 +158,11 @@ function register() {
     }
 }
 
-function setEditable()
-{
-	
-	document.getElementById('optDisp1').style.visibility = "visible";
-	document.getElementById('optDisp2').style.visibility = "visible";
-	document.getElementById('optDisp3').style.visibility = "visible";
+function setEditable() {
+    
+    document.getElementById('optDisp1').style.visibility = "visible";
+    document.getElementById('optDisp2').style.visibility = "visible";
+    document.getElementById('optDisp3').style.visibility = "visible";
 }
 
 function validEmail() {
@@ -243,14 +239,14 @@ function validPass() {
 }
 
 function validRegister() {
-	if(!validEmail())
-    	return false;
+    if(!validEmail())
+        return false;
     else if(!validPass())
         return false;
-	else if(!validFName())
-    	return false;
-	else if(!validLName())
+    else if(!validFName())
         return false;
-	else 
+    else if(!validLName())
+        return false;
+    else 
         return true;
 }

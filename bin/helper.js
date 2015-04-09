@@ -95,24 +95,40 @@ function getGroup() {
     });
 }
 
-function getGroups() {
+function getGroupsForProfile() {
+    $ajax({
+        url:"api/GetGroupsRow",
+        type: "post",
+        dataType: "integer",
+        success: function(data) {
+            if(data.success) {
+                var numRows = data.numRows;
+            }
+        }
+
+    });
+
+}
+
+/*function getGroups() {
     $.ajax({
         url: "api/getGroups",
         type: "post",
         dataType: "json",
-        success: function(data) {
-            if(data.success) {
-               $('cur_gname').text(data.gname);
-               $('cur_time1').text(data.time1);
-               $('cur_loc').text(data.loc); 
-            }
-            else {
-                alert("Error: Could not retrieve your groups.")
-                window.location = "editprofile.html";
+        function(data) {
+            var tr;
+            for(var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append(<"td"> + data[i].gname + "</td>");
+                tr.append("<td>" + data[i].time1 + "</td>");
+                tr.append("<td>" + data[i].loc + "</td>");
+                $('table').append(tr);
             }
         }
     });
-}
+}*/
+
+
 
 function leaveStudyGroup() {
     $.ajax({
