@@ -70,8 +70,6 @@ function editProfile(toChange) {
     $("#password2").val('');
 }
 
-
-
 function getProfile() {
     $.ajax({
         url: "api/getUserInfo",
