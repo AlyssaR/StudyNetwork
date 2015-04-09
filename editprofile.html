@@ -5,25 +5,23 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> User Profile </title>
 </head>
-<body onload = "getProfile()" bgcolor="#000000" />
-<body onload = add
-			
+<body onload = "getProfile(),populateStudyGroups()" bgcolor="#000000" />		
 		<div id = formData>
 		
 				<h1>Welcome to the Study Network!</h1>
 				
 				First name: 	<label id = "cur_f_name"> Undefined </label>
-				<option value ="1" id="optDisp" style= "visibility: hidden">
+				<div value ="1" id="optDisp1" style= "visibility: hidden">
 					<input type = "text" id = "f_name" placeholder = "New First Name">
 					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br />
-				</option>
+				</div>
 				Last name:		<label id = "cur_l_name"> Undefined </label>
-				<option value ="1" id="optDisp" style= "visibility: hidden">
+				<div value ="1" id="optDisp2" style= "visibility: hidden">
 					<input type = "text" id = "l_name" placeholder = "New Last Name">
 					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
-				</option>
+				</div>
 				Email: 			<label id = "cur_email"> Undefined </label>
-				<option value ="1" id="optDisp" style= "visibility: hidden">
+				<div value ="1" id="optDisp3" style= "visibility: hidden">
 					<input type = "text" id = "email" placeholder = "New Email">
 					<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
 				
@@ -31,7 +29,7 @@
 				Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/>
 				
 					<input type = "submit" onclick = "javascript:editProfile('password')" value = "Change">
-				</option>
+				</div>
 				 <br /><span id="validateMessage"></span>
 
 				 <br /><br />
@@ -56,6 +54,18 @@
 
 
 				<br /><br />
+				
+				
+				<div id="cur_study_grps">
+				<h3> Current Study Groups </h3>
+				<ul>
+				  <li id="SG1"> FILLER  </li>
+				  <li id="SG2"> FILLER  </li>
+				  <li id="SG3"> FILLER  </li>
+				</ul>
+				</div>
+				
+				
 				<form>
 					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
