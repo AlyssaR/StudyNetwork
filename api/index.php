@@ -1,6 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-;
+
 session_cache_limiter(false);
 $cookieParams = session_get_cookie_params(); // Gets current cookies params.
 session_set_cookie_params(30*60, $cookieParams["path"], $cookieParams["domain"], false, true); //Turns on HTTP only (helps mitigate some XSS)
@@ -30,12 +30,27 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
+	$gid = 0;
+
+	//Assign incremented ID
+	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
+	if($gidStart->num_rows > 0) {
+		$lastGID = $gidStart->fetch_assoc();
+		$gid = $lastGID['gid'] + 1;
+	}
+
 	//$num_members = $_POST['num_members'];
+	
+	$uid = $_SESSION["uid"];
+	$role = "member";
+
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (gid, cid, admin, gname, time1, loc, num_members) VALUES (, , , '$gname', '$time1', '$loc', ,);");
-		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
+	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	
+	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
 });
 
@@ -44,7 +59,13 @@ $app->post('/editprofile', function () use ($database) {
 	$lName = $_POST['l_name'];
 	$email = $_POST['email'];
 	$pass = $_POST['password'];
-	$uid = $_POST['uid'];
+	$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
 	$success = true;
 
 	$runQuery = $database->query("SELECT f_name, l_name, email, passwd FROM Users WHERE uid = '$uid';");
@@ -77,7 +98,78 @@ $app->post('/editprofile', function () use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('editStudyGroup', function() use ($database){
+	$gname = $_POST['gname'];
+	$time1 =  $_POST['time1'];
+	$loc = $_POST['loc'];
+	$success = true;
+
+	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
+	$resultEG = $runQueryEG->fetch_assoc();
+	if($gname === "ignore")
+		$gname = $resultEG['gname'];
+	if($time1 === "ignore")
+		$time1 = $resultEG['time1'];
+	if($loc === "ignore")
+		$loc = $resultEG['loc'];
+
+	$database->query("UPDATE StudyGroups SET gname = '$gname', time1 = '$time1', loc = '$loc' WHERE gid = '$gid';");
+	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
+	$resultEG = $runQueryEG->fetch_assoc();
+
+	if($resultEG === NULL || !($gname === $resultEG['gname'] && $time1 === $resultEG['time1'] && $loc === $resultEG['loc']))
+		$success = false;
+	$response = array("success"=>$success, "gid"=>$gid, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "errorType"=>"None");
+	echo json_encode($response);
+});
+
+//This is to get groups to redirect to group profile page
+$app->post('/getGroup', function () use ($database) {
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
+	$result = $runQuery->fetch_assoc();
+
+	//some response
+	if($result === NULL)
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+	else
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+	echo json_encode($response);
+});
+
+//This is to get Groups for the user profile page
+$app->post('/getGroups', function () use ($database) {
+	$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	
+	$response = array();
+	if ($runQuery->num_rows != 0) {
+		while($row = $runQuery->fetch_assoc()) 
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
+
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+});
+
+$app->post('/getGroupsRow', function() use ($database) {
+	$uid = $_SESSION["uid"];
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+
+	$numRows = mysql_num_rows($runQuery);
+
+	echo $numRows;
+
+});
+
 $app->post('/getUserInfo', function () use ($database) {
+    $uid = "";
     if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -94,6 +186,21 @@ $app->post('/getUserInfo', function () use ($database) {
 	else
 		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
     echo json_encode($response);
+});
+
+$app->post('/joinStudyGroup', function() use ($database) {
+    $gid = $_POST['gid'];
+    $role = $_POST['role'];
+    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+});
+
+//allow User to leave a study group
+//Quincy Schurr
+$app->post('leaveStudyGroup', function() use ($database) {
+	//need to add stuff
+	//how to get the gid here and such
+	$uid = $_SESSION["uid"];
+	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 });
 
 $app->post('/login', function () use ($database) {
@@ -147,8 +254,10 @@ $app->post('/register', function () use ($database) {
 		$success = false;
 	}
 	//Add user
-	else
+	else {
 		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
+		$_SESSION["uid"] = $uid;
+	}
 
 	//Respond
 	$response = array("success"=>$success, "f_name"=>$fName, "uid"=>$uid, "errorType"=>$error);
@@ -170,15 +279,6 @@ $app->post('/search', function() use ($database) {
     echo json_encode($response);
   }
 });
-/***************************************************
-*
-* Courtney's Section
-*						
-* Search By:
-* 	-Class
-*	-Professor
-*	-
-*********s*******************************************/
 
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
@@ -193,31 +293,22 @@ $app->post('/searchByClass', function() use ($database) {
     	echo json_encode($response);
     }
 });
-
-// $app->post('/login', function () use ($database) {
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-
-//     //Remove duplicates
-//     $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
-//     $result = $runQuery->fetch_assoc();
-
-//     //Frame response
-//     if($result === NULL)
-//     	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
-// 	else {
-// 		$response = array("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
-// 		$_SESSION["uid"] = $response["uid"];
-// 	}
-//     echo json_encode($response);
-// });
-
-//
-$app->post('/joinStudyGroup', function() use ($database) {
-    $gid = $_POST['gid'];
-    $role = $_POST['role'];
-    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+// issue: search for classes v2
+$app->get('/searchForClasses', function() use ($database) {
+  $json = json_decode($_GET["search"], true);
+  // build query string
+  $query = "SELECT * FROM Classes WHERE";
+  for ($i = 0; $i < count($json); $i++) {
+    $query = $query . " dept LIKE " . $json[$i] . " OR class_num LIKE " . $json[$i] . " OR time2 LIKE " . $json[$i] . " OR professor LIKE " . $json[$i] . " ";
+    if ($i < count($json) - 1) {
+      $query = $query . "OR";
+    }
+  }
+  $query = $query . ";";
+  $result = $database->query($query);
+  echo json_encode($query);
 });
 
 $app->run();
 ?>
+>>>>>>> dev
