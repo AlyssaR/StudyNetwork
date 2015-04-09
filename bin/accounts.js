@@ -159,10 +159,17 @@ function register() {
 }
 
 function setEditable() {
+<<<<<<< HEAD
 	
 	document.getElementById('optDisp1').style.visibility = "visible";
 	document.getElementById('optDisp2').style.visibility = "visible";
 	document.getElementById('optDisp3').style.visibility = "visible";
+=======
+    
+    document.getElementById('optDisp1').style.visibility = "visible";
+    document.getElementById('optDisp2').style.visibility = "visible";
+    document.getElementById('optDisp3').style.visibility = "visible";
+>>>>>>> d05c6cf466622a98c97a97ed74e1e6069b6cb483
 }
 
 function validEmail() {
@@ -239,14 +246,14 @@ function validPass() {
 }
 
 function validRegister() {
-	if(!validEmail())
-    	return false;
+    if(!validEmail())
+        return false;
     else if(!validPass())
         return false;
-	else if(!validFName())
-    	return false;
-	else if(!validLName())
+    else if(!validFName())
         return false;
-	else 
+    else if(!validLName())
+        return false;
+    else 
         return true;
 }
