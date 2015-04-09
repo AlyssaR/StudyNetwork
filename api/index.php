@@ -87,7 +87,12 @@ $app->post('/editprofile', function () use ($database) {
 	$lName = $_POST['l_name'];
 	$email = $_POST['email'];
 	$pass = $_POST['password'];
-	$uid = $_POST['uid'];
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
 	$success = true;
 
 	$runQuery = $database->query("SELECT f_name, l_name, email, passwd FROM Users WHERE uid = '$uid';");
