@@ -17,7 +17,7 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
+    theDeets = {"f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
     if (toChange === "first") {
@@ -53,7 +53,7 @@ function editProfile(toChange) {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                $('#cur_f_name').text(data.f_name);
+                $('#cur_f_name').text(data.f_name); //#variable is HTML id and ther one is the php variable
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);    
             }
@@ -112,6 +112,22 @@ function logout() {
     });
 }
 
+function populateStudyGroups() {
+	var hasGroups = false;
+	if(!hasGroups)
+	{
+	document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
+	document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
+	document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
+	}
+	else
+	{
+		document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
+		
+		
+	}
+}
+
 function redirect() {
     window.location = "register.html";
 }
@@ -138,6 +154,25 @@ function register() {
             }
         });
     }
+}
+
+function setEditableTrue() {
+	document.getElementById('optDisp1').style.visibility = "visible";
+	document.getElementById('optDisp2').style.visibility = "visible";
+	document.getElementById('optDisp3').style.visibility = "visible";
+
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Toggle Editing </button>"
+	
+}
+
+function setEditableFalse()
+{
+	document.getElementById('optDisp1').style.visibility = "hidden";
+	document.getElementById('optDisp2').style.visibility = "hidden";
+	document.getElementById('optDisp3').style.visibility = "hidden";
+	
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Toggle Editing </button>"
+
 }
 
 function validEmail() {
@@ -214,14 +249,14 @@ function validPass() {
 }
 
 function validRegister() {
-	if(!validEmail())
-    	return false;
+    if(!validEmail())
+        return false;
     else if(!validPass())
         return false;
-	else if(!validFName())
-    	return false;
-	else if(!validLName())
+    else if(!validFName())
         return false;
-	else 
+    else if(!validLName())
+        return false;
+    else 
         return true;
 }

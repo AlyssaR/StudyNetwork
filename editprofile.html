@@ -5,33 +5,67 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<title> User Profile </title>
 </head>
-<body onload = "getProfile()" bgcolor="#000000" />
-			
+<body onload = "getProfile(),getGroups()" bgcolor="#000000" />
 		<div id = formData>
 		
 				<h1>Welcome to the Study Network!</h1>
 				
 				First name: 	<label id = "cur_f_name"> Undefined </label>
+				<div value ="1" id="optDisp1" style= "visibility: hidden">
 					<input type = "text" id = "f_name" placeholder = "New First Name">
-					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br /> 
+					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br />
+				</div>
 				Last name:		<label id = "cur_l_name"> Undefined </label>
+				<div value ="1" id="optDisp2" style= "visibility: hidden">
 					<input type = "text" id = "l_name" placeholder = "New Last Name">
 					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
+				</div>
 				Email: 			<label id = "cur_email"> Undefined </label>
+				<div value ="1" id="optDisp3" style= "visibility: hidden">
 					<input type = "text" id = "email" placeholder = "New Email">
 					<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
 				
 				Change Password: <input type = "password" id = "password" placeholder = "New Password"/><br />
 				Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/>
+				
 					<input type = "submit" onclick = "javascript:editProfile('password')" value = "Change">
+				</div>
 				 <br /><span id="validateMessage"></span>
 
+				 <br /><br />
+
+				 <div id="Groups">
+				 <b>Groups You Are A Member Of</b>
+				 <table id="GroupData" width="100%" bgcolor="#909090">
+				 <tr>
+					<th>Group Name</th>
+					<th>Meeting Time</th>
+					<th>Meeting Location</th>
+				</tr>
+				</table>
+				<label id="results">You have not joined any groups</label>
+				</div>
+
+
 				<br /><br />
+							
 				<form>
 					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
 
 					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
+					
+					
+					
+					<div id="editButtonDiv">
+					<button  id="editableButton" type = "button" onclick = "javascript:setEditableTrue()"> Toggle Editing </button>
+					
+					</div>
+					
+					
+					
+
+				
 				</form>
 			
 		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
