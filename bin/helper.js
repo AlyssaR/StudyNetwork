@@ -95,7 +95,7 @@ function getGroup() {
     });
 }
 
-function getGroupsForProfile() {
+/*function getGroupsForProfile() {
     $ajax({
         url:"api/GetGroupsRow",
         type: "post",
@@ -108,7 +108,7 @@ function getGroupsForProfile() {
 
     });
 
-}
+}*/
 
 function getGroups() {
     $.ajax({

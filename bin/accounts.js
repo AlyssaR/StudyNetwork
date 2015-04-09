@@ -113,19 +113,19 @@ function logout() {
 }
 
 function populateStudyGroups() {
-    var hasGroups = false;
-    if(!hasGroups)
-    {
-    document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
-    document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
-    document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
-    }
-    else
-    {
-        document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
-        
-        
-    }
+	var hasGroups = false;
+	if(!hasGroups)
+	{
+	document.getElementById("SG1").innerHTML= "<a href = \"\"> Study Groups </a>";
+	document.getElementById("SG2").innerHTML= "<a href = \"\"> Displayed here </a>";
+	document.getElementById("SG3").innerHTML= "<a href = \"\"> Contact Sys Admin </a>";
+	}
+	else
+	{
+		document.getElementById("cur_study_grps").innerHTML ="There are no study groups to display.<br /></br>";
+		
+		
+	}
 }
 
 function redirect() {
@@ -157,10 +157,9 @@ function register() {
 }
 
 function setEditable() {
-    
-    document.getElementById('optDisp1').style.visibility = "visible";
-    document.getElementById('optDisp2').style.visibility = "visible";
-    document.getElementById('optDisp3').style.visibility = "visible";
+	document.getElementById('optDisp1').style.visibility = "visible";
+	document.getElementById('optDisp2').style.visibility = "visible";
+	document.getElementById('optDisp3').style.visibility = "visible";
 }
 
 function validEmail() {
