@@ -208,7 +208,7 @@ $app->post('/login', function () use ($database) {
     $password = $_POST['password'];
 
     //Remove duplicates
-    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1");
+    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1;");
     $result = $runQuery->fetch_assoc();
 
     //Frame response
@@ -311,4 +311,3 @@ $app->get('/searchForClasses', function() use ($database) {
 
 $app->run();
 ?>
->>>>>>> dev

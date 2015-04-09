@@ -97,7 +97,7 @@ function login() {
             window.location = "editProfile.html";
         }
         else
-            alert("Error logging in.\nPlease check your email/password or create an account.");
+            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
 
@@ -162,17 +162,14 @@ function setEditableTrue() {
 	document.getElementById('optDisp3').style.visibility = "visible";
 
 	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Toggle Editing </button>"
-	
 }
 
-function setEditableFalse()
-{
+function setEditableFalse() {
 	document.getElementById('optDisp1').style.visibility = "hidden";
 	document.getElementById('optDisp2').style.visibility = "hidden";
 	document.getElementById('optDisp3').style.visibility = "hidden";
 	
 	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Toggle Editing </button>"
-
 }
 
 function validEmail() {
