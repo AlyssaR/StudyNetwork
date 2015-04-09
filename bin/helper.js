@@ -65,9 +65,9 @@ function editGroup(changes) { //need to figure out what changes is
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                $('cur_gname').text(data.gname);
-                $('cur_time1').text(data.time1);
-                $('cur_loc').text(data.loc); 
+                $('#cur_gname').text(data.gname);
+                $('#cur_time1').text(data.time1);
+                $('#cur_loc').text(data.loc); 
             }
             else
                 alert(data.errorType);
@@ -115,14 +115,19 @@ function getGroups() {
         url: "api/getGroups",
         type: "post",
         dataType: "json",
-        function(data) {
-            var tr;
+        success: function(data) {
+            var table  = document.getElementById('GroupData');
             for(var i = 0; i < data.length; i++) {
-                tr = $('<tr/>');
-                tr.append(<"td"> + data[i].gname + "</td>");
-                tr.append("<td>" + data[i].time1 + "</td>");
-                tr.append("<td>" + data[i].loc + "</td>");
-                $('table').append(tr);
+                // Insert a row in the table at row index 0
+                var newRow = table.insertRow(i);
+                for(var j = 1; j < data[i].length - 1; j++) {
+                    // Insert a cell in the row at index 0
+                    var newCell  = newRow.insertCell(j);
+                    // Append a text node to the cell
+                    var newText  = document.createTextNode(data[i][j]);
+                    newCell.appendChild(newText);
+                }
+                $('#results').text("");
             }
         }
     });
@@ -146,7 +151,7 @@ function leaveStudyGroup() {
                 //not sure if any of this will actually work
             }
         }
-    })
+    });
 }
 
 function redirectToClass() {

@@ -87,6 +87,7 @@ $app->post('/editprofile', function () use ($database) {
 	$lName = $_POST['l_name'];
 	$email = $_POST['email'];
 	$pass = $_POST['password'];
+	$uid = "";
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -126,6 +127,7 @@ $app->post('/editprofile', function () use ($database) {
 });
 
 $app->post('/getUserInfo', function () use ($database) {
+    $uid = "";
     if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -159,7 +161,13 @@ $app->post('/getGroup', function () use ($database) {
 
 //This is to get Groups for the user profile page
 $app->post('/getGroups', function () use ($database) {
-	$uid = $_SESSION["uid"];
+	$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 	
 
@@ -171,7 +179,7 @@ $app->post('/getGroups', function () use ($database) {
 			$time1 = $row['time1'];
 			$loc = $row['loc'];
 
-			$response[$x] = array("success"=>true, "gname"=>$runQuery['gname'], "time1"=>$runQuery['time1'], "loc"=>$runQuery['loc'], "error"=>"None");
+			$response[$x] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
 			$x = $x + 1;
 		}
 	}
