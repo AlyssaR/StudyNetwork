@@ -156,10 +156,23 @@ function register() {
     }
 }
 
-function setEditable() {
+function setEditableTrue() {
 	document.getElementById('optDisp1').style.visibility = "visible";
 	document.getElementById('optDisp2').style.visibility = "visible";
 	document.getElementById('optDisp3').style.visibility = "visible";
+
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Toggle Editing </button>"
+	
+}
+
+function setEditableFalse()
+{
+	document.getElementById('optDisp1').style.visibility = "hidden";
+	document.getElementById('optDisp2').style.visibility = "hidden";
+	document.getElementById('optDisp3').style.visibility = "hidden";
+	
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Toggle Editing </button>"
+
 }
 
 function validEmail() {
