@@ -103,7 +103,7 @@ function getGroups() {
         type: "post",
         dataType: "json",
         success: function(data) {
-            var table  = document.getElementById('GroupData');
+            var table  = document.getElementById('GroupData');//.style.textAlign = "center";
             for(var i = 0; i < data.length; i++) {
                 $('#results').text("");
                 if(!data[i].success)
@@ -113,6 +113,10 @@ function getGroups() {
                 for(var key in data[i]) {
                     if(key == "error" || key == "success")
                         continue;
+                    if(key == "time1")
+                    {
+                        //can we do something here to conver to 12 hour time?
+                    }
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
@@ -123,6 +127,7 @@ function getGroups() {
                 var addName = document.createTextNode("View Group");
                 viewButton.appendChild(addName);
                 var addButton = table.appendChild(viewButton);
+                newRow.appendChild(addButton);
                 viewButton.onclick=getGroup();
         }
     }

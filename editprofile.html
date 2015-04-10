@@ -3,6 +3,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/helper.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
+	<script type="text/javascript" src="bin/searchGroups.js"></script>
 	<link href="css/navbar.css" rel="stylesheet">
 	<title> User Profile </title>
 </head>
@@ -46,13 +47,14 @@
 
 				 <div id="Groups">
 				 <b>Groups You Are A Member Of</b>
-				 <table id="GroupData" width="100%" bgcolor="#909090">
+				 <table id="GroupData" width="100%" bgcolor="#303030">
 				 <tr>
 					<th>Group Name</th>
 					<th>Meeting Time</th>
 					<th>Meeting Location</th>
 					<th></th>
-				</tr>
+					<td><div align="center"></div></td>
+					</tr>
 				</table>
 				<label id="results">You have not joined any groups</label>
 				</div>
@@ -63,6 +65,7 @@
 				<form>
 					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
 					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
+					<button type = "button" onclick = "javascript:redirectToSearchGroups()">Search For A Group</button>
 
 					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
 					

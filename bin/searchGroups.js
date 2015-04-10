@@ -9,7 +9,7 @@ function searchByClass() {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                alert("Groups for Class");
+                alert("Results for Groups");
                 //need to pull up search results
                 //window.location = "editprofile.html";
             }
@@ -19,6 +19,9 @@ function searchByClass() {
     });
 }
 
+function redirectToSearchGroups() {
+    window.location = "searchGroups.html";
+}
 
 function redirectToClass() {
     window.location = "createClassForm.html";
