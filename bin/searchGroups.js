@@ -3,13 +3,15 @@ function searchByClass() {
         url: "api/searchByClass",
         type: "post",
         data: {
-            "class":$("#class").val(),  
+            "class":$("#class").val(), 
+            //this id could cause an issue. Not sure 
         },
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                alert("Groups exist for that class");
-                window.location = "editprofile.html";
+                alert("Groups for Class");
+                //need to pull up search results
+                //window.location = "editprofile.html";
             }
             else
                 alert("Error: " + data.errorType);
