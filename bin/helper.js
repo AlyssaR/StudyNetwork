@@ -86,6 +86,7 @@ function getGroup() {
                $('cur_gname').text(data.gname);
                $('cur_time1').text(data.time1);
                $('cur_loc').text(data.loc); 
+               window.location = "groupProfile.html";
             }
             else {
                 alert("Error: Could not retrieve your group.")
@@ -102,7 +103,7 @@ function getGroups() {
         type: "post",
         dataType: "json",
         success: function(data) {
-            var table  = document.getElementById('GroupData');
+            var table  = document.getElementById('GroupData');//.style.textAlign = "center";
             for(var i = 0; i < data.length; i++) {
                 $('#results').text("");
                 if(!data[i].success)
@@ -112,23 +113,25 @@ function getGroups() {
                 for(var key in data[i]) {
                     if(key == "error" || key == "success")
                         continue;
+                    if(key == "time1")
+                    {
+                        //can we do something here to conver to 12 hour time?
+                    }
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
-                var element = document.createElement("button");
+                var viewButton = document.createElement("button");
                 var addName = document.createTextNode("View Group");
-                element.appendChild(addName);
-                document.body.appendChild(element);
-                    //element.setAttribute("type", "button");
-                   // element.setAttribute("value", "button");
-                    //element.setAttribute("name", "ViewGroup");
-                    //element.setAttribute("onclick", getGroup());
-            }
+                viewButton.appendChild(addName);
+                var addButton = table.appendChild(viewButton);
+                newRow.appendChild(addButton);
+                viewButton.onclick=getGroup();
         }
-    });
+    }
+});
 }
 
 
