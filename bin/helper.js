@@ -118,14 +118,17 @@ function getGroups() {
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
-                var element = document.createElement("button");
+                var viewButton = document.createElement("button");
                 var addName = document.createTextNode("View Group");
+                viewButton.appendChild(addName);
+                var addButton = table.appendChild(viewButton);
+                /*var addName = document.createTextNode("View Group");
                 element.appendChild(addName);
                 document.body.appendChild(element);
-                    //element.setAttribute("type", "button");
-                   // element.setAttribute("value", "button");
-                    //element.setAttribute("name", "ViewGroup");
-                    //element.setAttribute("onclick", getGroup());
+                    element.setAttribute("type", "button");
+                    element.setAttribute("value", "button");
+                    element.setAttribute("name", "ViewGroup");
+                    element.setAttribute("onclick", getGroup());*/
             }
         }
     });
