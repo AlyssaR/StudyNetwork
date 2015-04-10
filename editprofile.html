@@ -3,12 +3,22 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/helper.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
+	<link href="css/navbar.css" rel="stylesheet">
 	<title> User Profile </title>
 </head>
 <body onload = "getProfile(),getGroups()" bgcolor="#000000" />
 		<div id = formData>
 		
 				<h1>Welcome to the Study Network!</h1>
+				<div class="navbar">
+					<nav>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="editprofile.html">View Profile</a></li>
+						</ul>
+					</nav>
+				</div>
 				
 				First name: 	<label id = "cur_f_name"> Undefined </label>
 				<div value ="1" id="optDisp1" style= "visibility: hidden">
