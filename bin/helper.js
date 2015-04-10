@@ -42,7 +42,7 @@ function createGroup() {
     });
 }
 
-function editGroup(changes) { //need to figure out what changes is
+function editGroup(changes) { 
     editS = {"gname":"ignore", "time1":"ignore", "loc":"ignore"};
 
     //Change variables
@@ -74,45 +74,17 @@ function editGroup(changes) { //need to figure out what changes is
     });
 }
 
-function getGroup(gidGet) {
+function getGroupInfo(gidGet) {
     $.ajax({
-        url: "api/getGroup",
+        url: "api/getGroupInfo",
         type: "post",
         data: {
             "gid":gidGet
         },
         dataType: "json",
         success: function(data) {
-            if(data.success) {
-                window.location="groupprofile.php?gname="+data.gname+"&time1="+data.time1+"+&loc="+data.loc;
-
-                /* NEED TO MAKE THIS A GET REQUEST TO GROUPPROFILE PAGE
-
-                window.location = "groupProfile.html";
-                $('cur_gname').text(data.gname);
-                $('cur_time1').text(data.time1);
-                $('cur_loc').text(data.loc); 
-                */
-            }
-            else {
-                alert("Error: Could not retrieve your group.")
-                window.location = "editprofile.html";
-            }
-        }
-    });
-}
-
-function getGroupInfo() {
-    $.ajax({
-        url: "api/getGroupInfo",
-        type: "post",
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                $('#cur_gname').text(data.gname);
-                $('#cur_time1').text(data.time1);
-                $('#cur_loc').text(data.loc);
-            }
+            if(data.success)
+                window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
             else {
                 alert("Error: Could not retrieve your group.")
                 window.location = "editprofile.html";
@@ -152,27 +124,28 @@ function getGroups() {
                 var viewButton = document.createElement("button");
                 var addName = document.createTextNode("View Group");
                 viewButton.appendChild(addName);
-                viewButton.onclick=function(gidStr) { return function() { getGroup(gidStr); }; }(gidStr);
+                viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
                 newButton.appendChild(viewButton);
             }
-    }
-});
+        }
+    });
 }
 
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
         type: "post",
+        data: {
+            "gid": $('#gid').value
+        },
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                alert("You have left the group.")
+                alert("You have left the group.");
                 window.location = "editprofile.html";
             }
             else{
-                alert("Error: Could not remove you from group")
-                window.location = "groupProfile.html";
-                //not sure if any of this will actually work
+                alert("Error: Could not remove you from group");
             }
         }
     });

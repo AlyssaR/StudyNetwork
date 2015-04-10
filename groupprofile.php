@@ -12,7 +12,7 @@
 	$loc = $_GET['loc'];
 ?>
 
-
+		<label id = "gid" value="<?php echo $_GET['gid']; ?>" />
 		<div id = formData>
 
 		<h1>Group Profile</h1>
@@ -36,7 +36,7 @@
 			<input type = "text" id = "time1" placeholder = "New Meeting Time">
 			<input type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
 		</div>
-		Location:      <?php echo $gname; ?>
+		Location:      <?php echo $loc; ?>
 		<div value="1" id = "optDisp3" style= "visibility:hidden">
 			<input type = "text" id = "time1" placeholder = "New Meeting Location">
 			<input type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />

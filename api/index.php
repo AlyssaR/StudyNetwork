@@ -124,7 +124,7 @@ $app->post('editStudyGroup', function() use ($database){
 });
 
 //This is to get groups to redirect to group profile page
-$app->post('/getGroup', function () use ($database) {
+$app->post('/getGroupInfo', function () use ($database) {
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
 	else {
@@ -164,8 +164,6 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
-
-
 $app->post('/getUserInfo', function () use ($database) {
     $uid = "";
     if(isset($_SESSION["uid"]))
@@ -192,13 +190,11 @@ $app->post('/joinStudyGroup', function() use ($database) {
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
 });
 
-//allow User to leave a study group
-//Quincy Schurr
 $app->post('leaveStudyGroup', function() use ($database) {
-	//need to add stuff
-	//how to get the gid here and such
 	$uid = $_SESSION["uid"];
-	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
+	$gid = $_POST['gid'];
+	$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
+	echo json_encode(array("success"=>true));
 });
 
 $app->post('/login', function () use ($database) {
