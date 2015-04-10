@@ -1,24 +1,26 @@
 function createClass() {
-    $.ajax({
-        url: "api/addClass",
-        type: "post",
-        data: {
-            "dept":$("#dept").val(), 
-            "class_num":$("#class_num").val(),
-            "time2":$("#time2").val(), 
-            "prof_first":$("#prof_first").val(), 
-            "prof_last":$("#prof_last").val(), 
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Class added successfully!");
-                window.location = "editprofile.html";
+    if(validClass()) {
+        $.ajax({
+            url: "api/addClass",
+            type: "post",
+            data: {
+                "dept":$("#dept").val(), 
+                "class_num":$("#class_num").val(),
+                "time2":$("#time2").val(), 
+                "prof_first":$("#prof_first").val(), 
+                "prof_last":$("#prof_last").val(), 
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Class added successfully!");
+                    window.location = "editprofile.html";
+                }
+                else
+                    alert("Error: " + data.errorType);
             }
-            else
-                alert("Error: " + data.errorType);
-        }
-    });
+        });
+    }
 }
 
 function createGroup() {
@@ -167,15 +169,17 @@ function redirectToGroup() {
 
 
 function validClass(){
-        if(!validFName())
+    if(!validFName())
         return false;
     if(!validLName())
         return false;
+    else
+        return true;
 }
 
 function validFName() {
     var regex = /[A-Z][a-z]+/;
-    var name = document.getElementById("f_name").value;
+    var name = document.getElementById("prof_first").value;
     if(regex.test(name))
         return true;
     else {
@@ -190,7 +194,7 @@ function validGroup() {
 
 function validLName() { 
     var regex = /[A-Z][a-zA-Z]+/;
-    var name = document.getElementById("l_name").value;
+    var name = document.getElementById("prof_last").value;
     if(regex.test(name))
         return true;
     else {
