@@ -84,6 +84,8 @@ function getGroup(gidGet) {
         dataType: "json",
         success: function(data) {
             if(data.success) {
+                window.location="groupprofile.php?gname="+data.gname+"&time1="+data.time1+"+&loc="+data.loc;
+
                 /* NEED TO MAKE THIS A GET REQUEST TO GROUPPROFILE PAGE
 
                 window.location = "groupProfile.html";
