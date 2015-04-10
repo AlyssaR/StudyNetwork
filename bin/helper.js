@@ -40,7 +40,6 @@ function createGroup() {
                 alert("Error: " + data.errorType);
         }
     });
-
 }
 
 function editGroup(changes) { //need to figure out what changes is
@@ -73,11 +72,9 @@ function editGroup(changes) { //need to figure out what changes is
                 alert(data.errorType);
         }
     });
-
 }
 
 function getGroup(gidGet) {
-    alert("We can find it!" + gidGet);
     $.ajax({
         url: "api/getGroup",
         type: "post",
@@ -87,19 +84,40 @@ function getGroup(gidGet) {
         dataType: "json",
         success: function(data) {
             if(data.success) {
-               $('cur_gname').text(data.gname);
-               $('cur_time1').text(data.time1);
-               $('cur_loc').text(data.loc); 
-               window.location = "groupProfile.html";
+                /* NEED TO MAKE THIS A GET REQUEST TO GROUPPROFILE PAGE
+
+                window.location = "groupProfile.html";
+                $('cur_gname').text(data.gname);
+                $('cur_time1').text(data.time1);
+                $('cur_loc').text(data.loc); 
+                */
             }
             else {
-                alert("Error: Could not retrieve your group." + data.gid)
+                alert("Error: Could not retrieve your group.")
                 window.location = "editprofile.html";
             }
         }
     });
 }
 
+function getGroupInfo() {
+    $.ajax({
+        url: "api/getGroupInfo",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                $('#cur_gname').text(data.gname);
+                $('#cur_time1').text(data.time1);
+                $('#cur_loc').text(data.loc);
+            }
+            else {
+                alert("Error: Could not retrieve your group.")
+                window.location = "editprofile.html";
+            }
+        }
+    });
+}
 
 function getGroups() {
     $.ajax({
@@ -138,8 +156,6 @@ function getGroups() {
     }
 });
 }
-
-
 
 function leaveStudyGroup() {
     $.ajax({
