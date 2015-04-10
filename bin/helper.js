@@ -86,6 +86,7 @@ function getGroup() {
                $('cur_gname').text(data.gname);
                $('cur_time1').text(data.time1);
                $('cur_loc').text(data.loc); 
+               window.location = "groupProfile.html";
             }
             else {
                 alert("Error: Could not retrieve your group.")
@@ -122,16 +123,10 @@ function getGroups() {
                 var addName = document.createTextNode("View Group");
                 viewButton.appendChild(addName);
                 var addButton = table.appendChild(viewButton);
-                /*var addName = document.createTextNode("View Group");
-                element.appendChild(addName);
-                document.body.appendChild(element);
-                    element.setAttribute("type", "button");
-                    element.setAttribute("value", "button");
-                    element.setAttribute("name", "ViewGroup");
-                    element.setAttribute("onclick", getGroup());*/
-            }
+                viewButton.onclick=getGroup();
         }
-    });
+    }
+});
 }
 
 
