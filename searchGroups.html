@@ -8,14 +8,20 @@
       
   <div id = formData>
 
+  <h1>Search for a Study Group</h1>
+
       <select method="post" action = "javascript:searchByClass()">
         <option value="class" id = "class">Class</option>
         <option value="prof" id = "prof">Prof</option>
         <option value="group" id = "group">Group</option>
       </select>
 
-      <form>
+      <form method = "post" action = "javascript:searchByClass()">
+      <p>
+        Search By:
         <input type="text" name="searchGroups">
+        <input type="submit" value="Search">
+      </p>
       </form>
 
   </div>
