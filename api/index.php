@@ -125,6 +125,12 @@ $app->post('editStudyGroup', function() use ($database){
 
 //This is to get groups to redirect to group profile page
 $app->post('/getGroup', function () use ($database) {
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
@@ -145,12 +151,12 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
 	}
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
 
 		echo json_encode($response);
 	}
@@ -158,15 +164,7 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
-$app->post('/getGroupsRow', function() use ($database) {
-	$uid = $_SESSION["uid"];
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 
-	$numRows = mysql_num_rows($runQuery);
-
-	echo $numRows;
-
-});
 
 $app->post('/getUserInfo', function () use ($database) {
     $uid = "";

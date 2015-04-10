@@ -76,10 +76,14 @@ function editGroup(changes) { //need to figure out what changes is
 
 }
 
-function getGroup() {
+function getGroup(gidGet) {
+    alert("We can find it!" + gidGet);
     $.ajax({
         url: "api/getGroup",
         type: "post",
+        data: {
+            "gid":gidGet
+        },
         dataType: "json",
         success: function(data) {
             if(data.success) {
@@ -89,7 +93,7 @@ function getGroup() {
                window.location = "groupProfile.html";
             }
             else {
-                alert("Error: Could not retrieve your group.")
+                alert("Error: Could not retrieve your group." + data.gid)
                 window.location = "editprofile.html";
             }
         }
@@ -113,23 +117,24 @@ function getGroups() {
                 for(var key in data[i]) {
                     if(key == "error" || key == "success")
                         continue;
-                    if(key == "time1")
-                    {
-                        //can we do something here to conver to 12 hour time?
+                    if(key == "gid") {
+                        var gidStr = data[i][key];
+                        continue;
                     }
+
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
+                var newButton = newRow.insertCell(-1);
                 var viewButton = document.createElement("button");
                 var addName = document.createTextNode("View Group");
                 viewButton.appendChild(addName);
-                var addButton = table.appendChild(viewButton);
-                newRow.appendChild(addButton);
-                viewButton.onclick=getGroup();
-        }
+                viewButton.onclick=function(gidStr) { return function() { getGroup(gidStr); }; }(gidStr);
+                newButton.appendChild(viewButton);
+            }
     }
 });
 }
