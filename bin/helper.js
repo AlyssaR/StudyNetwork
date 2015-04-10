@@ -22,24 +22,26 @@ function createClass() {
 }
 
 function createGroup() {
-    $.ajax({
-        url: "api/addGroup",
-        type: "post",
-        data: {
-            "gname":$("#gname").val(), 
-            "time1":$("#time1").val(),
-            "loc":$("#loc").val(), 
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Group added successfully!");
-                window.location = "editprofile.html";
+    if(validGroup()) {
+        $.ajax({
+            url: "api/addGroup",
+            type: "post",
+            data: {
+                "gname":$("#gname").val(), 
+                "time1":$("#time1").val(),
+                "loc":$("#loc").val(), 
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Group added successfully!");
+                    window.location = "editprofile.html";
+                }
+                else
+                    alert("Error: " + data.errorType);
             }
-            else
-                alert("Error: " + data.errorType);
-        }
-    });
+        });
+    }   
 
 }
 
@@ -161,4 +163,38 @@ function redirectToClass() {
 
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
+}
+
+
+function validClass(){
+        if(!validFName())
+        return false;
+    if(!validLName())
+        return false;
+}
+
+function validFName() {
+    var regex = /[A-Z][a-z]+/;
+    var name = document.getElementById("f_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your first name must start with uppercase letter");
+        return false;
+    }
+}
+
+function validGroup() {
+
+}
+
+function validLName() { 
+    var regex = /[A-Z][a-zA-Z]+/;
+    var name = document.getElementById("l_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your last name start with an uppercase letter");
+        return false;
+    }
 }
