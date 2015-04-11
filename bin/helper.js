@@ -24,7 +24,6 @@ function createClass() {
 }
 
 function createGroup() {
-    if(validGroup()) {
         $.ajax({
             url: "api/addGroup",
             type: "post",
@@ -42,8 +41,7 @@ function createGroup() {
                 else
                     alert("Error: " + data.errorType);
             }
-        });
-    }   
+        });  
 }
 
 function editGroup(changes) { 
@@ -184,9 +182,6 @@ function validFName() {
     }
 }
 
-function validGroup() {
-
-}
 
 function validLName() { 
     var regex = /[A-Z][a-zA-Z]+/;
