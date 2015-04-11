@@ -2,6 +2,7 @@
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
+	<link href="css/navbar.css" rel="stylesheet">
 	<title> Homepage </title>
 </head>
 <body bgcolor="#000000" />
@@ -9,10 +10,18 @@
 		<div id = formData>
 		
 				<h1>The StudyNetwork</h1>
+				<div class="navbar">
+					 <nav>
+						  <ul>
+							   <li><a href="index.html">Home</a></li>
+							   <li><a href="about.html">About</a></li>
+						  </ul>
+					 </nav>
+				</div>
 		
 				<form method = "post" action = "javascript:login()">
-				<input type ="text" id="email" name="Login" value= "Your Login Email Here">
-				<input type ="password" id="password" name="Password" value= "Your Pass Here">
+				<input type ="text" id="email" name="Login" placeholder= "Your Login Email Here">
+				<input type ="password" id="password" name="Password" placeholder= "Your Pass Here">
 				<input type = "submit" value = "Login">
 				</form>
 			
@@ -21,7 +30,7 @@
 	<div id = registerLinkTo>
 		<p> Need an account? </p>
 		<form>
-		<button type = "button" onclick ="javascript:redirect()"> Register </button>
+		<button type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
 		</form>
 	
 	</div>

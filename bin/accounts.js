@@ -16,35 +16,100 @@ function authenticate() {
     return result;
 }
 
-function getID() {
-    var name = "sn_uid=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+function editProfile(toChange) {
+    theDeets = {"f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
+
+    //Set variables
+    if (toChange === "first") {
+        if(!validFName())
+            return;
+        else
+            theDeets['f_name'] = document.getElementById("f_name").value;            
     }
-    return null;
+    else if (toChange === "last") {
+        if(!validLName())
+            return;
+        else
+            theDeets['l_name'] = document.getElementById("l_name").value;
+    }
+    else if (toChange === "email") {
+        if(!validEmail())
+            return;
+        else
+            theDeets['email'] = document.getElementById("email").value;
+    }
+    else if (toChange === "password") {
+        if(!validPass())
+            return;
+        else 
+            theDeets['password'] = document.getElementById("password").value;
+    }
+    
+    //Change profile
+    $.ajax({
+        url: "api/editprofile",
+        type: "post",
+        data: theDeets,
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                $('#cur_f_name').text(data.f_name); //#variable is HTML id and ther one is the php variable
+                $('#cur_l_name').text(data.l_name);
+                $('#cur_email').text(data.email);    
+            }
+            else
+                alert(data.errorType);
+        }
+    });
+
+    //Clear input fields
+    $("#f_name").val('');
+    $("#l_name").val('');
+    $("#email").val('');
+    $("#password").val('');
+    $("#password2").val('');
 }
 
-function getName() {
+function getProfile() {
     $.ajax({
         url: "api/getUserInfo",
         type: "post",
-        data: { "uid":getID() },
         dataType: "json",
         success: function(data) {
-            if(data.success)
-                $('#name').text(data.f_name + " " + data.l_name);
-            else
-                alert("Error retrieving your information. Please log in.");
+            if(data.success) {
+                $('#cur_f_name').text(data.f_name);
+                $('#cur_l_name').text(data.l_name);
+                $('#cur_email').text(data.email);
+            }
+            else {
+                alert("Error: Could not retrieve your profile. Please log in.")
+                window.location = "index.html";
+            }
         }
     });
 }
 
+function login() {
+    if(validLogin()) {
+        var data = authenticate();
+        if(data.success) {
+            alert("Welcome, " + data.f_name + "!");
+            window.location = "editProfile.html";
+        }
+        else
+            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
+    }
+}
+
 function logout() {
-    document.cookie = "sn_uid=;expires=-1;path=/";
-    window.location = "index.html";
+    $.ajax({
+        url: "api/logout",
+        type: "post",
+        dataType: "json",
+        success:function() {
+            window.location = "index.html";
+        }
+    });
 }
 
 function redirect() {
@@ -52,14 +117,13 @@ function redirect() {
 }
 
 function register() {
-    if(valid()) {
+    if(validRegister()) {
         $.ajax({
             url: "api/register",
             type: "post",
             data: {
                 "f_name":$("#f_name").val(), 
                 "l_name":$("#l_name").val(), 
-                "uid":$("#uid").val(), 
                 "email":$("#email").val(), 
                 "passwd":$("#password").val()
             },
@@ -67,7 +131,7 @@ function register() {
             success: function(data) {
                 if(data.success) {
                     alert("Welcome, " + data.f_name + "!");
-                    signIn(data.uid);
+                    window.location = "editprofile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -76,48 +140,104 @@ function register() {
     }
 }
 
-function signIn(value) {
-    var date = new Date();
-    date.setTime(date.getTime() + (30*60*1000)); //Login expires in 30 minutes
-    var expires = "; expires=" + date.toGMTString();
+function setEditableTrue() {
+	document.getElementById('optDisp1').style.visibility = "visible";
+	document.getElementById('optDisp2').style.visibility = "visible";
+	document.getElementById('optDisp3').style.visibility = "visible";
 
-    document.cookie = "sn_uid=" + value + expires + "; path=/";
-    window.location = "editprofile.html";
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Edit Profile </button>"
 }
 
-function login() {
-    if(valid()) {
-        var data = authenticate();
-        if(data.success) {
-            alert("Welcome, " + data.f_name);
-            signIn(data.uid);
-        }
-        else
-            alert("Error logging in.\nPlease check your email/password or create an account.");
-    }
+function setEditableFalse() {
+	document.getElementById('optDisp1').style.visibility = "hidden";
+	document.getElementById('optDisp2').style.visibility = "hidden";
+	document.getElementById('optDisp3').style.visibility = "hidden";
+	
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Edit Profile </button>"
 }
 
-function valid() {
-    var regexName = /\w*@smu\.edu/;
-    var regexPass = /[\w!@#$%&*;'"_]{8,64}/;
-
-    var UserName = document.getElementById("email").value;
-    var UserPass = document.getElementById("password").value;
+function validEmail() {
+    var regex = /\w+@smu\.edu/;
+    var email = document.getElementById("email").value;
     
-    var test1 = regexName.test(UserName);
-    var test2 = regexPass.test(UserPass);
-    
-    console.log(test1);
-    console.log(test2);
-    
-    if(!test1) {
-    	alert("You must enter an SMU email address.");
-    	return false;
-    }
-    else if(!test2) {
-    	alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+    if(regex.test(email))
+        return true;
+    else {
+        alert("You must enter an SMU email address.");
         return false;
     }
+}
+
+function validFName() {
+    var regex = /[A-Z][a-z]+/;
+    var name = document.getElementById("f_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your first name must start with uppercase letter");
+        return false;
+    }
+}
+
+function validLName() { 
+    var regex = /[A-Z][a-zA-Z]+/;
+    var name = document.getElementById("l_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your last name start with an uppercase letter");
+        return false;
+    }
+}
+
+function validLogin() {
+    return (validEmail() && validPass());
+}
+
+function validPass() {
+    var pass1=document.getElementById('password');
+    var pass2=document.getElementById('password2');
+    if(pass2 == null) 
+        pass2 = pass1;
+
+    var message=document.getElementById('validateMessage');
+    var matchColor="#66cc66";
+    var noMatch="#ff6666";
+    
+    if (pass1.value == pass2.value) {
+        if(message != null) {
+            pass2.style.backgroundColor = matchColor;
+            message.style.color=matchColor;
+            message.innerHTML="Passwords match!";
+        }
+
+        var isValid = /[\w!@#$%&*;'"_]{8,64}/;
+        if(isValid.test(pass1.value))
+            return true;
+        else {
+            alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+            return false;
+        }
+        //document.getElementById('submit').disabled=false;
+    }
+    else if (message != null) {
+        pass2.style.backgroundColor = noMatch;
+        message.style.color=noMatch;
+        message.innerHTML = "Passwords do not match!";
+        //document.getElementById('submit').disabled=true;
+    }
+    return false;
+}
+
+function validRegister() {
+    if(!validEmail())
+        return false;
+    else if(!validPass())
+        return false;
+    else if(!validFName())
+        return false;
+    else if(!validLName())
+        return false;
     else 
         return true;
 }
