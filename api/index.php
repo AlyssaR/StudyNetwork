@@ -30,39 +30,24 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
-	$dept = $_POST['dept'];
-	$num = $_POST['class_num'];
 	$gid = 0;
-
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
 	if($gidStart->num_rows > 0) {
 		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
-
 	//$num_members = $_POST['num_members'];
 	
 	$uid = $_SESSION["uid"];
 	$role = "member";
-
 	$error = "None";
 	$success = true;
-
-	$class = $dept + $class_num;
-	$classExist = $database("SELECT count(*) FROM Classes WHERE dept = $dept AND class_num;");
-	if($classExist === 0) {
-		$response = array("success"=>false, "errorType"=>$error);
-		echo json_encode($response);
-	} else {
-		$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, class, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', '$class' 1);");
-		$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
+	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
 	
-		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
-		echo json_encode($response);	
-	}
-
-	
+	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+	echo json_encode($response);
 });
 
 $app->post('/editprofile', function () use ($database) {
@@ -176,13 +161,12 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
-$app->post('/getGroups_searchByClass', function () use ($database) {
+/*$app->post('/getGroups_searchByClass', function () use ($database) {
 	$uid = "";
-	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"])) {
+	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"]))
 		$dept = ($_SESSION["dept"]);
 		$class_num = ($SESSTION["class_num"]);
 	    $cid = $dept + $class_num;
-	}
 	else {
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
@@ -195,21 +179,10 @@ $app->post('/getGroups_searchByClass', function () use ($database) {
 			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
 
 		echo json_encode($response);
-		return;
 	}
 	else
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
-});
-
-$app->post('/getGroupsRow', function() use ($database) {
-	$uid = $_SESSION["uid"];
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
-
-	$numRows = mysql_num_rows($runQuery);
-
-	echo $numRows;
-
-});
+});*/
 
 $app->post('/getUserInfo', function () use ($database) {
     $uid = "";
@@ -321,7 +294,7 @@ $app->post('/search', function() use ($database) {
   }
 });
 
-$app->post('/searchByClass', function() use ($database) {
+/*$app->post('/searchByClass', function() use ($database) {
 	$class = array();
 	if(!empty($_POST['class'])) {
 //		$search = json_decode($_POST['class'], true); 	
@@ -333,9 +306,9 @@ $app->post('/searchByClass', function() use ($database) {
     		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
     	echo json_encode($response);
     }
-});
+});*/
 // issue: search for classes v2
-$app->get('/searchForClasses', function() use ($database) {
+/*$app->get('/searchForClasses', function() use ($database) {
   $json = json_decode($_GET["search"], true);
   // build query string
   $query = "SELECT * FROM Classes WHERE";
@@ -348,7 +321,7 @@ $app->get('/searchForClasses', function() use ($database) {
   $query = $query . ";";
   $result = $database->query($query);
   echo json_encode($query);
-});
+});*/
 
 $app->run();
 ?>
