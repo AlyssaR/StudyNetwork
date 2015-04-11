@@ -15,6 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/search_template.css" rel="stylesheet">
+	
+	<link href="css/navbar.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -34,24 +36,29 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">The StudyNetwork</h3>
-              <nav>
-                 <!-- <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Home</a></li>
-                  <li><a href="#">Features</a></li>
-                </ul>-->
-              </nav>
+                <h3 class="masthead-brand">The StudyNetwork</h3>
+				<div class="navbar">
+					<nav>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="editprofile.html">View Profile</a></li>
+						</ul>
+					</nav>
+				</div>
             </div>
           </div>
 
           <div class="inner cover">
-          <!--<div id="display-title" onload="alertTitle()"></div>-->
+		  <!--<div id="display-title" onload="alertTitle()"></div>-->
             <h1 class="cover-heading">Search for a class</h1>
             <p class="lead">
             <div id = "search-for-class">
             <form action="javascript:searchForClasses()" method="GET">
               <input type="text" name="searchclass" class=" btn-lg btn-default">
-              <button type="submit" id="search-for-class-actual" onclick="console.log('You clicked da button') " class="btn btn-lg btn-default">Search</button>
+              <button type="submit" id="search-for-class-actual" onclick="console.log('You clicked da button') " class="btn btn-lg btn-default">Search</button><br>
+			  <input type="text" name="searchstudygroup" class=" btn-lg btn-default">
+              <button type="submit" id="search-for-study-group-actual" onclick="console.log('You clicked da button') " class="btn btn-lg btn-default">Search For Study Group</button>
               </form>
               </div>
               <!--<form action="/echo/json" method="POST">

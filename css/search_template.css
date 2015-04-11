@@ -69,6 +69,7 @@ body {
  * Header
  */
 .masthead-brand {
+  text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -103,7 +104,7 @@ body {
 
 @media (min-width: 768px) {
   .masthead-brand {
-    float: left;
+    float: center;
   }
   .masthead-nav {
     float: right;

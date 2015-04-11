@@ -3,7 +3,8 @@ function searchByClass() {
         url: "api/searchByClass",
         type: "post",
         data: {
-            "class":$("#class").val(),  
+            "class":$("#class").val(), 
+            //this id could cause an issue. Not sure 
         },
         dataType: "json",
         success: function(data) {
@@ -17,7 +18,7 @@ function searchByClass() {
     });
 }
 
-function getGroups() {
+function getGroupsSearch() {
     $.ajax({
         url: "api/getGroups_searchByClass",
         type: "post",
@@ -42,6 +43,9 @@ function getGroups() {
             }
         }
     });
+}
+function redirectToSearchGroups() {
+    window.location = "searchGroups.html";
 }
 
 function redirectToClass() {
