@@ -98,10 +98,11 @@ $app->post('/editprofile', function () use ($database) {
 	echo json_encode($response);
 });
 
-$app->post('editStudyGroup', function() use ($database){
+$app->post('/editStudyGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1 =  $_POST['time1'];
 	$loc = $_POST['loc'];
+	$gid = $_POST['gid'];
 	$success = true;
 
 	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
@@ -190,8 +191,8 @@ $app->post('/joinStudyGroup', function() use ($database) {
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
 });
 
-$app->post('leaveStudyGroup', function() use ($database) {
-	$uid = $_SESSION["uid"];
+$app->post('/leaveStudyGroup', function() use ($database) {
+	$uid = $_SESSION['uid'];
 	$gid = $_POST['gid'];
 	$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 	echo json_encode(array("success"=>true));

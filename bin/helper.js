@@ -43,7 +43,7 @@ function createGroup() {
 }
 
 function editGroup(changes) { 
-    editS = {"gname":"ignore", "time1":"ignore", "loc":"ignore"};
+    editS = {"gid":$('#gid').text(),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
 
     //Change variables
     if (changes === "GroupName") { //also "GroupName is probably tied to HTML"
@@ -55,10 +55,10 @@ function editGroup(changes) {
     else if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
-
+    alert(editS['time1']);
     //update StudyGroups
     $.ajax({
-        url: "api/editGroup",
+        url: "api/editStudyGroup",
         type: "post",
         data: editS,
         dataType: "json",
@@ -136,7 +136,7 @@ function leaveStudyGroup() {
         url: "api/leaveStudyGroup",
         type: "post",
         data: {
-            "gid": $('#gid').value
+            "gid": $('#gid').text()
         },
         dataType: "json",
         success: function(data) {
