@@ -59,7 +59,6 @@ function editGroup(changes) {
     else if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
-    alert(editS['time1']);
     //update StudyGroups
     $.ajax({
         url: "api/editStudyGroup",
