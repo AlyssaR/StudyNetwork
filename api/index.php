@@ -30,6 +30,8 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
+	$dept = $_POST['dept'];
+	$num = $_POST['class_num'];
 	$gid = 0;
 
 	//Assign incremented ID
@@ -47,11 +49,20 @@ $app->post('/addGroup', function() use ($database){
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
-	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	$class = $dept + $class_num;
+	$classExist = $database("SELECT count(*) FROM Classes WHERE dept = $dept AND class_num;");
+	if($classExist === 0) {
+		$response = "success"=>false, "errorType"=>$error);
+		echo json_encode($response);
+	} else {
+		$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, class, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', '$class' 1);");
+		$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
 	
-	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
-	echo json_encode($response);
+		$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
+		echo json_encode($response);	
+	}
+
+	
 });
 
 $app->post('/editprofile', function () use ($database) {
@@ -146,6 +157,29 @@ $app->post('/getGroups', function () use ($database) {
 		return;
 	}
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	
+	$response = array();
+	if ($runQuery->num_rows != 0) {
+		while($row = $runQuery->fetch_assoc()) 
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
+
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+});
+
+$app->post('/getGroups_searchByClass', function () use ($database) {
+	$uid = "";
+	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"]))
+		$dept = ($_SESSION["dept"]);
+		$class_num = ($SESSTION["class_num"]);
+	    $cid = $dept + $class_num;
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, WHERE s.cid = '$cid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {

@@ -29,6 +29,8 @@ function createGroup() {
             "gname":$("#gname").val(), 
             "time1":$("#time1").val(),
             "loc":$("#loc").val(), 
+            "dept":$("#dept").val(),
+            "class_num":$("class_num").val(),
         },
         dataType: "json",
         success: function(data) {
@@ -37,7 +39,7 @@ function createGroup() {
                 window.location = "editprofile.html";
             }
             else
-                alert("Error: " + data.errorType);
+                alert("Error: Class does not exist");
         }
     });
 
@@ -95,7 +97,7 @@ function getGroup() {
     });
 }
 
-/*function getGroupsForProfile() {
+function getGroupsForProfile() {
     $ajax({
         url:"api/GetGroupsRow",
         type: "post",
@@ -108,7 +110,7 @@ function getGroup() {
 
     });
 
-}*/
+}
 
 function getGroups() {
     $.ajax({
