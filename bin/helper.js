@@ -24,26 +24,26 @@ function createClass() {
 }
 
 function createGroup() {
-    $.ajax({
-        url: "api/addGroup",
-        type: "post",
-        data: {
-            "gname":$("#gname").val(), 
-            "time1":$("#time1").val(),
-            "loc":$("#loc").val(), 
-            "dept":$("#dept").val(),
-            "class_num":$("class_num").val(),
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Group added successfully!");
-                window.location = "editprofile.html";
+    if(validGroup()) {
+        $.ajax({
+            url: "api/addGroup",
+            type: "post",
+            data: {
+                "gname":$("#gname").val(), 
+                "time1":$("#time1").val(),
+                "loc":$("#loc").val(), 
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Group added successfully!");
+                    window.location = "editprofile.html";
+                }
+                else
+                    alert("Error: " + data.errorType);
             }
-            else
-                alert("Error: Class does not exist");
-        }
-    });
+        });
+    }   
 }
 
 function editGroup(changes) { 
@@ -59,6 +59,7 @@ function editGroup(changes) {
     else if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
+    alert(editS['time1']);
     //update StudyGroups
     $.ajax({
         url: "api/editStudyGroup",
@@ -94,21 +95,6 @@ function getGroupInfo(gidGet) {
             }
         }
     });
-}
-
-function getGroupsForProfile() {
-    $ajax({
-        url:"api/GetGroupsRow",
-        type: "post",
-        dataType: "integer",
-        success: function(data) {
-            if(data.success) {
-                var numRows = data.numRows;
-            }
-        }
-
-    });
-
 }
 
 function getGroups() {
