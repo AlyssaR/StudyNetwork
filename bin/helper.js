@@ -44,11 +44,10 @@ function createGroup() {
             }
         });
     }   
-
 }
 
-function editGroup(changes) { //need to figure out what changes is
-    editS = {"gname":"ignore", "time1":"ignore", "loc":"ignore"};
+function editGroup(changes) { 
+    editS = {"gid":$('#gid').text(),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
 
     //Change variables
     if (changes === "GroupName") { //also "GroupName is probably tied to HTML"
@@ -60,10 +59,10 @@ function editGroup(changes) { //need to figure out what changes is
     else if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
-
+    alert(editS['time1']);
     //update StudyGroups
     $.ajax({
-        url: "api/editGroup",
+        url: "api/editStudyGroup",
         type: "post",
         data: editS,
         dataType: "json",
@@ -77,21 +76,19 @@ function editGroup(changes) { //need to figure out what changes is
                 alert(data.errorType);
         }
     });
-
 }
 
-function getGroup() {
+function getGroupInfo(gidGet) {
     $.ajax({
-        url: "api/getGroup",
+        url: "api/getGroupInfo",
         type: "post",
+        data: {
+            "gid":gidGet
+        },
         dataType: "json",
         success: function(data) {
-            if(data.success) {
-               $('cur_gname').text(data.gname);
-               $('cur_time1').text(data.time1);
-               $('cur_loc').text(data.loc); 
-               window.location = "groupProfile.html";
-            }
+            if(data.success)
+                window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
             else {
                 alert("Error: Could not retrieve your group.")
                 window.location = "editprofile.html";
@@ -99,7 +96,6 @@ function getGroup() {
         }
     });
 }
-
 
 function getGroups() {
     $.ajax({
@@ -117,43 +113,43 @@ function getGroups() {
                 for(var key in data[i]) {
                     if(key == "error" || key == "success")
                         continue;
-                    if(key == "time1")
-                    {
-                        //can we do something here to conver to 12 hour time?
+                    if(key == "gid") {
+                        var gidStr = data[i][key];
+                        continue;
                     }
+
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
+                var newButton = newRow.insertCell(-1);
                 var viewButton = document.createElement("button");
                 var addName = document.createTextNode("View Group");
                 viewButton.appendChild(addName);
-                var addButton = table.appendChild(viewButton);
-                newRow.appendChild(addButton);
-                viewButton.onclick=getGroup();
+                viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
+                newButton.appendChild(viewButton);
+            }
         }
-    }
-});
+    });
 }
-
-
 
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
         type: "post",
+        data: {
+            "gid": $('#gid').text()
+        },
         dataType: "json",
         success: function(data) {
             if(data.success) {
-                alert("You have left the group.")
+                alert("You have left the group.");
                 window.location = "editprofile.html";
             }
             else{
-                alert("Error: Could not remove you from group")
-                window.location = "groupProfile.html";
-                //not sure if any of this will actually work
+                alert("Error: Could not remove you from group");
             }
         }
     });
