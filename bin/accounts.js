@@ -17,7 +17,7 @@ function authenticate() {
 }
 
 function editProfile(toChange) {
-    theDeets = { "uid":getID(), "f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
+    theDeets = {"f_name":"ignore", "l_name":"ignore", "email":"ignore","password":"ignore"};
 
     //Set variables
     if (toChange === "first") {
@@ -97,7 +97,7 @@ function login() {
             window.location = "editProfile.html";
         }
         else
-            alert("Error logging in.\nPlease check your email/password or create an account.");
+            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
 
@@ -138,6 +138,22 @@ function register() {
             }
         });
     }
+}
+
+function setEditableTrue() {
+	document.getElementById('optDisp1').style.visibility = "visible";
+	document.getElementById('optDisp2').style.visibility = "visible";
+	document.getElementById('optDisp3').style.visibility = "visible";
+
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Edit Profile </button>"
+}
+
+function setEditableFalse() {
+	document.getElementById('optDisp1').style.visibility = "hidden";
+	document.getElementById('optDisp2').style.visibility = "hidden";
+	document.getElementById('optDisp3').style.visibility = "hidden";
+	
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Edit Profile </button>"
 }
 
 function validEmail() {
@@ -214,14 +230,14 @@ function validPass() {
 }
 
 function validRegister() {
-	if(!validEmail())
-    	return false;
+    if(!validEmail())
+        return false;
     else if(!validPass())
         return false;
-	else if(!validFName())
-    	return false;
-	else if(!validLName())
+    else if(!validFName())
         return false;
-	else 
+    else if(!validLName())
+        return false;
+    else 
         return true;
 }

@@ -3,6 +3,7 @@
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/helper.js"></script>
+	<link href="css/navbar.css" rel="stylesheet">
 	<title>Create a Study Group</title>
 	<style>
 	body {
@@ -17,17 +18,26 @@
 
 <body>	
 	<h1>Study Network</h1>
+	<div class="navbar">
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="editprofile.html">View Profile</a></li>
+			</ul>
+		</nav>
+	</div>
 	
-	<div id=classForm>
+	<div id=groupForm>
 			<h2><br/><br/>Create A Study Group</h2>
 		<form method = "post" action = "javascript:createGroup()">
 			<p>
 				Group Name:
-				<input type ="text" id="gname" placeholder = "Enter a Group Name" name="groupName">  <br/><br/>
+				<input type ="text" id="gname" placeholder = "Enter a Group Name" name="groupName" required>  <br/><br/>
 				Meeting Time:
-				<input type ="time" id="time1" name="meetingTime"> <br/><br/>
+				<input type ="time" id="time1" name="meetingTime" required> <br/><br/>
 				Meeting Location:
-				<input type="text" id="loc" placeholder = "Enter a Location" name="meetingLocation"> <br/><br/>
+				<input type="text" id="loc" placeholder = "Enter a Location" name="meetingLocation" required> <br/><br/>
 				<input type = "submit" value = "Create Group">
 			</p>
 		</form>
