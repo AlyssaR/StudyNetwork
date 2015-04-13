@@ -3,9 +3,11 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<link href="css/navbar.css" rel="stylesheet">
+	 <link href="css/bootstrap.min.css" rel="stylesheet">
+	 <link href = "css/signin.css" rel = "stylesheet">
 	<title> Homepage </title>
 </head>
-<body bgcolor="#000000" />
+<body />
 			
 		<div id = formData>
 		
@@ -18,36 +20,47 @@
 						  </ul>
 					 </nav>
 				</div>
+				
 		
-				<form method = "post" action = "javascript:login()">
-				<input type ="text" id="email" name="Login" placeholder= "Your Login Email Here">
-				<input type ="password" id="password" name="Password" placeholder= "Your Pass Here">
-				<input type = "submit" value = "Login">
-				</form>
-			
+			 <div class="container">
+
+      <form class="form-signin"action = "javascript:login()">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div>
+	
 		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
 	</div>
-	<div id = registerLinkTo>
+	<div class="container" id = "registerLinkTo">
 		<p> Need an account? </p>
-		<form>
-		<button type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
+		<form class="form-signin">
+		<button class=" btn btn-primary btn-block" type = "button" onclick ="javascript:redirect()"> Register </button>
 		</form>
 	
 	</div>
 </html>
 
-<style>
+<!--<style>
+
 #formData {
     background-color:black;
     color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
+	/*font-family:courier;*/
 }
 #registerLinkTo {
 	background-color: black;
 	color:lime;
-	text-align: center;
-	font-family: courier;
+	/*font-family: courier;*/
 }
-</style>
+</style>-->
