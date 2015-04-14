@@ -178,21 +178,13 @@ $app->post('/getGroups', function () use ($database) {
 
 $app->post('/getGroups_searchByClass', function () use ($database) {
 	$uid = "";
-<<<<<<< HEAD
 	if(isset($_SESSION["dept"]) AND isset($_SESSION["class_num"])) {
 		$dept = $_SESSION["dept"];
 		$class_num = $_SESSION["class_num"];
 	    $cid = $dept + $class_num;
 	}
 	else  {
-=======
-	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"])) {
-		$dept = ($_SESSION["dept"]);
-		$class_num = ($SESSTION["class_num"]);
-	    $cid = $dept + $class_num;
-	}
-	else {
->>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
+
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
 	}
