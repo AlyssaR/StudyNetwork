@@ -74,6 +74,7 @@ CREATE TABLE `GroupEnroll` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `gid` int(11) NOT NULL DEFAULT '0',
   `role` varchar(30) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`uid`,`gid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -84,7 +85,6 @@ CREATE TABLE `GroupEnroll` (
 
 LOCK TABLES `GroupEnroll` WRITE;
 /*!40000 ALTER TABLE `GroupEnroll` DISABLE KEYS */;
-INSERT INTO `GroupEnroll` VALUES (2,0,'member');
 /*!40000 ALTER TABLE `GroupEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +98,7 @@ DROP TABLE IF EXISTS `OrgEnroll`;
 CREATE TABLE `OrgEnroll` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `oid` int(11) NOT NULL DEFAULT '0',
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`uid`,`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -135,31 +136,6 @@ LOCK TABLES `Organizations` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Profile`
---
-
-DROP TABLE IF EXISTS `Profile`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Profile` (
-  `uid` int(11) NOT NULL,
-  `oid` int(11) DEFAULT NULL,
-  `gid` int(11) DEFAULT NULL,
-  `cid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Profile`
---
-
-LOCK TABLES `Profile` WRITE;
-/*!40000 ALTER TABLE `Profile` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Profile` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `StudyGroups`
 --
 
@@ -174,6 +150,7 @@ CREATE TABLE `StudyGroups` (
   `time1` time DEFAULT NULL,
   `loc` varchar(40) DEFAULT NULL,
   `num_members` int(11) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`gid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -200,8 +177,9 @@ CREATE TABLE `Users` (
   `l_name` varchar(30) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `passwd` varchar(64) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +188,6 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'Quincy','Schurr','qschurr@smu.edu','qrstuvwx'),(2,'Tom','Brady','tbrady@smu.edu','patriots');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -223,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-03 22:11:14
+-- Dump completed on 2015-04-13  4:41:08
