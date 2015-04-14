@@ -52,11 +52,7 @@ $app->post('/addGroup', function() use ($database){
 	$class = $dept + $class_num;
 	$classExist = $database("SELECT count(*) FROM Classes WHERE dept = $dept AND class_num;");
 	if($classExist === 0) {
-<<<<<<< HEAD
-		$response = array("success"=>$success, "errorType"=>$error);
-=======
 		$response = array("success"=>false, "errorType"=>$error);
->>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
 		echo json_encode($response);
 	} else {
 		$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, class, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', '$class' 1);");
