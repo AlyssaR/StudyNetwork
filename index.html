@@ -5,7 +5,7 @@
 	<link href="css/navbar.css" rel="stylesheet">
 	<title> Homepage </title>
 </head>
-<body bgcolor="#000000" />
+<body onload="isLoggedIn('home')" bgcolor="#000000"/>
 			
 		<div id = formData>
 		
@@ -19,7 +19,7 @@
 					 </nav>
 				</div>
 		
-				<form method = "post" action = "javascript:login()">
+				<form method = "post" action = "javascript:login()" id = "loginForm">
 				<input type ="text" id="email" name="Login" placeholder= "Your Login Email Here">
 				<input type ="password" id="password" name="Password" placeholder= "Your Pass Here">
 				<input type = "submit" value = "Login">
