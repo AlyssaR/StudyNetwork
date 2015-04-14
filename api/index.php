@@ -205,10 +205,12 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+//Quincy Schurr - joinStudyGroup branch
 $app->post('/joinStudyGroup', function() use ($database) {
+	$uid = $_SESSION['uid'];
     $gid = $_POST['gid'];
-    $role = $_POST['role'];
-    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+    $role = "member";
+    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES('$uid', '$gid', '$role');");
 });
 
 $app->post('/leaveStudyGroup', function() use ($database) {
