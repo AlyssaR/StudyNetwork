@@ -174,7 +174,7 @@ function validFName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your first name must start with uppercase letter");
+        alert("Your first name must start with an uppercase letter and be followed by lowercase letters.");
         return false;
     }
 }
@@ -185,7 +185,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name start with an uppercase letter");
+        alert("Your last name start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }
