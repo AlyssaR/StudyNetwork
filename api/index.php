@@ -52,7 +52,11 @@ $app->post('/addGroup', function() use ($database){
 	$class = $dept + $class_num;
 	$classExist = $database("SELECT count(*) FROM Classes WHERE dept = $dept AND class_num;");
 	if($classExist === 0) {
+<<<<<<< HEAD
 		$response = array("success"=>$success, "errorType"=>$error);
+=======
+		$response = array("success"=>false, "errorType"=>$error);
+>>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
 		echo json_encode($response);
 	} else {
 		$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, class, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', '$class' 1);");
@@ -109,10 +113,11 @@ $app->post('/editprofile', function () use ($database) {
 	echo json_encode($response);
 });
 
-$app->post('editStudyGroup', function() use ($database){
+$app->post('/editStudyGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1 =  $_POST['time1'];
 	$loc = $_POST['loc'];
+	$gid = $_POST['gid'];
 	$success = true;
 
 	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
@@ -135,7 +140,13 @@ $app->post('editStudyGroup', function() use ($database){
 });
 
 //This is to get groups to redirect to group profile page
-$app->post('/getGroup', function () use ($database) {
+$app->post('/getGroupInfo', function () use ($database) {
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
 	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
@@ -156,12 +167,12 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
 	}
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
 
 		echo json_encode($response);
 	}
@@ -171,12 +182,21 @@ $app->post('/getGroups', function () use ($database) {
 
 $app->post('/getGroups_searchByClass', function () use ($database) {
 	$uid = "";
+<<<<<<< HEAD
 	if(isset($_SESSION["dept"]) AND isset($_SESSION["class_num"])) {
 		$dept = $_SESSION["dept"];
 		$class_num = $_SESSION["class_num"];
 	    $cid = $dept + $class_num;
 	}
 	else  {
+=======
+	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"])) {
+		$dept = ($_SESSION["dept"]);
+		$class_num = ($SESSTION["class_num"]);
+	    $cid = $dept + $class_num;
+	}
+	else {
+>>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
 	}
@@ -230,13 +250,11 @@ $app->post('/joinStudyGroup', function() use ($database) {
     $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
 });
 
-//allow User to leave a study group
-//Quincy Schurr
-$app->post('leaveStudyGroup', function() use ($database) {
-	//need to add stuff
-	//how to get the gid here and such
-	$uid = $_SESSION["uid"];
-	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
+$app->post('/leaveStudyGroup', function() use ($database) {
+	$uid = $_SESSION['uid'];
+	$gid = $_POST['gid'];
+	$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
+	echo json_encode(array("success"=>true));
 });
 
 $app->post('/login', function () use ($database) {

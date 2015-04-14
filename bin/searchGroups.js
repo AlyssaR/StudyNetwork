@@ -11,8 +11,11 @@ function searchByClass() {
             if(data.success) {
                 alert("Groups exist for that class");
                 window.location = "searchGroups.html";
+<<<<<<< HEAD
 
                 alert("Results for Groups");
+=======
+>>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
             }
             else
                 alert("Error: " + data.errorType);
@@ -20,8 +23,12 @@ function searchByClass() {
     });
 }
 
+<<<<<<< HEAD
 
 function getGroups() {
+=======
+function getGroupsSearch() {
+>>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
     $.ajax({
         url: "api/getGroups_searchByClass",
         type: "post",
@@ -46,6 +53,10 @@ function getGroups() {
             }
         }
     });
+<<<<<<< HEAD
+=======
+}
+>>>>>>> 6a4d25507a1a4e298b33b31fd9b7b584d41f1647
 function redirectToSearchGroups() {
     window.location = "searchGroups.html";
 }
