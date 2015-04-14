@@ -323,11 +323,9 @@ $app->post('/search', function() use ($database) {
 });
 
 $app->post('/searchByClass', function() use ($database) {
-	$class = array();
 	if(!empty($_POST['class'])) {
-//		$search = json_decode($_POST['class'], true); 	
-  		$class = explode(" ", $_POST['class']); //split search into seperate dept and number
-  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$class[0]' AND class_num = '$class[1])';"); //get cid
+		$search = json_decode($_POST['class'], true); 	
+  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
   		if($cid === NULL)
   			$result = "ERROR: No groups exist for that course.";
   		else
