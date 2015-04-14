@@ -73,8 +73,9 @@ $app->post('/editprofile', function () use ($database) {
 	if($email === "ignore")
 		$email = $result['email'];
 	else { //If email already exists in database
-		$runQuery = $database->query("SELECT COUNT(*) FROM Users WHERE email = '$email';");
-		if($runQuery->num_rows > 0) {
+		$runQuery = $database->query("SELECT COUNT(*) as count FROM Users WHERE email = '$email' LIMIT 1;");
+		$checkQuery = $runQuery->fetch_assoc();
+		if($checkQuery['count'] > 0) {
 			$response = array("success"=>false, "uid"=>0, "f_name"=>0, "l_name"=>0, "email"=>0, "errorType"=>"Error: Email is already associated with an account.");
 			echo json_encode($response);
 			return;
