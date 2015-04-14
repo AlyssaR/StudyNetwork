@@ -1,27 +1,30 @@
 function createClass() {
-    $.ajax({
-        url: "api/addClass",
-        type: "post",
-        data: {
-            "dept":$("#dept").val(), 
-            "class_num":$("#class_num").val(),
-            "time2":$("#time2").val(), 
-            "prof_first":$("#prof_first").val(), 
-            "prof_last":$("#prof_last").val(), 
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                alert("Class added successfully!");
-                window.location = "editprofile.html";
+    if(validClass()) {
+        $.ajax({
+            url: "api/addClass",
+            type: "post",
+            data: {
+                "dept":$("#dept").val(), 
+                "class_num":$("#class_num").val(),
+                "time2":$("#time2").val(), 
+                "prof_first":$("#prof_first").val(), 
+                "prof_last":$("#prof_last").val(), 
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Class added successfully!");
+                    window.location = "editprofile.html";
+                }
+                else
+                    alert("Error: " + data.errorType);
             }
-            else
-                alert("Error: " + data.errorType);
-        }
-    });
+        });
+    }
 }
 
 function createGroup() {
+<<<<<<< HEAD
     $.ajax({
         url: "api/addGroup",
         type: "post",
@@ -42,6 +45,28 @@ function createGroup() {
                 alert("Error: Class does not exist");
         }
     });
+=======
+    if(validGroup()) {
+        $.ajax({
+            url: "api/addGroup",
+            type: "post",
+            data: {
+                "gname":$("#gname").val(), 
+                "time1":$("#time1").val(),
+                "loc":$("#loc").val(), 
+            },
+            dataType: "json",
+            success: function(data) {
+                if(data.success) {
+                    alert("Group added successfully!");
+                    window.location = "editprofile.html";
+                }
+                else
+                    alert("Error: " + data.errorType);
+            }
+        });
+    }   
+>>>>>>> 7b6a1af9a41e4185f90986241d6f9e7958b7b7db
 
 }
 
@@ -88,6 +113,7 @@ function getGroup() {
                $('cur_gname').text(data.gname);
                $('cur_time1').text(data.time1);
                $('cur_loc').text(data.loc); 
+               window.location = "groupProfile.html";
             }
             else {
                 alert("Error: Could not retrieve your group.")
@@ -97,6 +123,7 @@ function getGroup() {
     });
 }
 
+<<<<<<< HEAD
 function getGroupsForProfile() {
     $ajax({
         url:"api/GetGroupsRow",
@@ -111,6 +138,8 @@ function getGroupsForProfile() {
     });
 
 }
+=======
+>>>>>>> 7b6a1af9a41e4185f90986241d6f9e7958b7b7db
 
 function getGroups() {
     $.ajax({
@@ -118,7 +147,7 @@ function getGroups() {
         type: "post",
         dataType: "json",
         success: function(data) {
-            var table  = document.getElementById('GroupData');
+            var table  = document.getElementById('GroupData');//.style.textAlign = "center";
             for(var i = 0; i < data.length; i++) {
                 $('#results').text("");
                 if(!data[i].success)
@@ -128,15 +157,25 @@ function getGroups() {
                 for(var key in data[i]) {
                     if(key == "error" || key == "success")
                         continue;
+                    if(key == "time1")
+                    {
+                        //can we do something here to conver to 12 hour time?
+                    }
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
                     // Append a text node to the cell
                     var newText  = document.createTextNode(data[i][key]);
                     newCell.appendChild(newText);
                 }
-            }
+                var viewButton = document.createElement("button");
+                var addName = document.createTextNode("View Group");
+                viewButton.appendChild(addName);
+                var addButton = table.appendChild(viewButton);
+                newRow.appendChild(addButton);
+                viewButton.onclick=getGroup();
         }
-    });
+    }
+});
 }
 
 
@@ -166,4 +205,40 @@ function redirectToClass() {
 
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
+}
+
+
+function validClass(){
+    if(!validFName())
+        return false;
+    if(!validLName())
+        return false;
+    else
+        return true;
+}
+
+function validFName() {
+    var regex = /[A-Z][a-z]+/;
+    var name = document.getElementById("prof_first").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your first name must start with uppercase letter");
+        return false;
+    }
+}
+
+function validGroup() {
+
+}
+
+function validLName() { 
+    var regex = /[A-Z][a-zA-Z]+/;
+    var name = document.getElementById("prof_last").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Your last name start with an uppercase letter");
+        return false;
+    }
 }

@@ -161,7 +161,7 @@ function setEditableTrue() {
 	document.getElementById('optDisp2').style.visibility = "visible";
 	document.getElementById('optDisp3').style.visibility = "visible";
 
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Toggle Editing </button>"
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Edit Profile </button>"
 }
 
 function setEditableFalse() {
@@ -169,7 +169,7 @@ function setEditableFalse() {
 	document.getElementById('optDisp2').style.visibility = "hidden";
 	document.getElementById('optDisp3').style.visibility = "hidden";
 	
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Toggle Editing </button>"
+	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Edit Profile </button>"
 }
 
 function validEmail() {

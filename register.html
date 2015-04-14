@@ -2,6 +2,7 @@
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
+	<link href="css/navbar.css" rel="stylesheet">
 	<title> Create Your Profile </title>
 </head>
 <body bgcolor="#000000" />
@@ -9,13 +10,21 @@
 	<div id = formData>
 	
 		<h1>Please enter the following information:</h1>
+		<div class="navbar">
+			 <nav>
+				  <ul>
+					   <li><a href="index.html">Home</a></li>
+					   <li><a href="about.html">About</a></li>
+				  </ul>
+			 </nav>
+		</div>
 
 		<form method="post" action = "javascript:register()">
-			First Name: <input type = "text" id = "f_name" /><br />
-			Last Name: <input type = "text" id = "l_name" /><br />
-			Email: <input type = "text" id = "email" /><br />
-			Password: <input type = "password" id = "password" /><br />
-			Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" /> <br />
+			First Name: <input type = "text" id = "f_name" placeholder = "Enter First Name" /><br />
+			Last Name: <input type = "text" id = "l_name" placeholder = "Enter Last Name"/><br />
+			Email: <input type = "text" id = "email" placeholder = "Enter email"/><br />
+			Password: <input type = "password" id = "password" placeholder = "Enter Password" /><br />
+			Retype Password: <input type = "password" placeholder="Retype Password" id="password2" onkeyup="validPass(); return false" /> <br />
 			<span id="validateMessage"></span> <br />
 			<input type = "submit" id="submit" value = "Register">
 		</form>

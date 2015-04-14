@@ -3,19 +3,23 @@ function searchByClass() {
         url: "api/searchByClass",
         type: "post",
         data: {
-            "class":$("#class").val(),  
+            "class":$("#class").val(), 
+            //this id could cause an issue. Not sure 
         },
         dataType: "json",
         success: function(data) {
             if(data.success) {
                 alert("Groups exist for that class");
                 window.location = "searchGroups.html";
+
+                alert("Results for Groups");
             }
             else
                 alert("Error: " + data.errorType);
         }
     });
 }
+
 
 function getGroups() {
     $.ajax({
@@ -42,6 +46,8 @@ function getGroups() {
             }
         }
     });
+function redirectToSearchGroups() {
+    window.location = "searchGroups.html";
 }
 
 function redirectToClass() {
