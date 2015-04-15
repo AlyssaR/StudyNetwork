@@ -52,6 +52,7 @@ $app->post('/addGroup', function() use ($database){
 
 $app->post('addOrganization', function() use ($database) {
 	$uid = $_SESSION["uid"];
+	$org_name = $_POST['org_name'];
 	//must insert into Organizations a name and unique id (just going to have that increment like before)
 	//have to check to see if organization exists. Need a validator to compare words...?
 	//can you make all capital before sending it to the code, or all lowercase?
