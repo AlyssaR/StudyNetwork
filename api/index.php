@@ -50,6 +50,14 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('addOrganization', function() use ($database) {
+	$uid = $_SESSION["uid"];
+	//must insert into Organizations a name and unique id (just going to have that increment like before)
+	//have to check to see if organization exists. Need a validator to compare words...?
+	//can you make all capital before sending it to the code, or all lowercase?
+
+});
+
 $app->post('/editprofile', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
