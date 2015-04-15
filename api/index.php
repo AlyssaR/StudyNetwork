@@ -40,11 +40,11 @@ $app->post('/addGroup', function() use ($database){
 	//$num_members = $_POST['num_members'];
 	
 	$uid = $_SESSION["uid"];
-	$role = "member";
+	$role = "admin";
 	$error = "None";
 	$success = true;
 	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
-	$database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES ('$uid', '$gid', '$role');");
+	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
 	
 	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
@@ -205,10 +205,13 @@ $app->post('/getUserInfo', function () use ($database) {
     echo json_encode($response);
 });
 
+//Quincy Schurr - joinStudyGroup branch
 $app->post('/joinStudyGroup', function() use ($database) {
+	$uid = $_SESSION['uid'];
     $gid = $_POST['gid'];
-    $role = $_POST['role'];
-    $database->query("INSERT INTO GroupEnroll (uid, gid, role) VALUES (" . $_SESSION["loggedin"] . ", " . $gid . ", " . $role . ")");
+    $role = "member";
+    $database->query("INSERT INTO GroupEnroll VALUES('$uid', '$gid', '$role', TRUE);");
+    echo json_encode(array("success"=>true));
 });
 
 $app->post('/leaveStudyGroup', function() use ($database) {
