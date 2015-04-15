@@ -90,22 +90,18 @@ function getProfile() {
 }
 
 function isLoggedIn(page) {
-    var uid = "";
     $.ajax({
         url: "api/getUserID",
         type: "post",
-        async: false,
-        dataType: "json",
         success:function(data) {
-            if(data.success)
-                uid = data.uid;
+            if(data.success) {
+                if(page === "home")
+                    document.getElementById('loginForm').disabled = true;
+            }
             else
                 return;
         }
     });
-
-    if(page == "home")
-        document.getElementById('loginForm').style.display = "none";
 }
 
 function login() {

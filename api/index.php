@@ -185,7 +185,7 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });*/
 
-$app->post('/getUserInfo', function () {
+$app->post('/getUserID', function () {
 	if(isset($_SESSION["uid"]))
 		echo json_encode(array("success"=>true,"uid"=>$_SESSION["uid"]));
 	else
