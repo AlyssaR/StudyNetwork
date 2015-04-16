@@ -100,7 +100,7 @@ function isLoggedIn(page) {
             }
             else {
                 if(page === "profile") {
-                    alert("You are not currently logged in.");
+                    alert("Error: You are not currently logged in. You are being redirected to the Login page now...");
                     window.location = "login.html";
                 }
             }
