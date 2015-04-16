@@ -81,10 +81,8 @@ function getProfile() {
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);
             }
-            else {
-                alert("Error: Could not retrieve your profile. Please log in.")
+            else 
                 window.location = "login.html";
-            }
         }
     });
 }
@@ -100,8 +98,12 @@ function isLoggedIn(page) {
                 if(page === "login")
                     window.location = "index.html";
             }
-            else
-                return;
+            else {
+                if(page === "profile") {
+                    alert("You are not currently logged in.");
+                    window.location = "login.html";
+                }
+            }
         }
     });
 }
