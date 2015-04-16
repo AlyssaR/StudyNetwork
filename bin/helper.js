@@ -14,7 +14,7 @@ function createClass() {
             success: function(data) {
                 if(data.success) {
                     alert("Class added successfully!");
-                    window.location = "editprofile.html";
+                    window.location = "profile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -24,24 +24,24 @@ function createClass() {
 }
 
 function createGroup() {
-        $.ajax({
-            url: "api/addGroup",
-            type: "post",
-            data: {
-                "gname":$("#gname").val(), 
-                "time1":$("#time1").val(),
-                "loc":$("#loc").val(), 
-            },
-            dataType: "json",
-            success: function(data) {
-                if(data.success) {
-                    alert("Group added successfully!");
-                    window.location = "editprofile.html";
-                }
-                else
-                    alert("Error: " + data.errorType);
+    $.ajax({
+        url: "api/addGroup",
+        type: "post",
+        data: {
+            "gname":$("#gname").val(), 
+            "time1":$("#time1").val(),
+            "loc":$("#loc").val(), 
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("Group added successfully!");
+                window.location = "profile.html";
             }
-        });  
+            else
+                alert("Error: " + data.errorType);
+        }
+    });  
 }
 
 function editGroup(changes) { 
@@ -88,7 +88,7 @@ function getGroupInfo(gidGet) {
                 window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
             else {
                 alert("Error: Could not retrieve your group.")
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
         }
     });
@@ -132,6 +132,20 @@ function getGroups() {
     });
 }
 
+function getGroupsForProfile() {
+    $ajax({
+        url:"api/GetGroupsRow",
+        type: "post",
+        dataType: "integer",
+        success: function(data) {
+            if(data.success) {
+                var numRows = data.numRows;
+            }
+        }
+
+    });
+}
+
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
@@ -143,7 +157,7 @@ function leaveStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have left the group.");
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
             else{
                 alert("Error: Could not remove you from group");
@@ -159,7 +173,6 @@ function redirectToClass() {
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
-
 
 function validClass(){
     if(!validFName())

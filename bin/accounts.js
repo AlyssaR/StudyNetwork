@@ -113,7 +113,7 @@ function login() {
         var data = authenticate();
         if(data.success) {
             alert("Welcome, " + data.f_name + "!");
-            window.location = "editProfile.html";
+            window.location = "profile.html";
         }
         else
             alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
@@ -150,7 +150,7 @@ function register() {
             success: function(data) {
                 if(data.success) {
                     alert("Welcome, " + data.f_name + "!");
-                    window.location = "editprofile.html";
+                    window.location = "profile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
