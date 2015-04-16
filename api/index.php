@@ -50,6 +50,39 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('addOrganization', function() use ($database) {
+	$uid = $_SESSION["uid"];
+	$org_name = $_POST['org_name'];
+	//must insert into Organizations a name and unique id (just going to have that increment like before)
+	//have to check to see if organization exists. Need a validator to compare words...?
+	//can you make all capital before sending it to the code, or all lowercase?
+	//validator in JS
+	$oid = 0;
+	$success = true;
+	$error = "None";
+
+	//assign an incremented org ID
+	$oidStart = $database->query("SELECT 'oid' FROM Organizations ORDER BY 'oid' DESC LIMIT 1;");
+	if($oidStart->num_rows > 0) {
+		$lastOID = $oidStart->fetch_assoc();
+		$oid = $lastUID['oid'] + 1;
+	}
+
+	$checkForOrg = $database->query("SELECT org_name FROM Organizations WHERE org_name = '$org_name';");
+	//check to see if Organization already exists in database
+	if($checkForOrg->num_rows > 0) {
+		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$oid', TRUE);");
+	}
+	else{
+		$database->query("INSERT INTO Organizations VALUES ('$oid', '$org_name');");
+		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$oid', TRUE);");
+	}
+
+	$response = array("success"=>$success, "org_name"=>$org_name, "errorType"=>$error);
+	echo json_encode($response);
+
+});
+
 $app->post('/editprofile', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
