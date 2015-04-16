@@ -83,7 +83,7 @@ function getProfile() {
             }
             else {
                 alert("Error: Could not retrieve your profile. Please log in.")
-                window.location = "index.html";
+                window.location = "login.html";
             }
         }
     });
@@ -92,11 +92,13 @@ function getProfile() {
 function isLoggedIn(page) {
     $.ajax({
         url: "api/getUserID",
+        data: { "getID":true},
+        dataType: "json",
         type: "post",
         success:function(data) {
             if(data.success) {
-                if(page === "home")
-                    document.getElementById('loginForm').disabled = true;
+                if(page === "login")
+                    window.location = "index.html";
             }
             else
                 return;
