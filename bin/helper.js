@@ -24,24 +24,24 @@ function createClass() {
 }
 
 function createGroup() {
-        $.ajax({
-            url: "api/addGroup",
-            type: "post",
-            data: {
-                "gname":$("#gname").val(), 
-                "time1":$("#time1").val(),
-                "loc":$("#loc").val(), 
-            },
-            dataType: "json",
-            success: function(data) {
-                if(data.success) {
-                    alert("Group added successfully!");
-                    window.location = "editprofile.html";
-                }
-                else
-                    alert("Error: " + data.errorType);
+    $.ajax({
+        url: "api/addGroup",
+        type: "post",
+        data: {
+            "gname":$("#gname").val(), 
+            "time1":$("#time1").val(),
+            "loc":$("#loc").val(), 
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("Group added successfully!");
+                window.location = "editprofile.html";
             }
-        });  
+            else
+                alert("Error: " + data.errorType);
+        }
+    });  
 }
 
 function editGroup(changes) { 
@@ -132,6 +132,20 @@ function getGroups() {
     });
 }
 
+function getGroupsForProfile() {
+    $ajax({
+        url:"api/GetGroupsRow",
+        type: "post",
+        dataType: "integer",
+        success: function(data) {
+            if(data.success) {
+                var numRows = data.numRows;
+            }
+        }
+
+    });
+}
+
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
@@ -159,7 +173,6 @@ function redirectToClass() {
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
-
 
 function validClass(){
     if(!validFName())
