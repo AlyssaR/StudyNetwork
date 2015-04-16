@@ -12,30 +12,44 @@
 			<ul>
 			    <li><a href="index.html">Home</a></li>
 			    <li><a href="about.html">About</a></li>
-			    <li><a href="editprofile.html">View Profile</a></li>
+			    <li><a href="profile.html">View Profile</a></li>
+				<li>
+						<input type="text" name="searchGroups">
+						<select method="post" action = "javascript:searchByClass()">
+							<option value="class" id = "class">Class</option>
+							<option value="prof" id = "prof">Prof</option>
+							<option value="group" id = "group">Group</option>
+						</select>
+						<a href="searchGroups.html"><input type="submit" value="Search"></a>
+				</li>
 			</ul>
 		 </nav>
 	</div>
       
-  <div id = formData>
+    <div id = formData>
 
-  <h1>Search for a Study Group</h1>
+    <h1>Search for a Study Group</h1>
 
-      <select method="post" action = "javascript:searchByClass()">
-        <option value="class" id = "class">Class</option>
-        <option value="prof" id = "prof">Prof</option>
-        <option value="group" id = "group">Group</option>
-      </select>
-
-      <form method = "post" action = "javascript:searchByClass()">
-      <p>
-        Search By:
+    <form method = "post" action = "javascript:searchByClass()">
         <input type="text" name="searchGroups">
-        <input type="submit" value="Search">
-      </p>
-      </form>
+	    <select method="post" action = "javascript:searchByClass()">
+			<option value="class" id = "class">Class</option>
+			<option value="prof" id = "prof">Prof</option>
+			<option value="group" id = "group">Group</option>
+        </select>
+		<input type="submit" value="Search" href="searchGroups.html">
+    </form>
 
-  </div>
+    </div>
+	
+	<table align="center">
+		<tr>
+			<th><a href="groupProfile.html">{{StudyGroupName}}</a></th>
+			<th>{{ClassName}}</th>
+			<th>{{MeetingTime}}</th>
+		</tr>
+	</table>
+</body>
 </html>
 
 <style>

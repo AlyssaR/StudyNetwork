@@ -11,13 +11,24 @@
 	
 		<h1>Please enter the following information:</h1>
 		<div class="navbar">
-			 <nav>
-				  <ul>
-					   <li><a href="index.html">Home</a></li>
-					   <li><a href="about.html">About</a></li>
-				  </ul>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="profile.html">View Profile</a></li>
+					<li>
+							<input type="text" name="searchGroups">
+							<select method="post" action = "javascript:searchByClass()">
+								<option value="class" id = "class">Class</option>
+								<option value="prof" id = "prof">Prof</option>
+								<option value="group" id = "group">Group</option>
+							</select>
+							<a href="searchGroups.html"><input type="submit" value="Search"></a>
+					</li>
+				</ul>
 			 </nav>
 		</div>
+
 
 		<form method="post" action = "javascript:register()">
 			First Name: <input type = "text" id = "f_name" placeholder = "Enter First Name" /><br />

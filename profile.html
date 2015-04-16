@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="bin/helper.js"></script>
+	<script type="text/javascript" src="bin/accounts.js"></script>
+	<script type="text/javascript" src="bin/searchGroups.js"></script>
+	<link href="css/navbar.css" rel="stylesheet">
+	<title>Profile</title>
+</head>
+<body onload = "getProfile(),getGroups()" bgcolor="#000000" />
+		<div id = formData>
+		
+				<h1>Welcome to the Study Network!</h1>
+				<div class="navbar">
+					<nav>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="profile.html">View Profile</a></li>
+							<li>
+									<input type="text" name="searchGroups">
+									<select method="post" action = "javascript:searchByClass()">
+										<option value="class" id = "class">Class</option>
+										<option value="prof" id = "prof">Prof</option>
+										<option value="group" id = "group">Group</option>
+									</select>
+									<a href="searchGroups.html"><input type="submit" value="Search"></a>
+							</li>
+						</ul>
+					 </nav>
+				</div>
+				
+				<h2>Profile</h2>
+				<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button> 
+				
+				<h4>First name:	<label id = "cur_f_name">{{FirstName}}</label> </h4>
+				<div value ="1" id="optDisp1" style= "visibility: hidden">
+					<input type = "text" id = "f_name" placeholder = "New First Name">
+					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br />
+				</div>
+				<h4>Last name:	<label id = "cur_l_name">{{LastName}}</label> </h4>
+				<div value ="1" id="optDisp2" style= "visibility: hidden">
+					<input type = "text" id = "l_name" placeholder = "New Last Name">
+					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
+				</div>
+				<h4>Email:	<label id = "cur_email">{{Email}}</label></h4>
+				<div value ="1" id="optDisp3" style= "visibility: hidden">
+						<input type = "text" id = "email" placeholder = "New Email">
+						<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
+				
+				<h4>Change Password: <input type = "password" id = "password" placeholder = "New Password"/></h4>
+				<h4>Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/> </h4>
+				
+				<input type = "submit" onclick = "javascript:editProfile('password')" value = "Save Changes"> <br>
+				</div>
+				
+				<h2>My Organizations</h2>
+				<table align="center">
+					<tr>
+						<th>{{OrganizationName}}</th>
+					</tr>
+				</table>
+				<br><input type="text" id="inputButton" style="visibility:hidden"></input> <input type="submit" id=addOrganizationButton value="Add An Organization" style="visibility:hidden"></input>
+
+				<div id="Groups">
+				<h2>Groups</h2>
+				<table id="GroupData" width="100%" bgcolor="#303030">
+				<tr>
+					<th><a href="studyGroup.html">Group Name: {{Group Name}}</a></th>
+					<th>Meeting Time: {{Meeting Time}}</th>
+					<th>Meeting Location: {{Meeting Location}}</th>
+					<th><button>Leave Group</button></th>
+				</tr>
+				</table>
+				</div>
+
+
+				<br /><br />
+							
+				<form>
+					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
+					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
+					<button type = "button" onclick = "javascript:redirectToSearchGroups()">Search For A Group</button>
+
+					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
+				
+				</form>
+			
+		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+	</div>
+</html>
+
+<style>
+#formData {
+    background-color:black;
+    color:lime;
+    text-align:center;
+    padding:100px;
+	font-family:courier;
+}
+</style>
