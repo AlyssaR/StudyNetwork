@@ -101,6 +101,7 @@ $app->post('/editStudyGroup', function() use ($database){
 	$loc = $_POST['loc'];
 	$gid = $_POST['gid'];
 	$success = true;
+	$errorType = "None";
 
 	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
 	$resultEG = $runQueryEG->fetch_assoc();
@@ -115,9 +116,12 @@ $app->post('/editStudyGroup', function() use ($database){
 	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
 	$resultEG = $runQueryEG->fetch_assoc();
 
-	if($resultEG === NULL || !($gname === $resultEG['gname'] && $time1 === $resultEG['time1'] && $loc === $resultEG['loc']))
+	if($resultEG === NULL || !($gname === $resultEG['gname'] && $time1 === $resultEG['time1'] && $loc === $resultEG['loc'])) {
 		$success = false;
-	$response = array("success"=>$success, "gid"=>$gid, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "errorType"=>"None");
+		$errorType = "Error making your changes. Please try again later.";
+	}
+
+	$response = array("success"=>$success, "gid"=>$gid, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "errorType"=>$errorType);
 	echo json_encode($response);
 });
 
@@ -184,6 +188,13 @@ $app->post('/getGroups', function () use ($database) {
 	else
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });*/
+
+$app->post('/getUserID', function () {
+	if(isset($_SESSION["uid"]))
+		echo json_encode(array("success"=>true,"uid"=>$_SESSION["uid"]));
+	else
+		echo json_encode(array("success"=>false));
+});
 
 $app->post('/getUserInfo', function () use ($database) {
     $uid = "";

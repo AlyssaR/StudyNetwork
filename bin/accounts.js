@@ -81,9 +81,28 @@ function getProfile() {
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);
             }
+            else 
+                window.location = "login.html";
+        }
+    });
+}
+
+function isLoggedIn(page) {
+    $.ajax({
+        url: "api/getUserID",
+        data: { "getID":true},
+        dataType: "json",
+        type: "post",
+        success:function(data) {
+            if(data.success) {
+                if(page === "login")
+                    window.location = "index.html";
+            }
             else {
-                alert("Error: Could not retrieve your profile. Please log in.")
-                window.location = "index.html";
+                if(page === "profile") {
+                    alert("Error: You are not currently logged in. You are being redirected to the Login page now...");
+                    window.location = "login.html";
+                }
             }
         }
     });
@@ -185,7 +204,7 @@ function validFName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your first name must start with uppercase letter");
+        alert("Your first name must start with an uppercase letter and be followed by lowercase letters.");
         return false;
     }
 }
@@ -196,7 +215,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name start with an uppercase letter");
+        alert("Your last name start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }

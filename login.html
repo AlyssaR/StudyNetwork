@@ -1,13 +1,11 @@
 <DOCUMENT html>
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<link href="css/navbar.css" rel="stylesheet">
 	<title> Homepage </title>
 </head>
-<body bgcolor="#000000"/>
+<body onload="isLoggedIn('login')" bgcolor="#000000"/>
 			
 		<div id = formData>
 		
@@ -15,13 +13,24 @@
 				<div class="navbar">
 					 <nav>
 						  <ul>
+							   <li><a href="index.html">Home</a></li>
 							   <li><a href="about.html">About</a></li>
-							   <li><a href="login.html">Login</a></li>
 						  </ul>
 					 </nav>
 				</div>
-					
-		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+		
+				<form method = "post" action = "javascript:login()">
+				<input type ="text" id="email" name="Login" placeholder= "Your Login Email Here">
+				<input type ="password" id="password" name="Password" placeholder= "Your Pass Here">
+				<input type = "submit" id = "loginForm" value = "Login">
+				</form>
+	</div>
+	<div id = registerLinkTo>
+		<p> Need an account? </p>
+		<form>
+		<button type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
+		</form>
+	
 	</div>
 </html>
 
