@@ -14,7 +14,7 @@ function createClass() {
             success: function(data) {
                 if(data.success) {
                     alert("Class added successfully!");
-                    window.location = "editprofile.html";
+                    window.location = "profile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -36,7 +36,7 @@ function createGroup() {
         success: function(data) {
             if(data.success) {
                 alert("Group added successfully!");
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
             else
                 alert("Error: " + data.errorType);
@@ -88,7 +88,7 @@ function getGroupInfo(gidGet) {
                 window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
             else {
                 alert("Error: Could not retrieve your group.")
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
         }
     });
@@ -157,7 +157,7 @@ function leaveStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have left the group.");
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
             else{
                 alert("Error: Could not remove you from group");
