@@ -159,20 +159,31 @@ function register() {
     }
 }
 
+function toggle(){
+	if (document.getElementById('optDisp1').style.visibility == "hidden") {
+		document.getElementById("editableButton").innerHTML="View Profile";
+		setEditableTrue();
+	}
+	else {
+		document.getElementById("editableButton").innerHTML="EditProfile";
+		setEditableFalse();
+	}
+}
+
 function setEditableTrue() {
 	document.getElementById('optDisp1').style.visibility = "visible";
 	document.getElementById('optDisp2').style.visibility = "visible";
 	document.getElementById('optDisp3').style.visibility = "visible";
-
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Edit Profile </button>"
+	document.getElementById('inputButton').style.visibility = "visible";
+	document.getElementById('addOrganizationButton').style.visibility = "visible";
 }
 
 function setEditableFalse() {
 	document.getElementById('optDisp1').style.visibility = "hidden";
 	document.getElementById('optDisp2').style.visibility = "hidden";
 	document.getElementById('optDisp3').style.visibility = "hidden";
-	
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Edit Profile </button>"
+	document.getElementById('inputButton').style.visibility = "hidden";
+	document.getElementById('addOrganizationButton').style.visibility = "hidden";
 }
 
 function validEmail() {
@@ -259,4 +270,17 @@ function validRegister() {
         return false;
     else 
         return true;
+}
+
+function toggle_visibility(id) 
+{
+    var e = document.getElementById(id);
+    if (e.style.display == 'visible' || e.style.display=='')
+    {
+        e.style.display = 'hidden';
+    }
+    else 
+    {
+        e.style.display = 'visible';
+    }
 }

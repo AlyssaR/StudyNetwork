@@ -11,14 +11,25 @@
 
 		<h1>Group Profile</h1>
 		<div class="navbar">
-			 <nav>
-				  <ul>
-					   <li><a href="index.html">Home</a></li>
-					   <li><a href="about.html">About</a></li>
-					   <li><a href="editprofile.html">View Profile</a></li>
-				  </ul>
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="profile.html">View Profile</a></li>
+					<li>
+							<input type="text" name="searchGroups">
+							<select method="post" action = "javascript:searchByClass()">
+								<option value="class" id = "class">Class</option>
+								<option value="prof" id = "prof">Prof</option>
+								<option value="group" id = "group">Group</option>
+							</select>
+							<a href="searchGroups.html"><input type="submit" value="Search"></a>
+					</li>
+					<li><a href="index.html">logout</a></li>
+				</ul>
 			 </nav>
 		</div>
+
 
 		Group Name:    <label id = "cur_gname"> Undefined </label>
 		<div value="1" id="optDisp1" style="visibility:hidden">
@@ -39,10 +50,7 @@
 
 			<input type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group"><br />
 			
-			<div id="editButtonDiv">
-					<button  id="editableButton" type = "button" onclick = "javascript:setEditableTrue()"> Toggle Editing </button>
-					
-					</div>
+					<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Editing Profile </button>
 
 		</div>
 </html>
