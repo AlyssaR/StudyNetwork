@@ -201,7 +201,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("The last name start with an uppercase letter and be followed by only letters from the English alphabet.");
+        alert("The last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }
