@@ -43,6 +43,7 @@ $app->post('/addGroup', function() use ($database){
 	$role = "admin";
 	$error = "None";
 	$success = true;
+	//have not added cid
 	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
 	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
 	
@@ -201,29 +202,6 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
-/*$app->post('/getGroups_searchByClass', function () use ($database) {
-	$uid = "";
-	if(isset($_SESSION["dept"]) AND isset($SESSTION["class_num"]))
-		$dept = ($_SESSION["dept"]);
-		$class_num = ($SESSTION["class_num"]);
-	    $cid = $dept + $class_num;
-	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
-		return;
-	}
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE cid = '$cid';");
-	
-	$response = array();
-	if ($runQuery->num_rows != 0) {
-		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "error"=>"None");
-
-		echo json_encode($response);
-	}
-	else
-		echo json_encode(array("success"=>false, "error"=>"No groups found"));
-});*/
-
 $app->post('/getUserID', function () {
 	if(isset($_SESSION["uid"]))
 		echo json_encode(array("success"=>true,"uid"=>$_SESSION["uid"]));
@@ -332,23 +310,7 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
-// expects array of values, returns json array named 'search' of results from first value (for now)
-$app->post('/search', function() use ($database) {
-  $search = array();
-  if (!empty($_POST['search'])) {
-    $search = json_decode($_POST['search'], true);
-    // perform the search
-    $response = $database->query("SELECT * FROM StudyGroups WHERE gid = " . $search[0] . " OR cid = " . $search[0]
-    . " OR creator = " . $search[0]
-    . " OR gname = " . $search[0]
-    . " OR time1 = " . $search[0]
-    . " OR loc = " . $search[0]
-    . " OR num_members = " . $search[0]);
-    echo json_encode($response);
-  }
-});
-
-/*$app->post('/searchByClass', function() use ($database) {
+$app->post('/searchByClass', function() use ($database) {
 	$class = array();
 	if(!empty($_POST['class'])) {
 		$search = json_decode($_POST['class'], true); 	
@@ -356,25 +318,11 @@ $app->post('/search', function() use ($database) {
   		if($cid === NULL)
   			$result = "ERROR: No groups exist for that course.";
   		else
-    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid';"); //use cid to get list of groups
+    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
     	echo json_encode($response);
     }
-});*/
-// issue: search for classes v2
-/*$app->get('/searchForClasses', function() use ($database) {
-  $json = json_decode($_GET["search"], true);
-  // build query string
-  $query = "SELECT * FROM Classes WHERE";
-  for ($i = 0; $i < count($json); $i++) {
-    $query = $query . " dept LIKE " . $json[$i] . " OR class_num LIKE " . $json[$i] . " OR time2 LIKE " . $json[$i] . " OR professor LIKE " . $json[$i] . " ";
-    if ($i < count($json) - 1) {
-      $query = $query . "OR";
-    }
-  }
-  $query = $query . ";";
-  $result = $database->query($query);
-  echo json_encode($query);
-});*/
+});
+
 
 $app->run();
 ?>
