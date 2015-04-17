@@ -199,7 +199,7 @@ function validEmail() {
 }
 
 function validFName() {
-    var regex = /[A-Z][a-z]+/;
+    var regex = /^[A-Z][-a-zA-Z]+$/;
     var name = document.getElementById("f_name").value;
     if(regex.test(name))
         return true;
@@ -210,7 +210,7 @@ function validFName() {
 }
 
 function validLName() { 
-    var regex = /[A-Z][a-zA-Z]+/;
+    var regex = /^[A-Z][-'a-zA-Z]+$/;
     var name = document.getElementById("l_name").value;
     if(regex.test(name))
         return true;
