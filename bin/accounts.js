@@ -116,7 +116,7 @@ function login() {
             window.location = "profile.html";
         }
         else
-            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
+            alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
 
@@ -215,7 +215,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name start with an uppercase letter and be followed by only letters from the English alphabet.");
+        alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }
