@@ -116,7 +116,7 @@ function login() {
             window.location = "profile.html";
         }
         else
-            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
+            alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
 

@@ -21,7 +21,7 @@
 				  <ul>
 					   <li><a href="index.html">Home</a></li>
 					   <li><a href="about.html">About</a></li>
-					   <li><a href="editprofile.html">View Profile</a></li>
+					   <li><a href="profile.html">View Profile</a></li>
 				  </ul>
 			 </nav>
 		</div>
