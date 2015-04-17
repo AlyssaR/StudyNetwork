@@ -47,7 +47,7 @@
 			<input type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group"><br />
 			
 			<div id="editButtonDiv">
-					<button  id="editableButton" type = "button" onclick = "javascript:setEditableTrue()"> Toggle Editing </button>
+					<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
 					
 					</div>
 
