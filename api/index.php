@@ -43,7 +43,7 @@ $app->post('/addGroup', function() use ($database){
 	$role = "admin";
 	$error = "None";
 	$success = true;
-	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1);");
+	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
 	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
 	
 	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
@@ -166,7 +166,8 @@ $app->post('/getGroupInfo', function () use ($database) {
 		echo json_encode(array("gid"=>$_POST['gid']));
 		return;
 	}
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' LIMIT 1;");
+	//only want to pull up groups that are active, hopefully this works
+	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' and active = TRUE LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
 	//some response
@@ -186,7 +187,8 @@ $app->post('/getGroups', function () use ($database) {
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 		return;
 	}
-	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.uid = '$uid';");
+	//again only returning groups that they are still a part of...hopefully 
+	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {
@@ -261,7 +263,10 @@ $app->post('/joinStudyGroup', function() use ($database) {
 $app->post('/leaveStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
 	$gid = $_POST['gid'];
-	$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
+
+	//changed this to update. old deleting method below if needed
+	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE gid = '$gid' AND uid = '$uid';");
+	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 	echo json_encode(array("success"=>true));
 });
 
@@ -317,7 +322,8 @@ $app->post('/register', function () use ($database) {
 	}
 	//Add user
 	else {
-		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd) VALUES ('$uid', '$fName', '$lName', '$email', '$password');");
+		//added active to this query as well
+		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd, active) VALUES ('$uid', '$fName', '$lName', '$email', '$password', TRUE);");
 		$_SESSION["uid"] = $uid;
 	}
 
