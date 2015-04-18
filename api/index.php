@@ -190,6 +190,23 @@ $app->post('/getGroupInfo', function () use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('/getGroupMembers', function() use ($database) {
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+
+	//this will grab all the uid's of users in the Group
+	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+	if($allGroupMembers === NULL)
+		$response = array("success"=>false, "f_name"=>"Not Valid", "l_name"=>"Not Valid", "error"=>"There are no members in this group");
+	else
+		$response = array("success"=>true, "f_name"=>$allGroupMembers['f_name'], "l_name"=>$allGroupMembers['l_name'], "error"=>"None");
+	echo json_encode($response);
+});
+
 //This is to get Groups for the user profile page
 $app->post('/getGroups', function () use ($database) {
 	$uid = "";
