@@ -18,10 +18,21 @@ $app->post('/addClass', function() use ($database){
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
 	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
+	$cid = ($_POST['dept'].$_POST['prof_last']);
+	$uid = $_SESSION["uid"];
+
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (cid, dept, time2, professor) VALUES ('$class_num', '$dept', '$time2', '$professor');");
+	$checkClass = $database->query("SELECT cid FROM Classes where cid = '$cid'");
+	if($checkClass->num_rows > 0){
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+	}
+	else {
+		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$professor');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+	}
+
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
 	echo json_encode($response);
 });
