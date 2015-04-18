@@ -174,6 +174,10 @@ function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
 
+function redirectToSearchResults() {
+	window.location = "searchGroups.html";
+}
+
 function validClass(){
     if(!validFName())
         return false;
