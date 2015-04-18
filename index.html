@@ -1,42 +1,58 @@
 <DOCUMENT html>
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
-	<link href="css/navbar.css" rel="stylesheet">
-	<title> Homepage </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	
+	<title>Study Network</title>
 </head>
-<body bgcolor="#000000"/>
-			
-		<div id = formData>
-		
-				<h1>The StudyNetwork</h1>
-				<div class="navbar">
-					 <nav>
-						  <ul>
-							   <li><a href="about.html">About</a></li>
-							   <li><a href="login.html">Login</a></li>
-						  </ul>
-					 </nav>
+<body>			
+	<!--Navigation bar and Header-->
+	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">Study Network</a>
 				</div>
-					
-		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+				<div>
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li>
+							<form method = "post" class="form-inline" style="margin: 10px;" action = "javascript:login()">
+								<input type ="text" id="email" class="form-control" name="Login" placeholder= "Enter Email">
+								<input type ="password" id="password" class="form-control" name="Password" placeholder= "Enter Password">
+								<input type = "submit" class="btn" value = "Login">
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	<!--Divs are used to center the text and button-->
+	<div class="container">
+		<div class="row vertical-center-row">
+			<div class="col-lg-12">
+				<div class="row ">
+					<div class="col-xs-4  col-xs-offset-4">
+						<br><br>
+						<p class="text-center"> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+						<p class="text-center"> Need an account? </p>
+						<form>
+							<button class="btn center-block" type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	
+</body>
 </html>
 
-<style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
-}
-#registerLinkTo {
-	background-color: black;
-	color:lime;
-	text-align: center;
-	font-family: courier;
-}
-</style>
