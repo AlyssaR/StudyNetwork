@@ -2,45 +2,74 @@
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
-	<link href="css/navbar.css" rel="stylesheet">
-	<title> Create Your Profile </title>
-</head>
-<body bgcolor="#000000" />
-			
-	<div id = formData>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	
-		<h1>Please enter the following information:</h1>
-		<div class="navbar">
-			<nav>
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="profile.html">View Profile</a></li>
-				</ul>
-			 </nav>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href="css/bootstrap-addons.css" rel="stylesheet">
+	
+	<title> Register </title>
+</head>
+<body>
+	<!--Navigation bar and Header-->
+	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">Study Network</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li>
+							<form method = "post" class="form-inline" style="margin: 10px;" action = "javascript:login()">
+								<input type ="text" id="email" class="form-control" name="Login" placeholder= "Enter Email">
+								<input type ="password" id="password" class="form-control" name="Password" placeholder= "Enter Password">
+								<input type = "submit" class="btn" value = "Login">
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-
-
-		<form method="post" action = "javascript:register()">
-			First Name: <input type = "text" id = "f_name" placeholder = "Enter First Name" /><br />
-			Last Name: <input type = "text" id = "l_name" placeholder = "Enter Last Name"/><br />
-			Email: <input type = "text" id = "email" placeholder = "Enter email"/><br />
-			Password: <input type = "password" id = "password" onkeyup="validPass();" placeholder = "Enter Password" /><br />
-			Retype Password: <input type = "password" placeholder="Retype Password" id="password2" onkeyup="validPass();" /> <br />
-			<span id="validateMessage"></span> <br />
-			<input type = "submit" id="submit" value = "Register">
-		</form>
-
-	<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+	</nav>
+	
+	<!--Register Form-->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<legend class="text-center">Register</legend>
+				<form method="post" action = "javascript:register()">
+					<div class="form-group">
+						<label>First Name:</label>
+						<input type = "text" id = "f_name" placeholder = "Enter First Name" />
+					</div>
+					<div class="form-group">
+						<label>Last Name:</label>
+						<input type = "text" id = "l_name" placeholder = "Enter Last Name"/>
+					</div>
+					<div class="form-group">
+						<label>Email:</label>
+						<input type = "text" id = "email" placeholder = "Enter email"/>
+					</div>
+					<div class="form-group">
+						<label>Password:</label>
+						<input type = "password" id = "password" onkeyup="validPass();" placeholder = "Enter Password" />
+					</div>
+					<div class="form-group">
+						<label>Retype Password:</label>
+						<input type = "password" placeholder="Retype Password" id="password2" onkeyup="validPass();" />
+					</div>
+					<input type = "submit" id="submit" value = "Register">
+				</form>
+			</div>
+		</div>
 	</div>
+	
+	 <!--Footer-->
+	<p class="text-center"> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+</body>
 </html>
 
-<style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
-}
-</style>
