@@ -234,15 +234,35 @@ $app->post('/joinStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
     $gid = $_POST['gid'];
     $role = "member";
+
+    $num_members = 0;
+    $error = "None";
+    $success = true;
+    //assign num members!
+    $numMemStart = $database->query("SELECT num_members FROM StudyGroups WHERE gid = 'gid';");
+    $numMem = $numMemStart->fetch_assoc();
+    $num_members = $numMem['num_members'] + 1;
+
+    $database->query("UPDATE StudyGroups SET num_members = '$num_members' WHERE gid = '$gid';");
     $database->query("INSERT INTO GroupEnroll VALUES('$uid', '$gid', '$role', TRUE);");
-    echo json_encode(array("success"=>true));
+    $response = array("success"=>$success, "errorType"=>$error);
+    echo json_encode($response);
 });
 
 $app->post('/leaveStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
 	$gid = $_POST['gid'];
 
+	$$num_members = 0;
+    $error = "None";
+    $success = true;
+    //assign num members!
+    $numMemStart = $database->query("SELECT num_members FROM StudyGroups WHERE gid = 'gid';");
+    $numMem = $numMemStart->fetch_assoc();
+    $num_members = $numMem['num_members'] - 1;
+
 	//changed this to update. old deleting method below if needed
+	$database->query("UPDATE StudyGroups SET num_members = '$num_members' WHERE gid = '$gid';");
 	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE gid = '$gid' AND uid = '$uid';");
 	//$database->query("DELETE FROM GroupEnroll WHERE gid = '$gid' and uid = '$uid';");
 	echo json_encode(array("success"=>true));
