@@ -174,16 +174,12 @@ function setEditableTrue() {
 	document.getElementById('optDisp1').style.visibility = "visible";
 	document.getElementById('optDisp2').style.visibility = "visible";
 	document.getElementById('optDisp3').style.visibility = "visible";
-	document.getElementById('inputButton').style.visibility = "visible";
-	document.getElementById('addOrganizationButton').style.visibility = "visible";
 }
 
 function setEditableFalse() {
 	document.getElementById('optDisp1').style.visibility = "hidden";
 	document.getElementById('optDisp2').style.visibility = "hidden";
 	document.getElementById('optDisp3').style.visibility = "hidden";
-	document.getElementById('inputButton').style.visibility = "hidden";
-	document.getElementById('addOrganizationButton').style.visibility = "hidden";
 }
 
 function validEmail() {
