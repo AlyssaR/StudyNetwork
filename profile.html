@@ -4,98 +4,133 @@
 	<script type="text/javascript" src="bin/helper.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<script type="text/javascript" src="bin/searchGroups.js"></script>
-	<link href="css/navbar.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href="css/bootstrap-addons.css" rel="stylesheet">
+	
 	<title>Profile</title>
 </head>
-<body onload = "getProfile(),getGroups()" bgcolor="#000000" />
-		<div id = formData>
-		
-				<h1>Welcome to the Study Network!</h1>
-				<div class="navbar">
-					<nav>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="about.html">About</a></li>
-							<li><a href="profile.html">View Profile</a></li>
-							<li>
-									<input type="text" name="searchGroups">
-									<select method="post" action = "javascript:searchByClass()">
-										<option value="class" id = "class">Class</option>
-										<option value="prof" id = "prof">Prof</option>
-										<option value="group" id = "group">Group</option>
-									</select>
-									<a href="searchGroups.html"><input type="submit" value="Search"></a>
-							</li>
-							<li><a href="index.html">logout</a></li>
-						</ul>
-					 </nav>
+<body onload = "getProfile()>
+	<!--Navigation bar and Header-->
+	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">Study Network</a>
 				</div>
-				
-				<h2>Profile</h2>
+				<div>
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="profile.html">Profile</a></li>
+						<li>
+							<form class="navbar-form" role="search">
+								<div class="input-group">
+									<input type="text" class="form-control pull-right" style="width: 300px; margin-right: 35px, border: 1px solid black; background-color: #e5e5e5;" placeholder="Search">
+									<span class="input-group-btn">
+										<button type="reset" class="btn btn-default">
+											<span class="glyphicon glyphicon-remove">
+												<span class="sr-only">Close</span>
+											</span>
+										</button>
+										<button type="submit" class="btn btn-default" onclick="javascript:redirectToSearchResults()">
+											<span class="glyphicon glyphicon-search" >
+												<span class="sr-only">Search</span>
+											</span>
+										</button>
+									</span>
+								</div>
+							</form>
+						</li>
+						<li><a href="index.html">logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	<!--Profile Page Header-->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<legend class="text-center">Profile</legend>
+			</div>
+		</div>
+	</div>	
+	
+	<!--Profile info-->
+	<div class="container">
+		<div class="row">
+		
+			<!--Profile Stats-->
+			<div class="col-md-3">			
+				<h2>Account<h2>
 				<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button> 
-				
+			
 				<h4>First name:	<label id = "cur_f_name">{{FirstName}}</label> </h4>
 				<div value ="1" id="optDisp1" style= "visibility: hidden">
 					<input type = "text" id = "f_name" placeholder = "New First Name">
-					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change"><br />
+					<input type = "submit" onclick = "javascript:editProfile('first')" value = "Change">
 				</div>
 				<h4>Last name:	<label id = "cur_l_name">{{LastName}}</label> </h4>
 				<div value ="1" id="optDisp2" style= "visibility: hidden">
 					<input type = "text" id = "l_name" placeholder = "New Last Name">
-					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"><br /> 
+					<input type = "submit" onclick = "javascript:editProfile('last')" value = "Change"> 
 				</div>
 				<h4>Email:	<label id = "cur_email">{{Email}}</label></h4>
 				<div value ="1" id="optDisp3" style= "visibility: hidden">
-						<input type = "text" id = "email" placeholder = "New Email">
-						<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"><br /> 
-				
-				<h4>Change Password: <input type = "password" id = "password" placeholder = "New Password"/></h4>
-				<h4>Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/> </h4>
-				
-				<input type = "submit" onclick = "javascript:editProfile('password')" value = "Save Changes"> <br>
+					<input type = "text" id = "email" placeholder = "New Email">
+					<input type = "submit" onclick = "javascript:editProfile('email')" value = "Change"> 
+					<h4>Change Password: <input type = "password" id = "password" placeholder = "New Password"/></h4>
+					<h4>Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/> </h4>
 				</div>
-				
-				<h2>My Organizations</h2>
-				<table align="center">
-					<tr>
-						<th>{{OrganizationName}}</th>
-					</tr>
-				</table>
-				<br><input type="text" id="inputButton" style="visibility:hidden"></input> <input type="submit" id=addOrganizationButton value="Add An Organization" style="visibility:hidden"></input>
-
-				<div id="Groups">
-				<h2>Groups</h2>
-				<table id="GroupData" width="100%" bgcolor="#303030">
-				<tr>
-					<th><a href="studyGroup.html">Group Name: {{Group Name}}</a></th>
-					<th>Meeting Time: {{Meeting Time}}</th>
-					<th>Meeting Location: {{Meeting Location}}</th>
-					<th><button>Leave Group</button></th>
-				</tr>
-				</table>
-				</div>
-
-
-				<br /><br />
-							
-				<form>
-					<button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button>
-					<button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button>
-
-					<br /><br /><button type = "button" onclick = "javascript:logout()"> Logout </button>
-				
-				</form>
 			
-		<p> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
-	</div>
-</html>
+				<input type = "submit" onclick = "javascript:editProfile('password')" value = "Save Changes"> <br>
+			</div>
+			
+			<!--Organizations-->
+			<div class="col-md-3">
+			
+			<h2>Organizations</h2>
+			<table align="center">
+				<tr>
+					<th>{{OrganizationName}}</th>
+				</tr>
+			</table>
+			<br><input type="text" id="inputButton"></input> <input type="submit" id=addOrganizationButton value="Add An Organization"></input>
+			</div>
+			
+			<!--Study Groups-->
+			<div class="col-md-3">
+			<h2>Study Groups</h2>
+			<table id="GroupData" width="100%" bgcolor="#303030">
+			<tr>
+				<th><a href="studyGroup.html">Group Name: {{Group Name}}</a></th>
+				<th>Meeting Time: {{Meeting Time}}</th>
+				<th>Meeting Location: {{Meeting Location}}</th>
+				<th><button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button></th>
+			</tr>
+			</table>
+			</div>
+			
+			<!--Classes-->
+			<div class="col-md-3">
+			<h2>Classes</h2>
+			<table id="GroupData" width="100%" bgcolor="#303030">
+			<tr>
+				<th><a href="studyGroup.html">Group Name: {{Group Name}}</a></th>
+				<th>Class Time:{{Class Time}}</th>
+				<th>Professor: {{Professor FirstName + LastName}}</th>
+				<th><button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button></th>
+			</tr>
+			</table>
+			</div>
+		</div>
+	</div>	
+		<p class="text-center"> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </p>
+</body>
 
-<style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
-}
-</style>
+</html>

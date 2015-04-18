@@ -2,50 +2,48 @@
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="bin/accounts.js"></script>
-	<link href="css/navbar.css" rel="stylesheet">
-	<title> Homepage </title>
-</head>
-<body onload="isLoggedIn('login')" bgcolor="#000000"/>
-			
-		<div id = formData>
-		
-				<h1>The StudyNetwork</h1>
-				<div class="navbar">
-					 <nav>
-						  <ul>
-							   <li><a href="index.html">Home</a></li>
-							   <li><a href="about.html">About</a></li>
-						  </ul>
-					 </nav>
-				</div>
-		
-				<form method = "post" action = "javascript:login()">
-				<input type ="text" id="email" name="Login" placeholder= "Your Login Email Here">
-				<input type ="password" id="password" name="Password" placeholder= "Your Pass Here">
-				<input type = "submit" id = "loginForm" value = "Login">
-				</form>
-	</div>
-	<div id = registerLinkTo>
-		<p> Need an account? </p>
-		<form>
-		<button type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
-		</form>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href="css/bootstrap-addons.css" rel="stylesheet">
+	<title> Login </title>
+</head>
+<body onload="isLoggedIn('login')">
+			
+	<!--Navigation bar and Header-->
+	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">Study Network</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li>
+							<form method = "post" class="form-inline" style="margin: 10px;" action = "javascript:login()">
+								<input type ="text" id="email" class="form-control" name="Login" placeholder= "Enter Email">
+								<input type ="password" id="password" class="form-control" name="Password" placeholder= "Enter Password">
+								<input type = "submit" class="btn" value = "Login">
+							</form>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<p> Need an account? </p>
+				<form>
+				<button type = "button" onclick ="javascript:redirect()"><big><big> Register</big> </big></button>
+				</form>
+			</div>
+		</div>
 	</div>
 </html>
 
-<style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
-}
-#registerLinkTo {
-	background-color: black;
-	color:lime;
-	text-align: center;
-	font-family: courier;
-}
-</style>
