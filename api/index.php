@@ -199,6 +199,7 @@ $app->post('/getGroupMembers', function() use ($database) {
 	}
 
 	//this will grab all the uid's of users in the Group
+	//may need to make this a 2-d array
 	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
 	if($allGroupMembers === NULL)
 		$response = array("success"=>false, "f_name"=>"Not Valid", "l_name"=>"Not Valid", "error"=>"There are no members in this group");
@@ -228,6 +229,30 @@ $app->post('/getGroups', function () use ($database) {
 	}
 	else
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+});
+
+$app->post('/getOrganizations', function() use ($database) {
+		$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+
+	//returning all Orgs
+	$allOrgs = $database->query("SELECT orgName FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.oid = o.oid AND active = TRUE;");
+
+	$response = array();
+	if($allOrgs->num_rows != 0) {
+		while($row = $allOrgs->fetch_assoc())
+			$response[] = array("success"=>true, "orgName"=>$row['orgName'], "error"=>"None");
+
+		echo json_encode($response)
+	}
+	else 
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+
 });
 
 $app->post('/getUserID', function () {
