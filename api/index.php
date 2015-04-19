@@ -170,6 +170,28 @@ $app->post('/editStudyGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('/getClasses', function() use ($database) {
+		$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+
+	//returning all classes a User has enrolled in
+	$runQuery = $database->query("SELECT dept, class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.cid = e.cid AND e.uid = '$uid';");
+	$response = array();
+	if($runQuery->num_rows != 0) {
+		while($row = $runQuery->fetch_assoc())
+			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "professor"=>$row['professor'], "error"=>"None");
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=> "No classes found"));
+
+});
+
 //This is to get groups to redirect to group profile page
 $app->post('/getGroupInfo', function () use ($database) {
 	if(isset($_POST['gid']))
@@ -201,11 +223,13 @@ $app->post('/getGroupMembers', function() use ($database) {
 	//this will grab all the uid's of users in the Group
 	//may need to make this a 2-d array
 	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
-	if($allGroupMembers === NULL)
-		$response = array("success"=>false, "f_name"=>"Not Valid", "l_name"=>"Not Valid", "error"=>"There are no members in this group");
+	if($allGroupMembers->num_rows != 0) {
+		while($row = $allGroupMembers->fetch_assoc())
+			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "error"=>"None");
+		echo json_encode($response);
+	}
 	else
-		$response = array("success"=>true, "f_name"=>$allGroupMembers['f_name'], "l_name"=>$allGroupMembers['l_name'], "error"=>"None");
-	echo json_encode($response);
+		echo json_encode(array("success"=>false, "error"=>"No members found"));
 });
 
 //This is to get Groups for the user profile page
