@@ -18,10 +18,21 @@ $app->post('/addClass', function() use ($database){
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
 	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
+	$cid = ($_POST['dept'].$_POST['prof_last']);
+	$uid = $_SESSION["uid"];
+
 	$error = "None";
 	$success = true;
 
-	$database->query("INSERT INTO Classes (cid, dept, time2, professor) VALUES ('$class_num', '$dept', '$time2', '$professor');");
+	$checkClass = $database->query("SELECT cid FROM Classes where cid = '$cid'");
+	if($checkClass->num_rows > 0){
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+	}
+	else {
+		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$professor');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+	}
+
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
 	echo json_encode($response);
 });
@@ -159,6 +170,47 @@ $app->post('/editStudyGroup', function() use ($database){
 	echo json_encode($response);
 });
 
+$app->post('/getClasses', function() use ($database) {
+		$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+
+	//returning all classes a User has enrolled in
+	$runQuery = $database->query("SELECT dept, class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.cid = e.cid AND e.uid = '$uid';");
+	$response = array();
+	if($runQuery->num_rows != 0) {
+		while($row = $runQuery->fetch_assoc())
+			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "professor"=>$row['professor'], "error"=>"None");
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=> "No classes found"));
+
+});
+
+$app->post('/getClassInfo', function(), use ($database) {
+	if(isset($_POST['cid']))
+		$cid = $_POST['cid'];
+	else {
+		echo json_encode(array("cid"=>$_POST['cid']));
+		return;
+	}
+
+	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE cid = '$cid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array ("success"=> false, "dept"=>"Not Valid", "class_num"=>"Not Valid", "error"=>"This class doesn't exist");
+	else
+		$response = array ("success"=>true, "dept"=>$result['dept'], "class_num"=>$result['class_num'], "error"=>"None");
+	echo json_encode($response);
+
+});
+
 //This is to get groups to redirect to group profile page
 $app->post('/getGroupInfo', function () use ($database) {
 	if(isset($_POST['gid']))
@@ -177,6 +229,26 @@ $app->post('/getGroupInfo', function () use ($database) {
 	else
 		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
 	echo json_encode($response);
+});
+
+$app->post('/getGroupMembers', function() use ($database) {
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+
+	//this will grab all the uid's of users in the Group
+	//may need to make this a 2-d array
+	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+	if($allGroupMembers->num_rows != 0) {
+		while($row = $allGroupMembers->fetch_assoc())
+			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "error"=>"None");
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=>"No members found"));
 });
 
 //This is to get Groups for the user profile page
@@ -200,6 +272,49 @@ $app->post('/getGroups', function () use ($database) {
 	}
 	else
 		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+});
+
+$app->post('/getOrganizations', function() use ($database) {
+		$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+
+	//returning all Orgs
+	$allOrgs = $database->query("SELECT org_name FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.oid = o.oid AND active = TRUE;");
+
+	$response = array();
+	if($allOrgs->num_rows != 0) {
+		while($row = $allOrgs->fetch_assoc())
+			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "error"=>"None");
+
+		echo json_encode($response)
+	}
+	else 
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+
+});
+
+//for if we want to pull one organizaiton at a time
+$app->post('/getOrganizationInfo', function() use ($database) {
+	if(isset($_POST['oid']))
+		$oid = $_POST['oid'];
+	else {
+		echo json_encode(array("oid"=>$_POST['oid']));
+		return;
+	}
+
+	$runQuery = $database->query("SELECT org_name FROM Organizations WHERE 'oid' = '$oid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array("success"=>false, "org_name"=>"Not Valid", "error"=>"This organizaiton doesn't exist");
+	else
+		$response = array("success"=>true, "org_name"=>$result['org_name'], "error"=>"None");
+	echo json_encode($response)
 });
 
 $app->post('/getUserID', function () {
