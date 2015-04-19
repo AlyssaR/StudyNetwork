@@ -239,6 +239,7 @@ function validPass(alertTrue) {
     
     if (pass1.value == pass2.value) {
         if(message != null) {
+            pass1.style.backgroundColor = matchColor;
             pass2.style.backgroundColor = matchColor;
             message.style.color=matchColor;
             message.innerHTML="Passwords match!";
@@ -255,6 +256,7 @@ function validPass(alertTrue) {
         //document.getElementById('submit').disabled=false;
     }
     else if (message != null) {
+        pass1.style.backgroundColor = noMatch;
         pass2.style.backgroundColor = noMatch;
         message.style.color=noMatch;
         message.innerHTML = "Passwords do not match!";
