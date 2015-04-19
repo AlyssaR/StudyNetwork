@@ -192,6 +192,25 @@ $app->post('/getClasses', function() use ($database) {
 
 });
 
+$app->post('/getClassInfo', function(), use ($database) {
+	if(isset($_POST['cid']))
+		$cid = $_POST['cid'];
+	else {
+		echo json_encode(array("cid"=>$_POST['cid']));
+		return;
+	}
+
+	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE cid = '$cid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array ("success"=> false, "dept"=>"Not Valid", "class_num"=>"Not Valid", "error"=>"This class doesn't exist");
+	else
+		$response = array ("success"=>true, "dept"=>$result['dept'], "class_num"=>$result['class_num'], "error"=>"None");
+	echo json_encode($response);
+
+});
+
 //This is to get groups to redirect to group profile page
 $app->post('/getGroupInfo', function () use ($database) {
 	if(isset($_POST['gid']))
