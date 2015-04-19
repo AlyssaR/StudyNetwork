@@ -102,7 +102,7 @@ function getGroups() {
         success: function(data) {
             var table  = document.getElementById('GroupData');//.style.textAlign = "center";
             for(var i = 0; i < data.length; i++) {
-                $('#results').text("");
+                $('#groupresults').text("");
                 if(!data[i].success)
                     continue;                
                 // Insert a row in the table at row index 0

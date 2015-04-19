@@ -12,7 +12,7 @@
 	
 	<title>Profile</title>
 </head>
-<body onload = "getProfile()>
+<body onload = "getProfile(),getGroups()" >
 	<!--Navigation bar and Header-->
 	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
 	<nav class="navbar navbar-default">
@@ -114,6 +114,7 @@
 				<th><button type = "button" onclick = "javascript:redirectToGroup()"> Create A Study Group</button></th>
 			</tr>
 			</table>
+			<label id="groupresults">You are not in any study groups yet.</label>
 			</div>
 			
 			<!--Classes-->
