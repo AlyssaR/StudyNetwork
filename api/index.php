@@ -241,18 +241,37 @@ $app->post('/getOrganizations', function() use ($database) {
 	}
 
 	//returning all Orgs
-	$allOrgs = $database->query("SELECT orgName FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.oid = o.oid AND active = TRUE;");
+	$allOrgs = $database->query("SELECT org_name FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.oid = o.oid AND active = TRUE;");
 
 	$response = array();
 	if($allOrgs->num_rows != 0) {
 		while($row = $allOrgs->fetch_assoc())
-			$response[] = array("success"=>true, "orgName"=>$row['orgName'], "error"=>"None");
+			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "error"=>"None");
 
 		echo json_encode($response)
 	}
 	else 
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
 
+});
+
+//for if we want to pull one organizaiton at a time
+$app->post('/getOrganizationInfo', function() use ($database) {
+	if(isset($_POST['oid']))
+		$oid = $_POST['oid'];
+	else {
+		echo json_encode(array("oid"=>$_POST['oid']));
+		return;
+	}
+
+	$runQuery = $database->query("SELECT org_name FROM Organizations WHERE 'oid' = '$oid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array("success"=>false, "org_name"=>"Not Valid", "error"=>"This organizaiton doesn't exist");
+	else
+		$response = array("success"=>true, "org_name"=>$result['org_name'], "error"=>"None");
+	echo json_encode($response)
 });
 
 $app->post('/getUserID', function () {
