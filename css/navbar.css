@@ -2,7 +2,7 @@ html,
 li {
 	display: inline;
 	text-align: center;
-	color: lime;
+	width:auto;
 	font-size: 20px;
 	/*padding-right: 40px;
 	padding-left: 40px;*/
