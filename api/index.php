@@ -364,6 +364,17 @@ $app->post('/joinStudyGroup', function() use ($database) {
     echo json_encode($response);
 });
 
+$app->post('/leaveOrganization', function() use ($database) {
+	$uid = $_SESSION['uid'];
+	$oid = $_POST['oid'];
+
+	$error = "None";
+	$success = true;
+
+	$database->query("UPDATE OrgEnroll SET active = FALSE where uid = '$uid' AND 'oid' ='$oid';");
+	echo json_encode($success);
+});
+
 $app->post('/leaveStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
 	$gid = $_POST['gid'];
