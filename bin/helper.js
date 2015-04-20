@@ -44,6 +44,25 @@ function createGroup() {
     });  
 }
 
+function createOrganization() {
+    $.ajax({
+        url: "api/addOrganization",
+        type: "post",
+        data: {
+            "org_name":$("#org_name").val()
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("Organization added successfully!");
+                window.location = "profile.html";
+            }
+            else
+                alert("Error " + data.errorType);
+        }
+    });
+}
+
 function editGroup(changes) { 
     editS = {"gid":$('#gid').text(),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
 
