@@ -3,6 +3,7 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="bin/helper.js"></script>
+<<<<<<< HEAD
 	<link href="css/navbar.css" rel="stylesheet">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<title>Create a Class</title>
@@ -196,19 +197,212 @@
 				<option value="WGST">WGST</option>
 				<option value="WL">WL</option>
 				</select><br/><br>	
+=======
+	<link href="css/bootstrap-addons.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-				<!--Course Department:
-				<input type ="text" id="dept" name="courseDepartment">  <br/><br/>-->
-				Course Number:
-				<input type ="text" id="class_num" name="courseNumber" required> <br/><br/>
-				Class Time: <input type ="time" id="time2" name="classTime" required> <br/><br/>
-				Professor: 
-					First: <input type="text" id="prof_first" name="profFirstName" required>
-					Last: <input type="text" id="prof_last" name="profLastName" required> <br/><br/>
-				<input type = "submit" value = "Create Class">
-			</p>
-		</form>
-	<div>
+	<title>Create a Class</title>
+</head>
+
+<body>	
+>>>>>>> dev
+
+	<!--Navigation bar and Header-->
+	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">Study Network</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="profile.html">Profile</a></li>
+						<li>
+							<form class="navbar-form" role="search">
+								<div class="input-group">
+									<input type="text" class="form-control pull-right" style="width: 300px; margin-right: 35px, border: 1px solid black; background-color: #e5e5e5;" placeholder="Search">
+									<span class="input-group-btn">
+										<button type="reset" class="btn btn-default">
+											<span class="glyphicon glyphicon-remove">
+												<span class="sr-only">Close</span>
+											</span>
+										</button>
+										<button type="submit" class="btn btn-default" onclick="javascript:redirectToSearchResults()">
+											<span class="glyphicon glyphicon-search" >
+												<span class="sr-only">Search</span>
+											</span>
+										</button>
+									</span>
+								</div>
+							</form>
+						</li>
+						<li><a href="index.html">logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	
+	<!--Create a Class Form-->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<legend>Create A Class</legend>
+				<form method = "post" action = "javascript:createClass()" role="form">
+					<div class="form-group">
+						<label for="subject">Subject:</label>
+						<select type="subject" id = "dept" name = "deptDropdown">
+							<option value="ACCT">ACCT</option>
+							<option value="ADPR">ADPR</option>
+							<option value="ADRE">ADRE</option>
+							<option value="AERO">AERO</option>
+							<option value="AMAE">AMAE</option>
+							<option value="ANTH">ANTH</option>
+							<option value="APSM">APSM</option>
+							<option value="ARBC">ARBC</option>
+							<option value="ARHS">ARHS</option>
+							<option value="ASAG">ASAG</option>
+							<option value="ASCE">ASCE</option>
+							<option value="ASDR">ASDR</option>
+							<option value="ASIM">ASIM</option>
+							<option value="ASPH">ASPH</option>
+							<option value="ASPR">ASPR</option>
+							<option value="ASPT">ASPT</option>
+							<option value="ASSC">ASSC</option>
+							<option value="BIOL">BIOL</option>
+							<option value="BL">BL</option>
+							<option value="BLI">BLI</option>
+							<option value="BSSN">BSSN</option>
+							<option value="BUSE">BUSE</option>
+							<option value="CEE">CEE</option>
+							<option value="CELL">CELL</option>
+							<option value="CF">CF</option>
+							<option value="CFA">CFA</option>
+							<option value="CFB">CFB</option>
+							<option value="CHEM">CHEM</option>
+							<option value="CHIN">CHIN</option>
+							<option value="CISB">CISB</option>
+							<option value="CLAR">CLAR</option>
+							<option value="COMM">COMM</option>
+							<option value="CRCP">CRCP</option>
+							<option value="CSE">CSE</option>
+							<option value="DANC">DANC</option>
+							<option value="DBBS">DBBS</option>
+							<option value="DISC">DISC</option>
+							<option value="ECO">ECO</option>
+							<option value="EDU">EDU</option>
+							<option value="EE">EE</option>
+							<option value="EMIS">EMIS</option>
+							<option value="ENGL">ENGL</option>
+							<option value="ENGR">ENGR</option>
+							<option value="ESL">ESL</option>
+							<option value="ETST">ETST</option>
+							<option value="EUPH">EUPH</option>
+							<option value="FILM">FILM</option>
+							<option value="FINA">FINA</option>
+							<option value="FLUT">FLUT</option>
+							<option value="FREN">FREN</option>
+							<option value="FRHN">FRHN</option>
+							<option value="GEOL">GEOL</option>
+							<option value="GERM">GERM</option>
+							<option value="GUIT">GUIT</option>
+							<option value="HARP">HARP</option>
+							<option value="HARS">HARS</option>
+							<option value="HDEV">HDEV</option>
+							<option value="HIST">HIST</option>
+							<option value="HRTS">HRTS</option>
+							<option value="INTL">INTL</option>
+							<option value="ITAL">ITAL</option>
+							<option value="ITOM">ITOM</option>
+							<option value="JAPN">JAPN</option>
+							<option value="JOUR">JOUR</option>
+							<option value="KNW">KNW</option>
+							<option value="LATN">LATN</option>
+							<option value="MATH">MATH</option>
+							<option value="MDVL">MDVL</option>
+							<option value="ME">ME</option>
+							<option value="MKTG">MKTG</option>
+							<option value="MNO">MNO</option>
+							<option value="MPED">MPED</option>
+							<option value="MREP">MREP</option>
+							<option value="MSA">MSA</option>
+							<option value="MUAC">MUAC</option>
+							<option value="MUAS">MUAS</option>
+							<option value="MUCO">MUCO</option>
+							<option value="MUED">MUED</option>
+							<option value="MUHI">MUHI</option>
+							<option value="MUPD">MUPD</option>
+							<option value="MURE">MURE</option>
+							<option value="MUTH">MUTH</option>
+							<option value="MUTY">MUTY</option>
+							<option value="OBOE">OBOE</option>
+							<option value="ORG">ORG</option>
+							<option value="PERB">PERB</option>
+							<option value="PERC">PERC</option>
+							<option value="PERE">PERE</option>
+							<option value="PHIL">PHIL</option>
+							<option value="PHYS">PHYS</option>
+							<option value="PIAN">PIAN</option>
+							<option value="PLSC">PLSC</option>
+							<option value="PPIA">PPIA</option>
+							<option value="PRW">PRW</option>
+							<option value="PSYC">PSYC</option>
+							<option value="RE">RE</option>
+							<option value="RELI">RELI</option>
+							<option value="RMI">RMI</option>
+							<option value="ROTC">ROTC</option>
+							<option value="RUSS">RUSS</option>
+							<option value="SAX">SAX</option>
+							<option value="SOCI">SOCI</option>
+							<option value="SPAN">SPAN</option>
+							<option value="STAT">STAT</option>
+							<option value="STRA">STRA</option>
+							<option value="THEA">THEA</option>
+							<option value="TROM">TROM</option>
+							<option value="TRPT">TRPT</option>
+							<option value="TUBA">TUBA</option>
+							<option value="URGD">URGD</option>
+							<option value="UHP">UHP</option>
+							<option value="VIOL">VIOL</option>
+							<option value="VLA">VLA</option>
+							<option value="VOIC">VOIC</option>
+							<option value="WELL">WELL</option>
+							<option value="WGST">WGST</option>
+							<option value="WL">WL</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="courseNumber">Course Number:</label>
+						<input type ="courseNumber" id="class_num" name="courseNumber" min = "100" max = "9999" required>				
+					</div>
+					<div class="form-group">
+						<label>Class Time:</label>
+						<input type ="time" placeholder="HH:MM PM" id="time2" name="classTime" required> 
+					</div>
+					<div class="form-group">
+						<label for="Professor">
+							<div class="form-group">
+								<label type="Professor" for="FirstName"> Professor's First Name:</label>
+								<input type="text" id="prof_first" name="profFirstName" required>
+							</div>
+						
+							<div class="form-group">
+								<label type="Professor for="LastName">Professor's Last Name:</label>
+								<input type="text" id="prof_last" name="profLastName" required> 
+							</div>
+						</label>
+					</div>	
+					<input type = "submit" value = "Create Class">
+				</form>
+			</div>
+		</div>
+	</div>
 <body>
 
 </html>

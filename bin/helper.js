@@ -14,7 +14,7 @@ function createClass() {
             success: function(data) {
                 if(data.success) {
                     alert("Class added successfully!");
-                    window.location = "editprofile.html";
+                    window.location = "profile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -24,24 +24,24 @@ function createClass() {
 }
 
 function createGroup() {
-        $.ajax({
-            url: "api/addGroup",
-            type: "post",
-            data: {
-                "gname":$("#gname").val(), 
-                "time1":$("#time1").val(),
-                "loc":$("#loc").val(), 
-            },
-            dataType: "json",
-            success: function(data) {
-                if(data.success) {
-                    alert("Group added successfully!");
-                    window.location = "editprofile.html";
-                }
-                else
-                    alert("Error: " + data.errorType);
+    $.ajax({
+        url: "api/addGroup",
+        type: "post",
+        data: {
+            "gname":$("#gname").val(), 
+            "time1":$("#time1").val(),
+            "loc":$("#loc").val(), 
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("Group added successfully!");
+                window.location = "profile.html";
             }
-        });  
+            else
+                alert("Error: " + data.errorType);
+        }
+    });  
 }
 
 function editGroup(changes) { 
@@ -57,7 +57,6 @@ function editGroup(changes) {
     else if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
-    alert(editS['time1']);
     //update StudyGroups
     $.ajax({
         url: "api/editStudyGroup",
@@ -89,7 +88,7 @@ function getGroupInfo(gidGet) {
                 window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
             else {
                 alert("Error: Could not retrieve your group.")
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
         }
     });
@@ -103,7 +102,7 @@ function getGroups() {
         success: function(data) {
             var table  = document.getElementById('GroupData');//.style.textAlign = "center";
             for(var i = 0; i < data.length; i++) {
-                $('#results').text("");
+                $('#groupresults').text("");
                 if(!data[i].success)
                     continue;                
                 // Insert a row in the table at row index 0
@@ -133,6 +132,20 @@ function getGroups() {
     });
 }
 
+function getGroupsForProfile() {
+    $ajax({
+        url:"api/GetGroupsRow",
+        type: "post",
+        dataType: "integer",
+        success: function(data) {
+            if(data.success) {
+                var numRows = data.numRows;
+            }
+        }
+
+    });
+}
+
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",
@@ -144,7 +157,7 @@ function leaveStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have left the group.");
-                window.location = "editprofile.html";
+                window.location = "profile.html";
             }
             else{
                 alert("Error: Could not remove you from group");
@@ -161,6 +174,9 @@ function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
 
+function redirectToSearchResults() {
+	window.location = "searchGroups.html";
+}
 
 function validClass(){
     if(!validFName())
@@ -177,7 +193,7 @@ function validFName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your first name must start with uppercase letter");
+        alert("The first name must start with an uppercase letter and be followed by lowercase letters.");
         return false;
     }
 }
@@ -189,7 +205,7 @@ function validLName() {
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name start with an uppercase letter");
+        alert("The last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }

@@ -21,11 +21,12 @@
 				  <ul>
 					   <li><a href="index.html">Home</a></li>
 					   <li><a href="about.html">About</a></li>
-					   <li><a href="editprofile.html">View Profile</a></li>
+					   <li><a href="profile.html">View Profile</a></li>
 				  </ul>
 			 </nav>
 		</div>
-		Group ID: 		<label id = "gid"><?php echo $gid; ?></label><br /><br />
+		<!--I really don't want the group id to show. Keeping here for second opinion
+		Group ID: 		<label id = "gid"><?php echo $gid; ?></label><br /><br />-->
 		
 		Group Name:    <label id = "cur_gname"><?php echo $gname; ?></label>
 		<div value="1" id="optDisp1" style="visibility:hidden">
@@ -47,7 +48,7 @@
 			<input type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group"><br />
 			
 			<div id="editButtonDiv">
-					<button  id="editableButton" type = "button" onclick = "javascript:setEditableTrue()"> Toggle Editing </button>
+					<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
 					
 					</div>
 

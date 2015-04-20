@@ -81,9 +81,28 @@ function getProfile() {
                 $('#cur_l_name').text(data.l_name);
                 $('#cur_email').text(data.email);
             }
+            else 
+                window.location = "login.html";
+        }
+    });
+}
+
+function isLoggedIn(page) {
+    $.ajax({
+        url: "api/getUserID",
+        data: { "getID":true},
+        dataType: "json",
+        type: "post",
+        success:function(data) {
+            if(data.success) {
+                if(page === "login")
+                    window.location = "index.html";
+            }
             else {
-                alert("Error: Could not retrieve your profile. Please log in.")
-                window.location = "index.html";
+                if(page === "profile") {
+                    alert("Error: You are not currently logged in. You are being redirected to the Login page now...");
+                    window.location = "login.html";
+                }
             }
         }
     });
@@ -94,10 +113,10 @@ function login() {
         var data = authenticate();
         if(data.success) {
             alert("Welcome, " + data.f_name + "!");
-            window.location = "editProfile.html";
+            window.location = "profile.html";
         }
         else
-            alert(data);//alert("Error logging in.\nPlease check your email/password or create an account.");
+            alert("Error logging in.\nPlease check your email/password or create an account.");
     }
 }
 
@@ -124,14 +143,14 @@ function register() {
             data: {
                 "f_name":$("#f_name").val(), 
                 "l_name":$("#l_name").val(), 
-                "email":$("#email").val(), 
-                "passwd":$("#password").val()
+                "email":$("#reg_email").val(), 
+                "passwd":$("#reg_pass").val()
             },
             dataType: "json",
             success: function(data) {
                 if(data.success) {
                     alert("Welcome, " + data.f_name + "!");
-                    window.location = "editprofile.html";
+                    window.location = "profile.html";
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -141,24 +160,30 @@ function register() {
 }
 
 function setEditableTrue() {
-	document.getElementById('optDisp1').style.visibility = "visible";
-	document.getElementById('optDisp2').style.visibility = "visible";
-	document.getElementById('optDisp3').style.visibility = "visible";
-
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableFalse()\"> Edit Profile </button>"
+    document.getElementById('optDisp1').style.visibility = "visible";
+    document.getElementById('optDisp2').style.visibility = "visible";
+    document.getElementById('optDisp3').style.visibility = "visible";
 }
 
 function setEditableFalse() {
-	document.getElementById('optDisp1').style.visibility = "hidden";
-	document.getElementById('optDisp2').style.visibility = "hidden";
-	document.getElementById('optDisp3').style.visibility = "hidden";
-	
-	document.getElementById('editButtonDiv').innerHTML = "<button id=\"editableButton\" type = \"button\" onclick = \"javascript:setEditableTrue()\"> Edit Profile </button>"
+    document.getElementById('optDisp1').style.visibility = "hidden";
+    document.getElementById('optDisp2').style.visibility = "hidden";
+    document.getElementById('optDisp3').style.visibility = "hidden";
 }
 
-function validEmail() {
+function toggle(){
+	if (document.getElementById('optDisp1').style.visibility == "hidden") {
+		document.getElementById("editableButton").innerHTML="View Profile";
+		setEditableTrue();
+	}
+	else {
+		document.getElementById("editableButton").innerHTML="EditProfile";
+		setEditableFalse();
+	}
+}
+
+function validEmail(email) {
     var regex = /\w+@smu\.edu/;
-    var email = document.getElementById("email").value;
     
     if(regex.test(email))
         return true;
@@ -169,34 +194,42 @@ function validEmail() {
 }
 
 function validFName() {
-    var regex = /[A-Z][a-z]+/;
+    var regex = /^[A-Z][-a-zA-Z]+$/;
     var name = document.getElementById("f_name").value;
     if(regex.test(name))
         return true;
     else {
-        alert("Your first name must start with uppercase letter");
+        alert("Your first name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }
 
 function validLName() { 
-    var regex = /[A-Z][a-zA-Z]+/;
+    var regex = /^[A-Z][-'a-zA-Z]+$/;
     var name = document.getElementById("l_name").value;
     if(regex.test(name))
         return true;
     else {
-        alert("Your last name start with an uppercase letter");
+        alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
 }
 
 function validLogin() {
-    return (validEmail() && validPass());
+    return (validEmail(document.getElementById("email").value) && validPass('alert'));
 }
 
-function validPass() {
-    var pass1=document.getElementById('password');
-    var pass2=document.getElementById('password2');
+function validPass(alertTrue) {
+    var pass1;
+    var pass2; 
+    if(alertTrue == 'reg' || alertTrue == 'nowregistering') {
+        pass1=document.getElementById('reg_pass');
+        pass2=document.getElementById('reg_pass2');
+    }
+    else {
+        pass1=document.getElementById('password');
+        pass2=document.getElementById('password2');
+    }
     if(pass2 == null) 
         pass2 = pass1;
 
@@ -206,6 +239,7 @@ function validPass() {
     
     if (pass1.value == pass2.value) {
         if(message != null) {
+            pass1.style.backgroundColor = matchColor;
             pass2.style.backgroundColor = matchColor;
             message.style.color=matchColor;
             message.innerHTML="Passwords match!";
@@ -215,12 +249,14 @@ function validPass() {
         if(isValid.test(pass1.value))
             return true;
         else {
-            alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
+            if(alertTrue != 'reg')
+                alert("Passwords must be 8-64 characters and not contain the following: ! @ # $ % & * ; ' _ ");
             return false;
         }
         //document.getElementById('submit').disabled=false;
     }
     else if (message != null) {
+        pass1.style.backgroundColor = noMatch;
         pass2.style.backgroundColor = noMatch;
         message.style.color=noMatch;
         message.innerHTML = "Passwords do not match!";
@@ -230,9 +266,9 @@ function validPass() {
 }
 
 function validRegister() {
-    if(!validEmail())
+    if(!validEmail(document.getElementById("reg_email").value))
         return false;
-    else if(!validPass())
+    else if(!validPass('nowregistering'))
         return false;
     else if(!validFName())
         return false;
@@ -240,4 +276,16 @@ function validRegister() {
         return false;
     else 
         return true;
+}
+
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'visible' || e.style.display=='')
+    {
+        e.style.display = 'hidden';
+    }
+    else 
+    {
+        e.style.display = 'visible';
+    }
 }
