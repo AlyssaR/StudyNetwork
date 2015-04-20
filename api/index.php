@@ -24,7 +24,7 @@ $app->post('/addClass', function() use ($database){
 	$error = "None";
 	$success = true;
 
-	$checkClass = $database->query("SELECT cid FROM Classes where cid = '$cid'");
+	$checkClass = $database->query("SELECT cid FROM Classes where cid = '$cid';");
 	if($checkClass->num_rows > 0){
 		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
 	}
@@ -62,9 +62,9 @@ $app->post('/addGroup', function() use ($database){
 	echo json_encode($response);
 });
 
-$app->post('addOrganization', function() use ($database) {
-	$uid = $_SESSION["uid"];
+$app->post('/addOrganization', function() use ($database) {
 	$org_name = $_POST['org_name'];
+	$uid = $_SESSION["uid"];
 	//must insert into Organizations a name and unique id (just going to have that increment like before)
 	//have to check to see if organization exists. Need a validator to compare words...?
 	//can you make all capital before sending it to the code, or all lowercase?
@@ -77,7 +77,7 @@ $app->post('addOrganization', function() use ($database) {
 	$oidStart = $database->query("SELECT 'oid' FROM Organizations ORDER BY 'oid' DESC LIMIT 1;");
 	if($oidStart->num_rows > 0) {
 		$lastOID = $oidStart->fetch_assoc();
-		$oid = $lastUID['oid'] + 1;
+		$oid = $lastOID['oid'] + 1;
 	}
 
 	$checkForOrg = $database->query("SELECT org_name FROM Organizations WHERE org_name = '$org_name';");
