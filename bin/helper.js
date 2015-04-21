@@ -47,7 +47,7 @@ function createGroup() {
 }
 
 function createOrganization() {
-    if(validOrg){
+    if(validOrg()){
         $.ajax({
             url: "api/addOrganization",
             type: "post",
@@ -95,6 +95,44 @@ function editGroup(changes) {
             }
             else
                 alert(data.errorType);
+        }
+    });
+}
+
+function getClasses() {
+    $.ajax ({
+        url: "api/getClasses",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            var table = document.getElementById('ClassData');
+            for(var i = 0; i < data.length; i++) {
+                $('#classresults').text("");
+                if(!data[i].success)
+                    continue;
+                var newRow = table.insertRow(-1);
+                for(var key in data[i]) {
+                    if(key == "error" || key == "success")
+                        continue;
+                    if(key == "dept"){
+                        var deptStr = data[i][key];
+                        continue;
+                    }
+
+                    var newCell = newRow.insertCell(-1);
+                    var newText  = document.createTextNode(data[i][key]);
+                    newCell.appendChild(newText);
+                }
+
+                var newButton = newRow.insertCell(-1);
+                var viewButton = document.createElement("button");
+                var addName = document.createTextNode("Remove Class");
+                viewButton.appendChild(addName);
+                viewButton.onclick=function(deptStr) { return function() { leaveClass(deptStr); }; }(deptStr);
+                newButton.appendChild(viewButton);
+
+
+            }
         }
     });
 }
@@ -165,6 +203,30 @@ function getOrganizations() {
             var table = document.getElementById('OrgData'); //'OrgData' is the table name in the profile.html
             for (var i = 0; i < data.length; i++) {
                 $('#orgresults').text("");
+                if(!data[i].success)
+                    continue;
+                var newRow = table.insertRow(-1);
+                for(var key in data[i]) {
+                    if(key == "error" || key == "success")
+                        continue;
+                    if(key == "orgid") {
+                        var oidStr = data[i][key];
+                        continue; 
+                    }
+
+                    //insert new cell at row index 0
+                    var newCell = newRow.insertCell(-1);
+                    //appen a text node to the cell
+                    var newText = document.createTextNode(data[i][key]);
+                    newCell.appendChild(newText);
+                }
+
+                var newButton = newRow.insertCell(-1);
+                var viewButton = document.createElement("button");
+                var addName = document.createTextNode("Leave Organization");
+                viewButton.appendChild(addName);
+                viewButton.onclick=function(oidStr) { return function() {leaveOrganization(oidStr); }; }(oidStr);
+                newButton.appendChild(viewButton);
             }
         }
     });
@@ -202,6 +264,26 @@ function leaveStudyGroup() {
             }
         }
     });
+}
+
+function leaveOrganization() {
+    $.ajax({ 
+        url: "api/leaveOrganization",
+        type: "post",
+        data: {
+            "orgid": $('#orid').text()
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("You have removed the organization from your profile.");
+                window.location = "profile.html";
+            }
+            else {
+                alert("Error: Could not remove organization.");
+            }
+        }
+    })
 }
 
 function redirectToClass() {

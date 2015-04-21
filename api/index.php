@@ -18,10 +18,17 @@ $app->post('/addClass', function() use ($database){
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
 	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
-	$uid = $_SESSION["uid"];
+	$uid = "";
 
 	$error = "None";
 	$success = true;
+
+	if(isset($_SESSION['uid']))
+		$uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		return;
+	}
 
 	$checkClass = $database->query("SELECT dept, class_num FROM Classes where dept = '$dept' AND class_num = '$class_num';");
 	if($checkClass->num_rows > 0){
@@ -42,6 +49,7 @@ $app->post('/addGroup', function() use ($database){
 	$loc = $_POST['loc'];
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
+	$uid = "";
 	$gid = 0;
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
@@ -49,12 +57,16 @@ $app->post('/addGroup', function() use ($database){
 		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
-	
-	$uid = $_SESSION["uid"];
 	$role = "admin";
 	$error = "None";
 	$success = true;
-	//have not added cid
+	if(isset($_SESSION['uid']))
+		$uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		return;
+	}
+
 	$database->query("INSERT INTO StudyGroups (gid, dept, class_num, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$dept', '$class_num', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
 	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
 	
@@ -64,30 +76,40 @@ $app->post('/addGroup', function() use ($database){
 
 $app->post('/addOrganization', function() use ($database) {
 	$org_name = $_POST['org_name'];
-	$uid = $_SESSION["uid"];
+	$uid = "";
+
+	if(isset($_SESSION["uid"]))
+		$uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		return;
+	}
+	
 	//must insert into Organizations a name and unique id (just going to have that increment like before)
 	//have to check to see if organization exists. Need a validator to compare words...?
 	//can you make all capital before sending it to the code, or all lowercase?
 	//validator in JS
-	$oid = 0;
+	$orgid = 0;
 	$success = true;
 	$error = "None";
 
 	//assign an incremented org ID
-	$oidStart = $database->query("SELECT 'oid' FROM Organizations ORDER BY 'oid' DESC LIMIT 1;");
+	$oidStart = $database->query("SELECT orgid FROM Organizations ORDER BY orgid DESC LIMIT 1;");
 	if($oidStart->num_rows > 0) {
 		$lastOID = $oidStart->fetch_assoc();
-		$oid = $lastOID['oid'] + 1;
+		$orgid = $lastOID['orgid'] + 1;
 	}
 
 	$checkForOrg = $database->query("SELECT org_name FROM Organizations WHERE org_name = '$org_name';");
 	//check to see if Organization already exists in database
 	if($checkForOrg->num_rows > 0) {
-		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$oid', TRUE);");
+		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
+		$success = false;
+		$error = "Organization already exists.";
 	}
 	else{
-		$database->query("INSERT INTO Organizations VALUES ('$oid', '$org_name');");
-		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$oid', TRUE);");
+		$database->query("INSERT INTO Organizations VALUES ('$orgid', '$org_name');");
+		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
 	}
 
 	$response = array("success"=>$success, "org_name"=>$org_name, "errorType"=>$error);
@@ -285,12 +307,12 @@ $app->post('/getOrganizations', function() use ($database) {
 	}
 
 	//returning all Orgs
-	$allOrgs = $database->query("SELECT org_name FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.oid = o.oid AND active = TRUE;");
+	$allOrgs = $database->query("SELECT org_name, g.orgid FROM OrgEnroll g, Organizations o WHERE g.uid = '$uid' AND g.orgid = o.orgid AND active = TRUE;");
 
 	$response = array();
 	if($allOrgs->num_rows != 0) {
 		while($row = $allOrgs->fetch_assoc())
-			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "error"=>"None");
+			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "orgid"=>$row['orgid'], "error"=>"None");
 
 		echo json_encode($response);
 	}
@@ -301,14 +323,14 @@ $app->post('/getOrganizations', function() use ($database) {
 
 //for if we want to pull one organizaiton at a time
 $app->post('/getOrganizationInfo', function() use ($database) {
-	if(isset($_POST['oid']))
-		$oid = $_POST['oid'];
+	if(isset($_POST['orgid']))
+		$orgid = $_POST['orgid'];
 	else {
-		echo json_encode(array("oid"=>$_POST['oid']));
+		echo json_encode(array("orgid"=>$_POST['orgid']));
 		return;
 	}
 
-	$runQuery = $database->query("SELECT org_name FROM Organizations WHERE 'oid' = '$oid';");
+	$runQuery = $database->query("SELECT org_name FROM Organizations WHERE orgid = '$orgid';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -374,27 +396,40 @@ $app->post('/leaveClass', function() use ($database) {
 	$success = true;
 
 	$database->query("DELETE FROM ClassEnroll WHERE uid = '$uid' AND dept = '$dept' AND class_num = '$class_num';");
+	echo json_encode(array("success"=>$success));
 
 });
 
 $app->post('/leaveOrganization', function() use ($database) {
-	$uid = $_SESSION['uid'];
-	$oid = $_POST['oid'];
+	$uid = "";
+	if(isset($_SESSION['uid']))
+		$uid = $_SESSION['uid'];
+	else {
+		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		return;
+	}
+	$orgid = $_POST['orgid'];
 
 	$error = "None";
 	$success = true;
 
-	$database->query("UPDATE OrgEnroll SET active = FALSE where uid = '$uid' AND 'oid' ='$oid';");
-	echo json_encode($success);
+	$database->query("UPDATE OrgEnroll SET active = FALSE where uid = '$uid' AND orgid ='$orgid';");
+	echo json_encode(array("success"=>$success));
 });
 
 $app->post('/leaveStudyGroup', function() use ($database) {
-	$uid = $_SESSION['uid'];
+	$uid = "";
 	$gid = $_POST['gid'];
-
-	$$num_members = 0;
+	$num_members = 0;
     $error = "None";
     $success = true;
+
+    if(isset($_SESSION['uid']))
+    	$uid = $_SESSION['uid'];
+	else {
+		echo json_encode(array("success"=>false, "errorType"=>"User not logged in."));
+		return;
+	}
     //assign num members!
     $numMemStart = $database->query("SELECT num_members FROM StudyGroups WHERE gid = 'gid';");
     $numMem = $numMemStart->fetch_assoc();
