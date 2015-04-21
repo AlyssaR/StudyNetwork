@@ -86,7 +86,7 @@ CREATE TABLE `GroupEnroll` (
 
 LOCK TABLES `GroupEnroll` WRITE;
 /*!40000 ALTER TABLE `GroupEnroll` DISABLE KEYS */;
-INSERT INTO `GroupEnroll` VALUES (1,1,'admin',0),(1,2,'admin',0),(1,3,'admin',1),(1,4,'admin',1),(1,5,'admin',1),(1,6,'admin',1),(1,7,'admin',0),(1,8,'admin',1),(1,9,'admin',1),(1,10,'admin',0),(1,11,'admin',1);
+INSERT INTO `GroupEnroll` VALUES (1,0,'admin',0),(1,1,'admin',0),(1,2,'admin',0),(1,3,'admin',0),(1,4,'admin',1),(1,5,'admin',1),(1,6,'admin',0),(1,7,'admin',0),(1,8,'admin',1),(1,9,'admin',1),(1,10,'admin',0),(1,11,'admin',1);
 /*!40000 ALTER TABLE `GroupEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,9 +99,9 @@ DROP TABLE IF EXISTS `OrgEnroll`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `OrgEnroll` (
   `uid` int(11) NOT NULL DEFAULT '0',
-  `oid` int(11) NOT NULL DEFAULT '0',
+  `orgid` int(11) NOT NULL DEFAULT '0',
   `active` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`uid`,`oid`)
+  PRIMARY KEY (`uid`,`orgid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,7 +111,6 @@ CREATE TABLE `OrgEnroll` (
 
 LOCK TABLES `OrgEnroll` WRITE;
 /*!40000 ALTER TABLE `OrgEnroll` DISABLE KEYS */;
-INSERT INTO `OrgEnroll` VALUES (1,0,1),(1,1,1);
 /*!40000 ALTER TABLE `OrgEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,9 +122,9 @@ DROP TABLE IF EXISTS `Organizations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Organizations` (
-  `oid` int(11) NOT NULL,
+  `orgid` int(11) NOT NULL,
   `org_name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`oid`)
+  PRIMARY KEY (`orgid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -135,7 +134,6 @@ CREATE TABLE `Organizations` (
 
 LOCK TABLES `Organizations` WRITE;
 /*!40000 ALTER TABLE `Organizations` DISABLE KEYS */;
-INSERT INTO `Organizations` VALUES (0,'Alpha Chi Omega'),(1,'Lyle Ambassadors');
 /*!40000 ALTER TABLE `Organizations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,6 +164,7 @@ CREATE TABLE `StudyGroups` (
 
 LOCK TABLES `StudyGroups` WRITE;
 /*!40000 ALTER TABLE `StudyGroups` DISABLE KEYS */;
+INSERT INTO `StudyGroups` VALUES (0,'ACCT',1010,1,'Try Some','12:05:00','Again!',-6,1),(1,'AERO',2340,1,'Now','10:00:00','again!',1,1),(2,'ADRE',2345,1,'Why','02:30:00','No',1,1),(3,'ARBC',2335,1,'No','15:30:00','No no no',-7,1),(4,'BIOL',2487,1,'Word','05:30:00','Somewhere',1,1),(5,'ARHS',4523,1,'Whoops','02:10:00','My test',1,1),(6,'ACCT',1234,1,'Crumpanions','01:10:00','Crum',-7,1),(7,'ACCT',1234,1,'Jesus Loves Me','10:00:00','This I Know',1,1),(8,'ACCT',1234,1,'Jesus Loves Me','10:00:00','This I Know',1,1),(9,'ACCT',1234,1,'Boop','10:10:00','Merp',1,1);
 /*!40000 ALTER TABLE `StudyGroups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +183,7 @@ CREATE TABLE `Users` (
   `passwd` varchar(64) DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +192,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'Tom','Brady','tbrady@smu.edu','patriots',NULL),(2,'Quincy','Schurr','qschurr@smu.edu','qrstuvwx',NULL);
+INSERT INTO `Users` VALUES (1,'Tom','Brady','tbrady@smu.edu','patriots',NULL),(2,'Quincy','Schurr','qschurr@smu.edu','qrstuvwx',NULL),(3,'Harry','Potter','hpotter@smu.edu','hogwarts',1);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -206,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-21  2:05:09
+-- Dump completed on 2015-04-21  5:30:16
