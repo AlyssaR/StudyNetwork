@@ -466,29 +466,6 @@ $app->post('/searchByClass', function() use ($database) {
     }
     else 
     	echo json_encode(array("success"=>false, "error"=>"No data entered"));
-
-});
-
-$app->post('/getGroups', function () use ($database) {
-	$uid = "";
-	if(isset($_SESSION["uid"]))
-	    $uid = $_SESSION["uid"];
-	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
-		return;
-	}
-	//again only returning groups that they are still a part of...hopefully 
-	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
-	
-	$response = array();
-	if ($runQuery->num_rows != 0) {
-		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
-
-		echo json_encode($response);
-	}
-	else
-		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
 $app->run();
