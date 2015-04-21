@@ -116,7 +116,7 @@ function getClasses() {
                         continue;
                     if(key == "dept"){
                         var deptStr = data[i][key];
-                         var newCell = newRow.insertCell(-1);
+                        var newCell = newRow.insertCell(-1);
                         var newText  = document.createTextNode(data[i][key]);
                         newCell.appendChild(newText);
                         continue;
@@ -258,7 +258,22 @@ function getGroupsForProfile() {
 
 function leaveClass() {
     $.ajax({ 
-        url: "api/leaveClass"
+        url: "api/leaveClass",
+        type: "post",
+        data: {
+            "dept": $('#dept').text(),
+            "class_num": $('#class_num').text()
+        },
+        dataType: "json",
+        success: function(data) {
+            if (data.success) {
+                alert("Class removed from profile.");
+                window.location = "profile.html";
+            }
+            else{
+                alert("Error: Could not remove class");
+            }
+        }
     });
 }
 

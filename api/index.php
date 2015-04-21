@@ -395,8 +395,8 @@ $app->post('/leaveClass', function() use ($database) {
 		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
 		return;
 	}
-	$dept = $_SESSION['dept'];
-	$class_num = $_SESSION['class_num'];
+	$dept = $_POST['dept'];
+	$class_num = $_POST['class_num'];
 
 	$error = "None";
 	$success = true;
