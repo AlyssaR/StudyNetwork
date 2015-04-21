@@ -18,19 +18,18 @@ $app->post('/addClass', function() use ($database){
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
 	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
-	$cid = ($_POST['dept'].$_POST['prof_last']);
 	$uid = $_SESSION["uid"];
 
 	$error = "None";
 	$success = true;
 
-	$checkClass = $database->query("SELECT cid FROM Classes where cid = '$cid'");
+	$checkClass = $database->query("SELECT dept, class_num FROM Classes where dept = '$dept' AND class_num = '$class_num';");
 	if($checkClass->num_rows > 0){
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
 	}
 	else {
-		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$professor');");
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$time2', '$professor');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
 	}
 
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
@@ -41,6 +40,8 @@ $app->post('/addGroup', function() use ($database){
 	$gname = $_POST['gname'];
 	$time1= $_POST['time1'];
 	$loc = $_POST['loc'];
+	$dept = $_POST['dept'];
+	$class_num = $_POST['class_num'];
 	$gid = 0;
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
@@ -48,23 +49,22 @@ $app->post('/addGroup', function() use ($database){
 		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
-	//$num_members = $_POST['num_members'];
 	
 	$uid = $_SESSION["uid"];
 	$role = "admin";
 	$error = "None";
 	$success = true;
 	//have not added cid
-	$database->query("INSERT INTO StudyGroups (gid, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
+	$database->query("INSERT INTO StudyGroups (gid, dept, class_num, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$dept', '$class_num', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
 	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
 	
 	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
 });
 
-$app->post('addOrganization', function() use ($database) {
-	$uid = $_SESSION["uid"];
+$app->post('/addOrganization', function() use ($database) {
 	$org_name = $_POST['org_name'];
+	$uid = $_SESSION["uid"];
 	//must insert into Organizations a name and unique id (just going to have that increment like before)
 	//have to check to see if organization exists. Need a validator to compare words...?
 	//can you make all capital before sending it to the code, or all lowercase?
@@ -77,7 +77,7 @@ $app->post('addOrganization', function() use ($database) {
 	$oidStart = $database->query("SELECT 'oid' FROM Organizations ORDER BY 'oid' DESC LIMIT 1;");
 	if($oidStart->num_rows > 0) {
 		$lastOID = $oidStart->fetch_assoc();
-		$oid = $lastUID['oid'] + 1;
+		$oid = $lastOID['oid'] + 1;
 	}
 
 	$checkForOrg = $database->query("SELECT org_name FROM Organizations WHERE org_name = '$org_name';");
@@ -193,14 +193,14 @@ $app->post('/getClasses', function() use ($database) {
 });
 
 $app->post('/getClassInfo', function() use ($database) {
-	if(isset($_POST['cid']))
-		$cid = $_POST['cid'];
+	if(isset($_POST['dept']))
+		$dept = $_POST['dept'];
 	else {
-		echo json_encode(array("cid"=>$_POST['cid']));
+		echo json_encode(array("dept"=>$_POST['dept']));
 		return;
 	}
-
-	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE cid = '$cid';");
+	//need to figure this one out...
+	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE dept = '$dept' AND class_num = '$class_num';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -364,6 +364,17 @@ $app->post('/joinStudyGroup', function() use ($database) {
     echo json_encode($response);
 });
 
+$app->post('/leaveOrganization', function() use ($database) {
+	$uid = $_SESSION['uid'];
+	$oid = $_POST['oid'];
+
+	$error = "None";
+	$success = true;
+
+	$database->query("UPDATE OrgEnroll SET active = FALSE where uid = '$uid' AND 'oid' ='$oid';");
+	echo json_encode($success);
+});
+
 $app->post('/leaveStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
 	$gid = $_POST['gid'];
@@ -448,12 +459,14 @@ $app->post('/register', function () use ($database) {
 $app->post('/searchByClass', function() use ($database) {
 	$class = array();
 	if(!empty($_POST['class'])) {
-		$search = json_decode($_POST['class'], true); 	
-  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
-  		if($cid === NULL)
-  			$result = "ERROR: No groups exist for that course.";
+		$search = json_decode($_POST['class'], true); 
+		//need to figure this out too :(	
+  		$dept = $database->query("SELECT dept FROM Classes WHERE dept = '$search[0]';"); //get dept
+  		$class_num = $database->query("SELECT class_num FROM Classes WHERE class_num = '$search[1]';"); //get class_num
+  		if($dept === NULL OR $class_num === NULL)
+  			$response = "ERROR: No groups exist for that course.";
   		else
-    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
+    		$response = $database->query("SELECT gname FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use dept and class_num to get list of groups
     	echo json_encode($response);
     }
 });

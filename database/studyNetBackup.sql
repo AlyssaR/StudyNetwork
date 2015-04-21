@@ -24,8 +24,9 @@ DROP TABLE IF EXISTS `ClassEnroll`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ClassEnroll` (
   `uid` int(11) NOT NULL DEFAULT '0',
-  `cid` varchar(12) NOT NULL DEFAULT '',
-  PRIMARY KEY (`uid`,`cid`)
+  `dept` varchar(6) NOT NULL DEFAULT '',
+  `class_num` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`,`dept`,`class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,11 +47,11 @@ DROP TABLE IF EXISTS `Classes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Classes` (
-  `dept` varchar(6) DEFAULT NULL,
-  `class_num` int(11) DEFAULT NULL,
-  `cid` varchar(12) DEFAULT NULL,
+  `dept` varchar(6) NOT NULL DEFAULT '',
+  `class_num` int(11) NOT NULL DEFAULT '0',
   `time2` time DEFAULT NULL,
-  `professor` varchar(50) DEFAULT NULL
+  `professor` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`dept`,`class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -110,6 +111,7 @@ CREATE TABLE `OrgEnroll` (
 
 LOCK TABLES `OrgEnroll` WRITE;
 /*!40000 ALTER TABLE `OrgEnroll` DISABLE KEYS */;
+INSERT INTO `OrgEnroll` VALUES (1,0,1),(1,1,1);
 /*!40000 ALTER TABLE `OrgEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,6 +135,7 @@ CREATE TABLE `Organizations` (
 
 LOCK TABLES `Organizations` WRITE;
 /*!40000 ALTER TABLE `Organizations` DISABLE KEYS */;
+INSERT INTO `Organizations` VALUES (0,'Alpha Chi Omega'),(1,'Lyle Ambassadors');
 /*!40000 ALTER TABLE `Organizations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +148,8 @@ DROP TABLE IF EXISTS `StudyGroups`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `StudyGroups` (
   `gid` int(11) NOT NULL,
-  `cid` int(11) DEFAULT NULL,
+  `dept` varchar(6) DEFAULT NULL,
+  `class_num` int(11) DEFAULT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `gname` varchar(40) DEFAULT NULL,
   `time1` time DEFAULT NULL,
@@ -162,7 +166,6 @@ CREATE TABLE `StudyGroups` (
 
 LOCK TABLES `StudyGroups` WRITE;
 /*!40000 ALTER TABLE `StudyGroups` DISABLE KEYS */;
-INSERT INTO `StudyGroups` VALUES (0,NULL,1,'no','18:00:00','lower',1,NULL),(1,NULL,1,'Testing','08:20:00','Somewhere',1,1),(2,NULL,1,'My Group','08:45:00',' Someplace',1,1),(3,NULL,1,'TestTime','22:00:00','Brew',1,1),(4,NULL,1,'TryAgain','09:00:00','Again!',23,1),(5,NULL,1,'Keep Deleting','09:30:00','Who that',1,1),(6,NULL,1,'Try Some','10:45:00','Thing Else',1,1),(7,NULL,1,'','00:00:00','',1,1),(8,NULL,1,'','00:00:00','',1,1),(9,NULL,1,'My Test','00:00:00','Cool',1,1),(10,NULL,1,'','00:00:00','',1,1),(11,NULL,1,'Yeah','20:00:00','Testing Testing 123',1,1);
 /*!40000 ALTER TABLE `StudyGroups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-18 18:07:09
+-- Dump completed on 2015-04-21  2:05:09
