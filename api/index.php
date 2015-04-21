@@ -192,7 +192,7 @@ $app->post('/getClasses', function() use ($database) {
 
 });
 
-$app->post('/getClassInfo', function(), use ($database) {
+$app->post('/getClassInfo', function() use ($database) {
 	if(isset($_POST['cid']))
 		$cid = $_POST['cid'];
 	else {
@@ -252,6 +252,7 @@ $app->post('/getGroupMembers', function() use ($database) {
 });
 
 //This is to get Groups for the user profile page
+//this is causing problems
 $app->post('/getGroups', function () use ($database) {
 	$uid = "";
 	if(isset($_SESSION["uid"]))
@@ -291,7 +292,7 @@ $app->post('/getOrganizations', function() use ($database) {
 		while($row = $allOrgs->fetch_assoc())
 			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "error"=>"None");
 
-		echo json_encode($response)
+		echo json_encode($response);
 	}
 	else 
 		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
@@ -314,7 +315,7 @@ $app->post('/getOrganizationInfo', function() use ($database) {
 		$response = array("success"=>false, "org_name"=>"Not Valid", "error"=>"This organizaiton doesn't exist");
 	else
 		$response = array("success"=>true, "org_name"=>$result['org_name'], "error"=>"None");
-	echo json_encode($response)
+	echo json_encode($response);
 });
 
 $app->post('/getUserID', function () {
