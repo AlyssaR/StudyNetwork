@@ -100,7 +100,7 @@ function editGroup(changes) {
 }
 
 function getClasses() {
-    $.ajax ({
+    $.ajax({
         url: "api/getClasses",
         type: "post",
         dataType: "json",
@@ -118,6 +118,10 @@ function getClasses() {
                         var deptStr = data[i][key];
                         continue;
                     }
+                    if(key == "class_num") {
+                        var classStr = data[i][key];
+                        continue;
+                    }
 
                     var newCell = newRow.insertCell(-1);
                     var newText  = document.createTextNode(data[i][key]);
@@ -128,7 +132,7 @@ function getClasses() {
                 var viewButton = document.createElement("button");
                 var addName = document.createTextNode("Remove Class");
                 viewButton.appendChild(addName);
-                viewButton.onclick=function(deptStr) { return function() { leaveClass(deptStr); }; }(deptStr);
+                viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
                 newButton.appendChild(viewButton);
 
 
@@ -243,6 +247,12 @@ function getGroupsForProfile() {
             }
         }
 
+    });
+}
+
+function leaveClass() {
+    $.ajax({ 
+        url: "api/leaveClass"
     });
 }
 

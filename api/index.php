@@ -193,7 +193,7 @@ $app->post('/editStudyGroup', function() use ($database){
 });
 
 $app->post('/getClasses', function() use ($database) {
-		$uid = "";
+	$uid = "";
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -202,7 +202,7 @@ $app->post('/getClasses', function() use ($database) {
 	}
 
 	//returning all classes a User has enrolled in
-	$runQuery = $database->query("SELECT dept, class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.cid = e.cid AND e.uid = '$uid';");
+	$runQuery = $database->query("SELECT dept, class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
