@@ -44,6 +44,6 @@
 	grant all privileges on StudyNetwork.* to web@localhost with grant option;<br />
 7. *optional* log into mysql -u web -p just to make sure it works<br />
 8. go back to the StudyNetwork/database directory and type:<br />
-	mysql -u web -pwearegeniuses StudyNetwork < populateScript.sql<br />
+	mysql -u web -pwearegeniuses StudyNetwork < studyNetBackup.sql<br />
 9. In your browser:<br />
 	192.168.10.10/StudyNetwork/bin/test.php<br />
