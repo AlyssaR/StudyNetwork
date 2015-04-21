@@ -252,6 +252,7 @@ $app->post('/getGroupMembers', function() use ($database) {
 });
 
 //This is to get Groups for the user profile page
+//this is causing problems
 $app->post('/getGroups', function () use ($database) {
 	$uid = "";
 	if(isset($_SESSION["uid"]))

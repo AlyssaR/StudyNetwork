@@ -132,6 +132,17 @@ function getGroups() {
     });
 }
 
+/*function getOrganizations() {
+    $.ajax({
+        url: "api/getOrganizations",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            var table = document.getElementById('')
+        }
+    })
+}*/
+
 function getGroupsForProfile() {
     $ajax({
         url:"api/GetGroupsRow",
