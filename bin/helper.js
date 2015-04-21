@@ -60,10 +60,11 @@ function createOrganization() {
                     alert("Organization added successfully!");
                     window.location = "profile.html";
                 }
-                else
-                    alert("Error " + data.errorType);
+                else {
+                    alert(data.errorType);
+                    window.location = "profile.html";
+                }
             }
-
         });
     }
 }
@@ -256,13 +257,13 @@ function getGroupsForProfile() {
     });
 }
 
-function leaveClass() {
+function leaveClass(dept, class_num) {
     $.ajax({ 
         url: "api/leaveClass",
         type: "post",
         data: {
-            "dept": $('#dept').text(),
-            "class_num": $('#class_num').text()
+            "dept": dept,
+            "class_num": class_num
         },
         dataType: "json",
         success: function(data) {
@@ -297,12 +298,12 @@ function leaveStudyGroup() {
     });
 }
 
-function leaveOrganization() {
+function leaveOrganization(orgid) {
     $.ajax({ 
         url: "api/leaveOrganization",
         type: "post",
         data: {
-            "orgid": $('#orid').text()
+            "orgid": orgid
         },
         dataType: "json",
         success: function(data) {
@@ -311,7 +312,7 @@ function leaveOrganization() {
                 window.location = "profile.html";
             }
             else {
-                alert("Error: Could not remove organization.");
+                alert("Error: " + data.errorType);
             }
         }
     })
@@ -339,7 +340,7 @@ function validClass(){
 }
 
 function validOrg(){
-    if(!validOrg())
+    if(!validOrgName())
         return false;
     else
         return true;

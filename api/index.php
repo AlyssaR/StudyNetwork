@@ -81,7 +81,7 @@ $app->post('/addOrganization', function() use ($database) {
 	if(isset($_SESSION["uid"]))
 		$uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		echo json_encode(array("success"=>false,"errorType"=>"Error: You are not logged in."));
 		return;
 	}
 	
@@ -100,12 +100,19 @@ $app->post('/addOrganization', function() use ($database) {
 		$orgid = $lastOID['orgid'] + 1;
 	}
 
-	$checkForOrg = $database->query("SELECT org_name FROM Organizations WHERE org_name = '$org_name';");
+	$checkForOrg = $database->query("SELECT orgid FROM Organizations WHERE org_name = '$org_name';");
 	//check to see if Organization already exists in database
 	if($checkForOrg->num_rows > 0) {
-		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
+		$result = $checkForOrg->fetch_assoc();
+		$orgid = $result['orgid'];
+		//check to see if user was ever in org before
+		$checkHistory = $database->query("SELECT active FROM OrgEnroll WHERE uid = '$uid' AND orgid = '$orgid';");
+		if($checkHistory->num_rows > 0)
+			$database->query("UPDATE OrgEnroll SET active = TRUE WHERE uid = '$uid' AND orgid = '$orgid';");
+		else
+			$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
 		$success = false;
-		$error = "Organization already exists.";
+		$error = "[Notice] Organization already exists. You've been added to pre-existing group.";
 	}
 	else{
 		$database->query("INSERT INTO Organizations VALUES ('$orgid', '$org_name');");
