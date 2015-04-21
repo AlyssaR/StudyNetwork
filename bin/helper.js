@@ -156,16 +156,19 @@ function getGroups() {
     });
 }
 
-/*function getOrganizations() {
+function getOrganizations() {
     $.ajax({
         url: "api/getOrganizations",
         type: "post",
         dataType: "json",
         success: function(data) {
-            var table = document.getElementById('')
+            var table = document.getElementById('OrgData'); //'OrgData' is the table name in the profile.html
+            for (var i = 0; i < data.length; i++) {
+                $('#orgresults').text("");
+            }
         }
-    })
-}*/
+    });
+}
 
 function getGroupsForProfile() {
     $ajax({

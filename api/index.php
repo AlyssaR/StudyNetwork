@@ -365,6 +365,18 @@ $app->post('/joinStudyGroup', function() use ($database) {
     echo json_encode($response);
 });
 
+$app->post('/leaveClass', function() use ($database) {
+	$uid = $_SESSION['uid'];
+	$dept = $_SESSION['dept'];
+	$class_num = $_SESSION['class_num'];
+
+	$error = "None";
+	$success = true;
+
+	$database->query("DELETE FROM ClassEnroll WHERE uid = '$uid' AND dept = '$dept' AND class_num = '$class_num';");
+
+});
+
 $app->post('/leaveOrganization', function() use ($database) {
 	$uid = $_SESSION['uid'];
 	$oid = $_POST['oid'];
