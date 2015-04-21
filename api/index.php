@@ -202,7 +202,7 @@ $app->post('/getClasses', function() use ($database) {
 	}
 
 	//returning all classes a User has enrolled in
-	$runQuery = $database->query("SELECT dept, class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
+	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
@@ -298,7 +298,7 @@ $app->post('/getGroups', function () use ($database) {
 });
 
 $app->post('/getOrganizations', function() use ($database) {
-		$uid = "";
+	$uid = "";
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -388,7 +388,13 @@ $app->post('/joinStudyGroup', function() use ($database) {
 });
 
 $app->post('/leaveClass', function() use ($database) {
-	$uid = $_SESSION['uid'];
+	$uid = "";
+	if(isset($_SESSION['uid']))
+		$uid = $_SESSION['uid'];
+	else {
+		echo json_encode(array("success"=>false,"errorType"=>"User not logged in."));
+		return;
+	}
 	$dept = $_SESSION['dept'];
 	$class_num = $_SESSION['class_num'];
 
