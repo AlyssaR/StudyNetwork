@@ -452,7 +452,7 @@ $app->post('/searchByClass', function() use ($database) {
 		$search = json_decode($_POST['class'], true); 	
   		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
   		if($cid === NULL)
-  			$result = "ERROR: No groups exist for that course.";
+  			$response = "ERROR: No groups exist for that course.";
   		else
     		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
     	echo json_encode($response);
