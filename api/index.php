@@ -49,7 +49,6 @@ $app->post('/addGroup', function() use ($database){
 		$lastGID = $gidStart->fetch_assoc();
 		$gid = $lastGID['gid'] + 1;
 	}
-	//$num_members = $_POST['num_members'];
 	
 	$uid = $_SESSION["uid"];
 	$role = "admin";
