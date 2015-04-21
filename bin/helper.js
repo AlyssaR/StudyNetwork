@@ -116,10 +116,16 @@ function getClasses() {
                         continue;
                     if(key == "dept"){
                         var deptStr = data[i][key];
+                         var newCell = newRow.insertCell(-1);
+                        var newText  = document.createTextNode(data[i][key]);
+                        newCell.appendChild(newText);
                         continue;
                     }
                     if(key == "class_num") {
                         var classStr = data[i][key];
+                        var newCell = newRow.insertCell(-1);
+                        var newText  = document.createTextNode(data[i][key]);
+                        newCell.appendChild(newText);
                         continue;
                     }
 
@@ -320,6 +326,8 @@ function validClass(){
 function validOrg(){
     if(!validOrg())
         return false;
+    else
+        return true;
 }
 
 function validFName() {
