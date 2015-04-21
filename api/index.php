@@ -447,18 +447,49 @@ $app->post('/register', function () use ($database) {
 });
 
 $app->post('/searchByClass', function() use ($database) {
-	$class = array();
 	if(!empty($_POST['class'])) {
 		$search = json_decode($_POST['class'], true); 	
   		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
   		if($cid === NULL)
-  			$response = "ERROR: No groups exist for that course.";
+  			echo json_encode(array("success" =>false, "error"=>"Class not found"));
   		else
-    		$response = $database->query("SELECT gname FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
-    	echo json_encode($response);
+    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
+    	
+    	$response = array();
+    	if ($query->num_rows != 0) {
+			while($row = $query->fetch_assoc()) 
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+			echo json_encode($response);
+		}
+		else
+			echo json_encode(array("success"=>false, "error"=>"No groups found"));
     }
+    else 
+    	echo json_encode(array("success"=>false, "error"=>"No data entered"));
+
 });
 
+$app->post('/getGroups', function () use ($database) {
+	$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+	//again only returning groups that they are still a part of...hopefully 
+	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
+	
+	$response = array();
+	if ($runQuery->num_rows != 0) {
+		while($row = $runQuery->fetch_assoc()) 
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+
+		echo json_encode($response);
+	}
+	else
+		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+});
 
 $app->run();
 ?>
