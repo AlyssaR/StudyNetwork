@@ -47,11 +47,11 @@ DROP TABLE IF EXISTS `Classes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Classes` (
-  `dept` varchar(6) DEFAULT NULL,
-  `class_num` int(11) DEFAULT NULL,
-  `cid` varchar(12) DEFAULT NULL,
+  `dept` varchar(6) NOT NULL DEFAULT '',
+  `class_num` int(11) NOT NULL DEFAULT '0',
   `time2` time DEFAULT NULL,
-  `professor` varchar(50) DEFAULT NULL
+  `professor` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`dept`,`class_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-21  1:57:12
+-- Dump completed on 2015-04-21  2:05:09
