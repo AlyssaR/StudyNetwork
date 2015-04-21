@@ -1,105 +1,98 @@
 <html>
 <head>
-<title> About StudyNetwork </title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<link href="css/navbar.css" rel="stylesheet">
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-theme.css" rel="stylesheet">
+    <title> About StudyNetwork </title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
 
 </head>
 <body>
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">The Study Network</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">The Study Network</a>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="createClassForm.html">Create Class</a></li>
+                        <li><a href="createStudyGroupForm.html">Create Study Group</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <!-- No functionality currently -->
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User<!--will hopefully pull name at some point--> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="profile.html">View Profile</a></li>
+                        <li><a href="#">Logout</a></li><!--do we have a logout route? -->
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
 <!-- End navbar -->
 
-	<div class="jumbotron container">
-        <h1>About The Study Network</h1>
-        <p>The StudyNetwork was developed by students, for students, with the intent to connect classmates with mentors. </p>
-      </div>
-      <div class="container">
-	<p>
-		By providing a simple to use interface, the StudyNetwork provides a lightweight and portable study group planner and organizer on the go. With a rapidly expanding community of students and study groups, StudyNetwork promises a satisfying user experience and an increased productivity closer to deadlines.
-	</p> 
-	
-	<p>
-		Created for the GUI/Database collaborative project, StudyNetwork is still being actively developed by a team of highly trained monkey-astronauts and is subject to massive, unexpected, and unannounced changes in the coming months.
-	</p>
-	<hr>
-	
-	
-	<h3> The Development </h3>
-	<p>
-	Development team members include: Anna C, Kristofor H,  Courtney K, Alyssa R, Quincy S and Aakash P.
-	</p>
-	</div>
-	
-	<hr>
-	<footer>
-	<p>&copy; Genius Loading</p>
-	</footer>
+<div class="jumbotron container">
+    <h1>About The Study Network</h1>
+    <p>The StudyNetwork was developed by students, for students, with the intent to connect classmates with mentors. </p>
+</div>
+<div class="container">
+    <p>
+        By providing a simple to use interface, the StudyNetwork provides a lightweight and portable study group planner and organizer on the go. With a rapidly expanding community of students and study groups, StudyNetwork promises a satisfying user experience and an increased productivity closer to deadlines.
+    </p>
+
+    <p>
+        Created for the GUI/Database collaborative project, StudyNetwork is still being actively developed by a team of highly trained monkey-astronauts and is subject to massive, unexpected, and unannounced changes in the coming months.
+    </p>
+    <hr>
+
+
+    <h3> The Development </h3>
+    <p>
+        Development team members include: Anna C, Kristofor H,  Courtney K, Alyssa R, Quincy S and Aakash P.
+    </p>
+</div>
+
+<hr>
+<footer>
+    <p>&copy; Genius Loading</p>
+</footer>
 </body>
 <html>
 <style>
- .container {
-  width:1000px;
-  
-}
-.row {
-	padding-left:500px;
-	padding-right:500px;
-}
+    .container {
+        width:1000px;
+
+    }
+    .row {
+        padding-left:500px;
+        padding-right:500px;
+    }
 
 </style>
 

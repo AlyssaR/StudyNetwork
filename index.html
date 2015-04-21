@@ -1,80 +1,131 @@
 <DOCUMENT html>
-<head>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="bin/accounts.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-	<link href="css/navbar.css" rel="stylesheet">
-	 <link href="css/bootstrap.min.css" rel="stylesheet">
-	 <link href = "css/signin.css" rel = "stylesheet">
-   <link href = "css/navbar.css" rel="stylesheet">
-	 <link href="css/bootstrap.min.css" rel="stylesheet">
-	<title> Study Network </title>
-</head>
-<body>
-<?php
- 
-			
-		<div id = formData>
-		
-				<h1>The StudyNetwork</h1>
-				
-		
-	 <div class="container">
+    <head>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="bin/accounts.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link href="css/navbar.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href = "css/signin.css" rel = "stylesheet">
+        <link href = "css/navbar.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <title> Study Network </title>
+    </head>
+    <body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">The Study Network</a>
+            </div>
 
-      <form class="form-signin"action = "javascript:login()">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div id = formData>
+
+        <h1>The StudyNetwork</h1>
+
+
+        <div class="container">
+
+            <form class="form-signin"action = "javascript:login()">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
 
+        <h3> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </h3>
     </div>
-	
-		<h3> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </h3>
-	</div>
-	<div class="container" id = "registerLinkTo">
-		<p> Need an account? </p>
-		<form class="form-signin">
-		<button class=" btn btn-primary btn-block" type = "button" onclick ="javascript:redirect()"> Register </button>
-		</form>
-	
-
-	</body>
-</html>
-
-<style>
-.btn {
-	background-color:#32CD32;
-	color:#FFFFF0;
-	border-color:#32CD32;
-}
-.btn:hover {
-	background-color:#008000;
-	border-color:#008000;
-	color:#FFFFF0;
-}
-.form-control {
-	border-color:#32CD32;
-
-}
-.form-signin {
-	border-color:#32CD32;
-}
-
-.container {
-	border-style:outset;
-	border-color:#32CD32;
-	width:500px;
-	
-}
+    <div class="container" id = "registerLinkTo">
+        <p> Need an account? </p>
+        <form class="form-signin">
+            <button class=" btn btn-primary btn-block" type = "button" onclick ="javascript:redirect()"> Register </button>
+        </form>
 
 
-</style>
+    </body>
+    </html>
+
+    <style>
+        .btn {
+            background-color:#32CD32;
+            color:#FFFFF0;
+            border-color:#32CD32;
+        }
+        .btn:hover {
+            background-color:#008000;
+            border-color:#008000;
+            color:#FFFFF0;
+        }
+        .form-control {
+            border-color:#32CD32;
+
+        }
+        .form-signin {
+            border-color:#32CD32;
+        }
+
+        .container {
+            border-style:outset;
+            border-color:#32CD32;
+            width:500px;
+
+        }
+
+
+    </style>
 
