@@ -31,8 +31,6 @@ function createGroup() {
             "gname":$("#gname").val(), 
             "time1":$("#time1").val(),
             "loc":$("#loc").val(), 
-            "dept":$("#dept").val(),
-            "class_num":$("#class_num").val(),
         },
         dataType: "json",
         success: function(data) {
@@ -44,28 +42,6 @@ function createGroup() {
                 alert("Error: " + data.errorType);
         }
     });  
-}
-
-function createOrganization() {
-    if(validOrg){
-        $.ajax({
-            url: "api/addOrganization",
-            type: "post",
-            data: {
-                "org_name":$("#org_name").val()
-            },
-            dataType: "json",
-            success: function(data) {
-                if(data.success) {
-                    alert("Organization added successfully!");
-                    window.location = "profile.html";
-                }
-                else
-                    alert("Error " + data.errorType);
-            }
-
-        });
-    }
 }
 
 function editGroup(changes) { 
@@ -211,11 +187,6 @@ function validClass(){
         return true;
 }
 
-function validOrg(){
-    if(!validOrg())
-        return false;
-}
-
 function validFName() {
     var regex = /[A-Z][a-z]+/;
     var name = document.getElementById("prof_first").value;
@@ -235,17 +206,6 @@ function validLName() {
         return true;
     else {
         alert("The last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
-        return false;
-    }
-}
-
-function validOrgName() {
-    var regex = /[A-Z][\w]+/;
-    var name = document.getElementById("org_name").value;
-    if(regex.test(name))
-        return true;
-    else {
-        alert("Organization must start with a capital letter");
         return false;
     }
 }
