@@ -30,7 +30,9 @@ function createGroup() {
         data: {
             "gname":$("#gname").val(), 
             "time1":$("#time1").val(),
-            "loc":$("#loc").val(), 
+            "loc":$("#loc").val(),
+            "dept":$("#dept").val(),
+            "class_num":$("#class_num").val(), 
         },
         dataType: "json",
         success: function(data) {
