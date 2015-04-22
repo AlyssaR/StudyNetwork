@@ -19,8 +19,6 @@ $app->post('/addClass', function() use ($database){
 	$time2 = $_POST['time2'];
 	$profFirst = $_POST['profFirst'];
 	$profLast = $_POST['profLast'];
-	//$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
-	$cid = ($_POST['dept'].$_POST['prof_last']);
 	$uid = "";
 
 	$error = "None";
@@ -36,11 +34,11 @@ $app->post('/addClass', function() use ($database){
 	$checkClass = $database->query("SELECT dept, class_num FROM Classes where dept = '$dept' AND class_num = '$class_num';");
 
 	if($checkClass->num_rows > 0){
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
 	}
 	else {
-		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$profFirst', '$profLast');");
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
+		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$time2', '$profFirst', '$profLast');");
+		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
 	}
 
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
@@ -213,11 +211,11 @@ $app->post('/getClasses', function() use ($database) {
 	}
 
 	//returning all classes a User has enrolled in
-	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, c.profLast FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
+	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, c.profFirst, c.profLast FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
-			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "profLast"=>$row['profLast'], "error"=>"None");
+			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "profFirst"=>$row['profFirst'], "profLast"=>$row['profLast'], "error"=>"None");
 		echo json_encode($response);
 	}
 	else
@@ -226,14 +224,17 @@ $app->post('/getClasses', function() use ($database) {
 });
 
 $app->post('/getClassInfo', function() use ($database) {
-	if(isset($_POST['cid']))
-		$cid = $_POST['cid'];
+	if(isset($_POST['dept']))
+	{
+		$dept = $_POST['dept'];
+		$class_num = $_POST['class_num'];
+	}
 	else {
-		echo json_encode(array("cid"=>$_POST['cid']));
+		echo json_encode(array("dept"=>$_POST['dept'], "class_num"=>$_POST['class_num']));
 		return;
 	}
 
-	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE cid = '$cid';");
+	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE dept = '$dept' AND class_num = '$class_num';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -524,11 +525,13 @@ $app->post('/register', function () use ($database) {
 $app->post('/searchByClass', function() use ($database) {
 	if(!empty($_POST['class'])) {
 		$search = json_decode($_POST['class'], true); 	
-  		$cid = $database->query("SELECT cid FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
-  		if($cid === NULL)
+  		$dept = $database->query("SELECT dept FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';");
+  		$class_num = $database->query("SELECT class_num FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
+
+  		if($dept === NULL)
   			echo json_encode(array("success" =>false, "error"=>"Class not found"));
   		else
-    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE cid = '$cid' AND active = TRUE;"); //use cid to get list of groups
+    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use cid to get list of groups
     	
     	$response = array();
     	if ($query->num_rows != 0) {
