@@ -17,7 +17,9 @@ $app->post('/addClass', function() use ($database){
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
 	$time2 = $_POST['time2'];
-	$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
+	$profFirst = $_POST['profFirst'];
+	$profLast = $_POST['profLast'];
+	//$professor = strtolower($_POST['prof_first'] . " " . $_POST['prof_last']);
 	$cid = ($_POST['dept'].$_POST['prof_last']);
 	$uid = "";
 
@@ -37,7 +39,7 @@ $app->post('/addClass', function() use ($database){
 		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
 	}
 	else {
-		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$professor');");
+		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$cid', '$time2', '$profFirst', '$profLast');");
 		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$cid');");
 	}
 
@@ -211,11 +213,11 @@ $app->post('/getClasses', function() use ($database) {
 	}
 
 	//returning all classes a User has enrolled in
-	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, professor FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
+	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, c.profLast FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
-			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "professor"=>$row['professor'], "error"=>"None");
+			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "profLast"=>$row['profLast'], "error"=>"None");
 		echo json_encode($response);
 	}
 	else

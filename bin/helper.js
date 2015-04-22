@@ -7,8 +7,8 @@ function createClass() {
                 "dept":$("#dept").val(), 
                 "class_num":$("#class_num").val(),
                 "time2":$("#time2").val(), 
-                "prof_first":$("#prof_first").val(), 
-                "prof_last":$("#prof_last").val(), 
+                "profFirst":$("#profFirst").val(), 
+                "profLast":$("#profLast").val(), 
             },
             dataType: "json",
             success: function(data) {
@@ -341,7 +341,7 @@ function validClass(){
 
 function validFName() {
     var regex = /[A-Z][a-z]+/;
-    var name = document.getElementById("prof_first").value;
+    var name = document.getElementById("profFirst").value;
     if(regex.test(name))
         return true;
     else {
@@ -353,7 +353,7 @@ function validFName() {
 
 function validLName() { 
     var regex = /[A-Z][a-zA-Z]+/;
-    var name = document.getElementById("prof_last").value;
+    var name = document.getElementById("profLast").value;
     if(regex.test(name))
         return true;
     else {
@@ -362,11 +362,20 @@ function validLName() {
     }
 }
 
+function validOrgName() {
+    var regex = /[A-Z][a-zA-Z0-9]+/;
+    var name = document.getElementById("org_name").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("The organization must start with a capital letter.");
+        return false;
+    }
+}
+
 function validOrg(){
-    /*if(!validOrgName())
+    if(!validOrgName())
         return false;
     else
         return true;
-    */
-    return true;
 }
