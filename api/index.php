@@ -469,26 +469,28 @@ $app->post('/searchByClass', function() use ($database) {
 
 });
 
-$app->post('/getGroups', function () use ($database) {
-	$uid = "";
-	if(isset($_SESSION["uid"]))
-	    $uid = $_SESSION["uid"];
-	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
-		return;
-	}
-	//again only returning groups that they are still a part of...hopefully 
-	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
-	
-	$response = array();
-	if ($runQuery->num_rows != 0) {
-		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+$app->post('/searchByOrg', function() use ($database) {
+	if(!empty($_POST['org'])) {
+		$search = json_decode($_POST['org'], true); 	
+  		$oid = $database->query("SELECT gid FROM Organizations WHERE org_name = '$search';");
+  		if($oid === NULL)
+  			echo json_encode(array("success" =>false, "error"=>"Organization not found"));
+  		else
+  			$gid = $database->query("SELECT gid FROM GroupEnroll g, OrgEnroll o WHERE g.uid = o.uid AND g.active = TRUE AND o.oid = '$oid';");
+    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' AND active = TRUE;"); 
+    	
+    	$response = array();
+    	if ($query->num_rows != 0) {
+			while($row = $query->fetch_assoc()) 
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+			echo json_encode($response);
+		}
+		else
+			echo json_encode(array("success"=>false, "error"=>"No groups found"));
+    }
+    else 
+    	echo json_encode(array("success"=>false, "error"=>"No data entered"));
 
-		echo json_encode($response);
-	}
-	else
-		echo json_encode(array("success"=>false, "error"=>"No groups found"));
 });
 
 $app->run();
