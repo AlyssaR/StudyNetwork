@@ -80,7 +80,7 @@ header h2 {
   font-size: 24px;
   font-weight: normal;
   line-height: 1.3;
-  color: #aaa;
+  color: #fac8bf;
   letter-spacing: -1px;
 }
 
@@ -188,7 +188,7 @@ pre {
 pre code {
   padding: 0;
   color: #f2f2f2;
-  background-color: #303030;
+  background-color: #466675;
   border: none;
 }
 
@@ -248,7 +248,7 @@ h2 {
   margin-bottom: 8px;
   font-size: 22px;
   font-weight: bold;
-  color: #303030;
+  color: #466675;
 }
 
 h3 {
@@ -315,7 +315,7 @@ footer {
   padding-bottom: 30px;
   margin-top: 40px;
   font-size: 13px;
-  color: #aaa;
+  color: #fac8bf;
   background: transparent url('../images/hr.png') 0 0 no-repeat;
 }
 
