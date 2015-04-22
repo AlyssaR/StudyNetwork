@@ -72,7 +72,7 @@ header h1 {
   font-family: 'Chivo', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 48px; font-weight: 900;
   line-height: 1.2;
-  color: #303030;
+  color: #466675;
   letter-spacing: -1px;
 }
 
@@ -111,7 +111,7 @@ a.button {
   font-size: 15px;
   font-weight: bold;
   line-height: 25px;
-  color: #303030;
+  color: #466675;
   background: #fdfdfd; /* Old browsers */
   background: -moz-linear-gradient(top,  #fdfdfd 0%, #f2f2f2 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fdfdfd), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
@@ -261,17 +261,17 @@ h3 {
 h4 {
   font-size: 16px;
   font-weight: bold;
-  color: #303030;
+  color: #466675;
 }
 
 h5 {
   font-size: 1em;
-  color: #303030;
+  color: #466675;
 }
 
 h6 {
   font-size: .8em;
-  color: #303030;
+  color: #466675;
 }
 
 p {
@@ -307,7 +307,7 @@ ol li {
 }
 
 dl dt {
-  color: #303030;
+  color: #466675;
 }
 
 footer {
