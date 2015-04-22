@@ -36,7 +36,7 @@ li {
 */
 
 header {
-  background: rgba(0, 0, 0, 0.1);
+  background: #ADD8E6;
   width: 100%;
   border-bottom: 1px dashed #F08080;
   padding: 20px 0;
@@ -49,7 +49,7 @@ header h1 {
   margin: 0 0 0 -40px;
   font-weight: bold;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-  color: #b5e853;
+  color: #CD5C5C;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
                0 0 5px rgba(181, 232, 83, 0.1),
                0 0 10px rgba(181, 232, 83, 0.1);
