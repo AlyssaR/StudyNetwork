@@ -137,7 +137,7 @@ ul li:before {
   content: ">>";
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   font-size: 13px;
-  color: #b5e853;
+  color: #CD5C5C;
   margin-left: -37px;
   margin-right: 21px;
   line-height: 16px;
@@ -154,7 +154,7 @@ pre {
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 10px;
   font-size: 14px;
-  color: #b5e853;
+  color: #CD5C5C;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -181,7 +181,7 @@ td {
 hr {
   height: 0;
   border: 0;
-  border-bottom: 1px dashed #b5e853;
+  border-bottom: 1px dashed #F08080;
   color: #b5e853;
 }
 
