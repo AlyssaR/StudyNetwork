@@ -12,7 +12,7 @@
 	
 	<title>Profile</title>
 </head>
-<body onload = "getProfile(),getGroups()" >
+<body onload = "getProfile(),getGroups(),getOrganizations(), getClasses()" >
 	<!--Navigation bar and Header-->
 	<h1><a href="index.html">{{Study Network Logo}}</a></h1>
 	<nav class="navbar navbar-default">
@@ -95,12 +95,13 @@
 			<div class="col-md-3">
 			
 			<h2>Organizations</h2>
-			<table align="center">
+			<table id="OrgData" align="center">
 				<tr>
 					<th>{{OrganizationName}}</th>
 				</tr>
 			</table>
-			<br><input type="text" id="inputButton"></input> <input type="submit" id=addOrganizationButton value="Add An Organization"></input>
+			<label id="orgresults">You are not in any Organizations yet.</label>
+			<br><input type="text" id="org_name"></input> <input type="submit" onclick = "javascript:createOrganization()" value="Add An Organization"></input>
 			</div>
 			
 			<!--Study Groups-->
@@ -120,14 +121,16 @@
 			<!--Classes-->
 			<div class="col-md-3">
 			<h2>Classes</h2>
-			<table id="GroupData" width="100%" bgcolor="#303030">
+			<table id="ClassData" width="100%" bgcolor="#303030">
 			<tr>
-				<th><a href="studyGroup.html">Group Name: {{Group Name}}</a></th>
+				<th>Class Dept: {{Class Name}}</th>
+				<th>Class Number: {{Class Number}}</th>
 				<th>Class Time:{{Class Time}}</th>
 				<th>Professor: {{Professor FirstName + LastName}}</th>
 				<th><button type = "button" onclick = "javascript:redirectToClass()"> Create A Class</button></th>
 			</tr>
 			</table>
+			<label id="classresults">You are not enrolled in any classes</label>
 			</div>
 		</div>
 	</div>	
