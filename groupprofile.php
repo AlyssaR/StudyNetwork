@@ -1,65 +1,134 @@
-<DOCUMENT html>
+<!DOCTYPE html>
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="bin/helper.js"></script>
-<script type="text/javascript" src="bin/accounts.js"></script>
-<link href="css/navbar.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="bin/helper.js"></script>
+    <script type="text/javascript" src="bin/accounts.js"></script>
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
+<!-- <select method="post" action = "javascript:searchByClass()">
+                            <option value="class" id = "class">Class</option>
+                            <option value="prof" id = "prof">Prof</option>
+                            <option value="group" id = "group">Group</option>
+                        </select>
+                        <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
 <body bgcolor = "#000000" />
+
 <?php
-	$gid = $_GET['gid'];
-	$gname = $_GET['gname'];
-	$time1 = $_GET['time1'];
-	$loc = $_GET['loc'];
+$gid = $_GET['gid'];
+$gname = $_GET['gname'];
+$time1 = $_GET['time1'];
+$loc = $_GET['loc'];
 ?>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">The Study Network</a>
+        </div>
 
-		<div id = formData>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="createClassForm.html">Create Class</a></li>
+                        <li><a href="createStudyGroupForm.html">Create Study Group</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <!-- No functionality currently -->
+                    <input type="text" class="form-control" placeholder="Search">
+                    <select class="form-control" method="post" action = "javascript:searchByClass()">
+                        <option value="class" id = "class">Class</option>
+                        <option value="prof" id = "prof">Prof</option>
+                        <option value="group" id = "group">Group</option>
+                    </select>
+                </div>
+                <a href="searchGroups.html"><input class="btn btn-default" type="submit" value="Search"></a>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
 
-		<h1>Group Profile</h1>
-		<div class="navbar">
-			 <nav>
-				  <ul>
-					   <li><a href="index.html">Home</a></li>
-					   <li><a href="about.html">About</a></li>
-					   <li><a href="profile.html">View Profile</a></li>
-				  </ul>
-			 </nav>
-		</div>
-		<label id = "gid" style="visibility:hidden"><?php echo $gid; ?></label><br /><br />
-		
-		Group Name:    <label id = "cur_gname"><?php echo $gname; ?></label>
-		<div value="1" id="optDisp1" style="visibility:hidden">
-			<input type = "text" id = "gname" placeholder = "New Group Name">
-			<input type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
-		</div>
-		Time:          <label id = "cur_time1"><?php echo $time1; ?></label>
-		<div value="1" id="optDisp2" style="visibility:hidden">
-			<input type = "time" id = "time1" placeholder = "New Meeting Time">
-			<input type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
-		</div>
-		Location:      <label id = "cur_loc"><?php echo $loc; ?></label>
-		<div value="1" id = "optDisp3" style= "visibility:hidden">
-			<input type = "text" id = "loc" placeholder = "New Meeting Location">
-			<input type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
-		</div>
-			<br /><br />
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User<!--will hopefully pull name at some point--> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="profile.html">View Profile</a></li>
+                        <li><a href="#">Logout</a></li><!--do we have a logout route? -->
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-			<input type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group"><br />
-			
-			<div id="editButtonDiv">
-					<button  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
-					
-					</div>
+<h1>Group Profile</h1>
 
-		</div>
+<label id = "gid" style="visibility:hidden"><?php echo $gid; ?></label><br /><br />
+
+<div class="container">
+
+    Group Name:    <label id = "cur_gname"> <?php echo $gname; ?> </label>
+
+    <div value="1" id="optDisp1" style="visibility:hidden">
+        <div class="form-inline">
+            <input class="form-control" type = "text" id = "gname" placeholder = "New Group Name">
+            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
+        </div>
+    </div>
+</div>
+<div class="container">
+
+
+    Time:          <label id = "cur_time1"> <?php echo $time1; ?> </label>
+
+    <div value="1" id="optDisp2" style="visibility:hidden">
+        <div class="form-inline">
+            <input class="form-control" type = "text" id = "time" placeholder = "New Meeting Time">
+            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    Location:   <label id = "cur_loc"> <?php echo $loc; ?> </label>
+
+    <div value="1" id = "optDisp3" style= "visibility:hidden">
+        <div class="form-inline">
+            <input class="form-control" type = "text" id = "time1" placeholder = "New Meeting Location">
+            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <button class="btn btn-primary btn-sm "  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
+    <input class="btn btn-primary btn-sm" type = "button" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group">
+
+
+</div>
+</div>
+</body>
 </html>
-
+<footer>
+    <hr>
+    <p>&copy;Genius Loading</p>
+</footer>
 <style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-	font-family:courier;
-}
+    .container {
+        width:500px;
+    }
 </style>
+
