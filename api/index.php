@@ -523,50 +523,42 @@ $app->post('/register', function () use ($database) {
 });
 
 $app->post('/searchByClass', function() use ($database) {
-	if(!empty($_POST['class'])) {
-		$search = json_decode($_POST['class'], true); 	
-  		$dept = $database->query("SELECT dept FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';");
-  		$class_num = $database->query("SELECT class_num FROM Classes WHERE dept = '$search[0]' AND class_num = '$search[1])';"); //get cid
+	if(!empty($_POST['dept']) && !empty($_POST['class_num'])) {
+		$dept = $_POST['dept'];
+  		$class_num = $_POST['class_num'];
 
-  		if($dept === NULL)
-  			echo json_encode(array("success" =>false, "error"=>"Class not found"));
-  		else
-    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use cid to get list of groups
+    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use cid to get list of groups
     	
     	$response = array();
     	if ($query->num_rows != 0) {
 			while($row = $query->fetch_assoc()) 
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
 		else
-			echo json_encode(array("success"=>false, "error"=>"No groups found"));
+			echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
     }
     else 
-    	echo json_encode(array("success"=>false, "error"=>"No data entered"));
+    	echo json_encode(array("success"=>false, "errorType"=>"Insufficient data entered"));
 });
 
-$app->post('/searchByOrg', function() use ($database) {
+$app->post('/searchByOrg', function() use ($database) {		
 	if(!empty($_POST['org'])) {
-		$search = json_decode($_POST['org'], true); 	
-  		$oid = $database->query("SELECT gid FROM Organizations WHERE org_name = '$search';");
-  		if($oid === NULL)
-  			echo json_encode(array("success" =>false, "error"=>"Organization not found"));
-  		else
-  			$gid = $database->query("SELECT gid FROM GroupEnroll g, OrgEnroll o WHERE g.uid = o.uid AND g.active = TRUE AND o.oid = '$oid';");
-    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' AND active = TRUE;"); 
+		$search = $_POST['org']; 	
+  		
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE org_name = '$search' AND active = TRUE;"); 
     	
     	$response = array();
     	if ($query->num_rows != 0) {
 			while($row = $query->fetch_assoc()) 
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
 		else
 			echo json_encode(array("success"=>false, "error"=>"No groups found"));
     }
     else 
-    	echo json_encode(array("success"=>false, "error"=>"No data entered"));
+    	echo json_encode(array("success"=>false, "error"=>"Insufficient data entered"));
 });
 
 $app->run();

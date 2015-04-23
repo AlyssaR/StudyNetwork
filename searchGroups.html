@@ -1,4 +1,4 @@
-<DOCUMENT html>
+<!DOCTYPE html>
 <head>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -8,7 +8,7 @@
   <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <title> Search </title>
 </head>
-<body bgcolor="#000000" style ="font-family: raleway, serif">
+<body onload="javascript:searchByClass()" bgcolor="#000000" style ="font-family: raleway, serif">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -63,12 +63,16 @@
 	
 	<legend class="text-center">Results</legend>
 	
-	<table class="table table-bordered" align="center">
-		<tr>
-			<th><a href="studyGroup.html">{{StudyGroupName}}</a></th>
-			<th>{{ClassName}}</th>
-			<th>{{MeetingTime}}</th>
-		</tr>
+	<table class="table table-bordered" align="center" id="searchResults">
+		<thead>
+			<tr>
+			<th><a href="studyGroup.html">StudyGroupName</a></th>
+			<th>ClassName</th>
+			<th>MeetingTime</th>
+			<th>View Group</th>
+			</tr>
+		</thead>
 	</table>
+	<label id="results">No Results Found.</label>
 </body>
 </html>
