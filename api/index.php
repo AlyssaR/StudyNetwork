@@ -394,7 +394,7 @@ $app->post('/groupRole', function() use ($database) {
 		return;
 	}
 
-	$runQuery $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
+	$runQuery = $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -606,7 +606,6 @@ $app->post('/searchByOrg', function() use ($database) {
     else 
     	echo json_encode(array("success"=>false, "error"=>"Insufficient data entered"));
 });
-
 
 
 $app->run();
