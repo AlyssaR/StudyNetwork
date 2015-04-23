@@ -76,10 +76,10 @@ function editGroup(changes) {
     if (changes === "GroupName") { //also "GroupName is probably tied to HTML"
         editS['gname'] = document.getElementById("gname").value;
     }
-    else if(changes === "time1") {
+    if(changes === "time1") {
         editS['time1'] = document.getElementById("time1").value;
     }
-    else if(changes === "loc") {
+    if(changes === "loc") {
         editS['loc'] = document.getElementById("loc").value;
     }
     //update StudyGroups

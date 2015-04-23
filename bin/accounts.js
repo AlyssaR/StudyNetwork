@@ -110,6 +110,22 @@ function $_GET(q,s) {
     return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
 }
 
+function isAdmin() { 
+    var status = false;
+    $.ajax({
+        url: "api/groupRole",
+        data: { "gid":$_GET('gid')},
+        dataType: "json",
+        async: false,
+        type: "post",
+        success:function(data) {
+            if(data.success && data.role == "admin")
+                status = true;
+        }
+    });
+    return status;
+}
+
 function isInGroup() { 
     var status = false;
     $.ajax({
@@ -224,8 +240,12 @@ function showAllTheThings() {
         document.getElementById('registerLinkTo').style.display = "none";
     }
     else if(document.title == "Group Profile") {
-        if(isInGroup())
+        document.getElementById('editableButton').style.display="none";
+        if(isInGroup()) {
             toggleJoin('leave');
+            if(isAdmin())
+                document.getElementById('editableButton').style.display="block";
+        }
         else
             toggleJoin('join');
     }
