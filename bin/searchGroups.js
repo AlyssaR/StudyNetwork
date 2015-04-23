@@ -25,6 +25,7 @@ function getGroupsSearch() {
     });
 }
 
+
 function redirectToSearchGroups() {
 	var queryInput = $("#searchInput").val();
 	var splitQueryInput = queryInput.split(" ");
@@ -129,4 +130,24 @@ function populateSearchResults(data) {
 		viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
 		newButton.appendChild(viewButton);
 	}
+}
+
+function searchByGroup() {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	var group = sURLVariables[0].split('=');
+	group = group[1];
+	alert(group);
+	
+    $.ajax({
+        url: "api/getGroups_searchByClass",
+        type: "post",
+		data: 	{
+					"group": group,
+				},
+        dataType: "json",
+        success: function(data) {
+			populateSearchResults(data);
+        }
+    });
 }
