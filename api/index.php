@@ -273,7 +273,7 @@ $app->post('/getGroupMembers', function() use ($database) {
 		return;
 	}
 
-	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid AND e.active = TRUE;");
 
 	$response = array();
 	if($allGroupMembers->num_rows != 0) {
