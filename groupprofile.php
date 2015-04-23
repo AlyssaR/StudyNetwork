@@ -136,5 +136,8 @@
     .container {
         width:500px;
     }
+    .table th {
+        text-align: center;
+    }
 </style>
 
