@@ -52,7 +52,7 @@ body {
   font-size: 1em;
   line-height: 1.5;
   color: #c8c8c8;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  text-shadow: none;
   background: #c8c8c8;
 }
 
