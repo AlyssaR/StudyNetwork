@@ -302,7 +302,7 @@ function leaveStudyGroup() {
         url: "api/leaveStudyGroup",
         type: "post",
         data: {
-            "gid": $('#gid').text()
+            "gid": $_GET('gid')
         },
         dataType: "json",
         success: function(data) {
