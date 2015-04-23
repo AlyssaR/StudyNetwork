@@ -148,17 +148,36 @@ function getClasses() {
     });
 }
 
-function getGroupInfo(gidGet) {
+function $_GET(q,s) {
+    s = (s) ? s : window.location.search;
+    var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
+    return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
+}
+
+function getGroupInfo(gid) {
+    var getInfo = false;
+    if(gid == "group") {
+        gid = $_GET('gid');
+        getInfo = true;
+    }
+
     $.ajax({
         url: "api/getGroupInfo",
         type: "post",
         data: {
-            "gid":gidGet
+            "gid":gid
         },
         dataType: "json",
         success: function(data) {
-            if(data.success)
-                window.location="groupprofile.php?gid="+gidGet+"&gname="+data.gname+"&time1="+data.time1+"&loc="+data.loc;
+            if(data.success) {
+                if(getInfo) {
+                    $('#cur_gname').text(data.gname);
+                    $('#cur_loc').text(data.loc);
+                    $('#cur_time1').text(data.time1);
+                }
+                else
+                    window.location="groupprofile.php?gid="+gid;
+            }
             else {
                 alert("Error: Could not retrieve your group.")
                 window.location = "profile.html";
