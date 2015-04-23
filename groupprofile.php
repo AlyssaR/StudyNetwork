@@ -89,7 +89,7 @@
 
     <div value="1" id="optDisp2" style="display:none">
         <div class="form-inline">
-            <input class="form-control" type = "text" id = "time" placeholder = "New Meeting Time">
+            <input class="form-control" type = "text" id = "time1" placeholder = "New Meeting Time">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
         </div>
     </div>
@@ -100,7 +100,7 @@
 
     <div value="1" id = "optDisp3" style= "display:none">
         <div class="form-inline">
-            <input class="form-control" type = "text" id = "time1" placeholder = "New Meeting Location">
+            <input class="form-control" type = "text" id = "loc" placeholder = "New Meeting Location">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
         </div>
     </div>
