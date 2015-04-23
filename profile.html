@@ -66,10 +66,23 @@
     <h1 class="text-center">Profile</h1>
         <hr>
         </div>
-    <div class="container">
+    <div class="container text-center">
 
-        <h4>First Name:</h4>
+        <h4>First Name:<label id = "cur_f_name">{{FirstName}}</label> </h4>
+        <div value ="1" id="optDisp1" style= "visibility: hidden">
+            <input type = "text" id = "f_name" placeholder = "New First Name">
+            <input type = "submit" onclick = "javascript:editProfile('first')" value = "Change">
+        </div>
+        <h4>Email:	<label id = "cur_email">{{Email}}</label></h4>
+        <div value ="1" id="optDisp3" style= "visibility: hidden">
+            <input type = "text" id = "email" placeholder = "New Email">
+            <input type = "submit" onclick = "javascript:editProfile('email')" value = "Change">
+            <h4>Change Password: <input type = "password" id = "password" placeholder = "New Password"/></h4>
+            <h4>Retype Password: <input type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/> </h4>
+        </div>
 
-    </div>
+        <input type = "submit" onclick = "javascript:editProfile('password')" value = "Save Changes"> <br>
+
+
     </body>
 </html>
