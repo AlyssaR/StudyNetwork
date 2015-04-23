@@ -1,6 +1,6 @@
 function getGroupsSearch() {
     $.ajax({
-        url: "api/getGroups_searchByClass",
+        url: "api/searchByClass",
         type: "post",
         dataType: "json",
         success: function(data) {
