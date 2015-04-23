@@ -273,7 +273,7 @@ $app->post('/getGroupMembers', function() use ($database) {
 		return;
 	}
 
-	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid AND e.active = TRUE;");
 
 	$response = array();
 	if($allGroupMembers->num_rows != 0) {
@@ -404,8 +404,9 @@ $app->post('/groupRole', function() use ($database) {
 	echo json_encode($response);
 });
 
-$app->post('isInGroup', function() use($database) {
+$app->post('/isInGroup', function() use($database) {
 	$uid = "";
+	$gid = "";
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -415,10 +416,12 @@ $app->post('isInGroup', function() use($database) {
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
 	else {
-		echo json_encode(array("gid"=>$_POST['gid']));
+		echo json_encode(array("success"=>false,"errorType"=>"No group id provided."));
 		return;
 	}
-	if($uid === NULL && $gid === NULL)
+
+	$query = $database->query("SELECT uid FROM GroupEnroll WHERE gid = '$gid' AND uid = '$uid';");
+	if($query->num_rows == 0)
 		$response = array("success"=>false, "errorType"=>"Not a member of this group");
 	else
 		$response = array("success"=>true, "errorType"=>"None");
