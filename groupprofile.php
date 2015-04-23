@@ -104,6 +104,19 @@
         </div>
     </div>
 </div>
+
+<hr>
+<h2>Group Members</h2>
+<hr>
+<table class="table" id="MemberData" width="500px">
+    <tr>
+        <th>{{Member}}</th>
+        <th>{{Name}}</th>
+    </tr>
+</table>
+<label id="memberresults">There are no members in this group.</label>
+
+
 <div class="container">
 
     <button class="btn btn-primary btn-sm "  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
