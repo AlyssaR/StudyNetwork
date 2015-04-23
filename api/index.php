@@ -546,5 +546,28 @@ $app->post('/searchByClass', function() use ($database) {
     	echo json_encode(array("success"=>false, "error"=>"No data entered"));
 });
 
+$app->post('/searchByOrg', function() use ($database) {
+	if(!empty($_POST['org'])) {
+		$search = json_decode($_POST['org'], true); 	
+  		$oid = $database->query("SELECT gid FROM Organizations WHERE org_name = '$search';");
+  		if($oid === NULL)
+  			echo json_encode(array("success" =>false, "error"=>"Organization not found"));
+  		else
+  			$gid = $database->query("SELECT gid FROM GroupEnroll g, OrgEnroll o WHERE g.uid = o.uid AND g.active = TRUE AND o.oid = '$oid';");
+    		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' AND active = TRUE;"); 
+    	
+    	$response = array();
+    	if ($query->num_rows != 0) {
+			while($row = $query->fetch_assoc()) 
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+			echo json_encode($response);
+		}
+		else
+			echo json_encode(array("success"=>false, "error"=>"No groups found"));
+    }
+    else 
+    	echo json_encode(array("success"=>false, "error"=>"No data entered"));
+});
+
 $app->run();
 ?>
