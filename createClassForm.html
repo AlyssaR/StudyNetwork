@@ -72,9 +72,11 @@
 			<div class="col-md-4 col-md-offset-4">
 				<legend>Create A Class</legend>
 				<form method = "post" action = "javascript:createClass()" role="form">
-					<div class="form-group">
+					<div class="form-group ">
+                        <div class="form-inline">
 						<label for="subject">Department</label>
-						<select type="subject" id = "dept" name = "deptDropdown">
+
+						<select class="form-control" type="subject" id = "dept" name = "deptDropdown">
 							<option value="ACCT">ACCT</option>
 							<option value="ADPR">ADPR</option>
 							<option value="ADRE">ADRE</option>
@@ -193,29 +195,32 @@
 							<option value="WGST">WGST</option>
 							<option value="WL">WL</option>
 						</select>
+                            </div>
 					</div>
-					<div class="form-group">
+					<div class="form-inline">
 						<label for="courseNumber">Course Number:</label>
-						<input type ="number" id="class_num" name="courseNumber" min = "100" max = "9999" required>				
-					</div>
-					<div class="form-group">
+						<input class="form-control" type ="number" id="class_num" name="courseNumber" min = "100" max = "9999" required>
+					</div> <br />
+					<div class="form-inline">
 						<label>Class Time:</label>
-						<input type ="time" placeholder="HH:MM PM" id="time2" name="classTime" required> 
+						<input class="form-control" type ="time" placeholder="HH:MM PM" id="time2" name="classTime" required>
 					</div>
-					<div class="form-group">
+                    <br />
+					<div class="form-inline">
 						<label for="Professor">
-							<div class="form-group">
+							<div class="form-inline">
 								<label type="Professor" for="FirstName"> Professor's First Name:</label>
-								<input type="text" id="profFirst" name="profFirstName" required>
+								<input class="form-control" type="text" id="profFirst" name="profFirstName" required>
 							</div>
+                            <br />
 						
-							<div class="form-group">
+							<div class="form-inline">
 								<label type="Professor" for="LastName">Professor's Last Name:</label>
-								<input type="text" id="profLast" name="profLastName" required> 
+								<input class="form-control" type="text" id="profLast" name="profLastName" required>
 							</div>
 						</label>
 					</div>	
-					<input type = "submit" value = "Create Class">
+					<input class="btn btn-primary btn-lg" type = "submit" value = "Create Class">
 				</form>
 			</div>
 		</div>
