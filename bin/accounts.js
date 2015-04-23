@@ -116,6 +116,7 @@ function isInGroup() {
         url: "api/isInGroup",
         data: { "gid":$_GET('gid')},
         dataType: "json",
+        async: false,
         type: "post",
         success:function(data) {
             if(data.success)
