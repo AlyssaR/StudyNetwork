@@ -273,9 +273,9 @@ $app->post('/getGroupMembers', function() use ($database) {
 		return;
 	}
 
-	//this will grab all the uid's of users in the Group
-	//may need to make this a 2-d array
 	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+	
+	$response = array();
 	if($allGroupMembers->num_rows != 0) {
 		while($row = $allGroupMembers->fetch_assoc())
 			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "error"=>"None");
