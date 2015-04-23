@@ -422,7 +422,7 @@ $app->post('isInGroup', function() use($database) {
 		$response = array("success"=>false, "errorType"=>"Not a member of this group");
 	else
 		$response = array("success"=>true, "errorType"=>"None");
-	echo json_encode($response)
+	echo json_encode($response);
 });
 
 //Quincy Schurr - joinStudyGroup branch
