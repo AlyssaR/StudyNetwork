@@ -66,8 +66,45 @@ function searchByClass() {
     });
 }
 
+function redirectToGroup() {
+    window.location = "createStudyGroupForm.html";
+}
+
+function getGroupInfo(gid) {
+    var getInfo = false;
+    if(gid == "group") {
+        gid = $_GET('gid');
+        getInfo = true;
+    }
+
+    $.ajax({
+        url: "api/getGroupInfo",
+        type: "post",
+        data: {
+            "gid":gid
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                if(getInfo) {
+                    $('#cur_gname').text(data.gname);
+                    $('#cur_loc').text(data.loc);
+                    $('#cur_time1').text(data.time1);
+                }
+                else
+                    window.location="groupprofile.php?gid="+gid;
+            }
+            else {
+                alert("Error: Could not retrieve your group.")
+                window.location = "profile.html";
+            }
+        }
+    });
+}
+
 function populateSearchResults(data) {
 	var table = document.getElementById('searchResults');
+	var gidStr;
 	for(var i = 0; i < data.length; i++) {
 		$('#results').text("");
 		if(!data[i].success)
@@ -77,7 +114,7 @@ function populateSearchResults(data) {
 			if(key == "errorType" || key == "success")
 				continue;
 			if (key == "gid") {
-				var gidstr = data[i][key];
+				gidStr = data[i][key];
 				continue;
 			}
 			var newCell = newRow.insertCell(-1);
@@ -87,9 +124,9 @@ function populateSearchResults(data) {
 
 		var newButton = newRow.insertCell(-1);
 		var viewButton = document.createElement("button");
-		var addName = document.createTextNode("Join Group");
+		var addName = document.createTextNode("View Group");
 		viewButton.appendChild(addName);
-		viewButton.onclick=function(gidstr) { return function() { joinGroup(gidstr); }; }(gidstr);
+		viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
 		newButton.appendChild(viewButton);
 	}
 }
