@@ -70,39 +70,51 @@ function editProfile(toChange) {
     $("#password2").val('');
 }
 
-function getProfile() {
+function getProfile(caller) {
+    var sendback;
     $.ajax({
         url: "api/getUserInfo",
         type: "post",
         dataType: "json",
+        async: false,
         success: function(data) {
             if(data.success) {
-                $('#cur_f_name').text(data.f_name);
-                $('#cur_l_name').text(data.l_name);
-                $('#cur_email').text(data.email);
+                if(caller == "justacheck") 
+                    sendback = data.f_name;
+                else
+                    setProfile(data);
             }
-            else 
-                window.location = "login.html";
+            else if (document.title != "Study Network")
+                window.location = "index.html";
+            else
+                alert("You are not logged in.");
         }
     });
+    return sendback;
 }
 
-function isLoggedIn(page) {
+function hideAllTheThings() {
+    document.getElementById('navCreate').style.display = "none";
+    document.getElementById('navGreet').style.display = "none";
+    //Add if is createGroup,createClass,groupProfile,profile, etc, redirect to login
+    if(document.title == "Profile" || document.title == "Group Profile" 
+        || document.title == "Create a Class" || document.title == "Create a Study Group") {
+        alert("You do not have permission to view this page.\nPlease log in or create an account.");
+        window.location = "index.html";
+    }
+}
+
+function isLoggedIn() {
     $.ajax({
         url: "api/getUserID",
         data: { "getID":true},
         dataType: "json",
         type: "post",
         success:function(data) {
-            if(data.success) {
-                if(page === "login")
-                    window.location = "index.html";
-            }
+            if(data.success)
+                showAllTheThings();
             else {
-                if(page === "profile") {
-                    alert("Error: You are not currently logged in. You are being redirected to the Login page now...");
-                    window.location = "index.html";
-                }
+                hideAllTheThings();
             }
         }
     });
@@ -125,9 +137,10 @@ function logout() {
         url: "api/logout",
         type: "post",
         dataType: "json",
-        success:function() {
-            window.location = "index.html";
-        }
+        success:function(data) {
+            if(data.success)
+                window.location = "index.html";
+        },
     });
 }
 
@@ -160,24 +173,43 @@ function register() {
 }
 
 function setEditableTrue() {
-    document.getElementById('optDisp1').style.visibility = "visible";
-    document.getElementById('optDisp2').style.visibility = "visible";
-    document.getElementById('optDisp3').style.visibility = "visible";
+    document.getElementById('optDisp1').style.display = "block";
+    document.getElementById('optDisp2').style.display = "block";
+    document.getElementById('optDisp3').style.display = "block";
+    document.getElementById('optDisp4').style.display = "block";
 }
 
 function setEditableFalse() {
-    document.getElementById('optDisp1').style.visibility = "hidden";
-    document.getElementById('optDisp2').style.visibility = "hidden";
-    document.getElementById('optDisp3').style.visibility = "hidden";
+    document.getElementById('optDisp1').style.display = "none";
+    document.getElementById('optDisp2').style.display = "none";
+    document.getElementById('optDisp3').style.display = "none";
+    document.getElementById('optDisp4').style.display = "none";
+}
+
+function setProfile(data) {
+    $('#cur_f_name').text(data.f_name);
+    $('#cur_l_name').text(data.l_name);
+    $('#cur_email').text(data.email);        
+}
+
+function showAllTheThings() {
+    document.getElementById('navCreate').style.display = "show";
+    document.getElementById('navGreet').style.display = "show";
+    document.getElementById('sayHello').innerHTML = getProfile('justacheck');
+
+    if(document.title == "Study Network") {
+        document.getElementById('loginForm').style.display = "none";
+        document.getElementById('registerLinkTo').style.display = "none";
+    }
 }
 
 function toggle(){
-	if (document.getElementById('optDisp1').style.visibility == "hidden") {
+	if (document.getElementById('optDisp1').style.display == "none") {
 		document.getElementById("editableButton").innerHTML="View Profile";
 		setEditableTrue();
 	}
 	else {
-		document.getElementById("editableButton").innerHTML="EditProfile";
+		document.getElementById("editableButton").innerHTML="Edit Profile";
 		setEditableFalse();
 	}
 }
