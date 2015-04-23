@@ -341,6 +341,10 @@ function redirectToClass() {
     window.location = "createClassForm.html";
 }
 
+function redirectToDoodle() {
+	window.location = "doodleAPILink.html";
+}
+
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
