@@ -395,7 +395,13 @@ $app->post('/groupRole', function() use ($database) {
 	}
 
 	$runQuery $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
+	$result = $runQuery->fetch_assoc();
 
+	if($result === NULL)
+		$response = array("success"=>false, "role"=>"Not Valid", "error"=>"User not logged in");
+	else
+		$response = array("success"=>true, "role"=>$result['role'], "error"=>"None");
+	echo json_encode($response);
 });
 
 //Quincy Schurr - joinStudyGroup branch
@@ -550,6 +556,7 @@ $app->post('/searchByClass', function() use ($database) {
   		if($dept === NULL)
   			echo json_encode(array("success" =>false, "error"=>"Class not found"));
   		else
+  			//might want to see if this works with two AND statements
     		$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use cid to get list of groups
     	
     	$response = array();
