@@ -572,27 +572,29 @@ $app->post('/searchByGroup', function() use ($database) {
 	if(!empty($_POST['group'])) {
 		$gname = $_POST['group'];
 
-		$query = $database->query("SELECT gname, gid FROM StudyGroups WHERE gname = '$gname';");
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '$gname';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
 			while($row = $query->fetch_assoc())
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "gid"=>$row['gid'], "error"=>"None");
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
 
-		else echo json_encode(array("success"=>false, "error"=>"No groups found"));
+		else echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
 	}
 
-	else echo json_encode(array("success"=>false, "error"=>"No data entered"));
+	else echo json_encode(array("success"=>false, "errorType"=>"No data entered"));
 
 });
 
 $app->post('/searchByOrg', function() use ($database) {		
 	if(!empty($_POST['org'])) {
-		$search = $_POST['org']; 	
+		$org_name = $_POST['org']; 	
   		
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE org_name = '$search' AND active = TRUE;"); 
+  		//this gets UserId. This will return more than 1 result, if needed
+		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name = '$org_name' AND u.orgid = o.orgid;"); 
+		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND active = TRUE;");
     	
     	$response = array();
     	if ($query->num_rows != 0) {
@@ -601,10 +603,10 @@ $app->post('/searchByOrg', function() use ($database) {
 			echo json_encode($response);
 		}
 		else
-			echo json_encode(array("success"=>false, "error"=>"No groups found"));
+			echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
     }
     else 
-    	echo json_encode(array("success"=>false, "error"=>"Insufficient data entered"));
+    	echo json_encode(array("success"=>false, "errorType"=>"Insufficient data entered"));
 });
 
 
