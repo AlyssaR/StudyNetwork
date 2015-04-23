@@ -227,7 +227,7 @@ function getGroups() {
 
 function getGroupMembers() {
     $.ajax({
-        url:"api/GetGroupsRow",
+        url:"api/getGroupMembers",
         type: "post",
         dataType: "json",
         success: function(data) {
