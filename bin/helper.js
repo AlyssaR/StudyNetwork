@@ -226,9 +226,14 @@ function getGroups() {
 
 
 function getGroupMembers() {
+    gid = $_GET('gid');
+    
     $.ajax({
         url:"api/getGroupMembers",
         type: "post",
+        data: {
+            "gid":gid
+        },
         dataType: "json",
         success: function(data) {
             var table = document.getElementById('MemberData');
