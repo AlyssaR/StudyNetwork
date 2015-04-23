@@ -2,6 +2,7 @@
     <head>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> <!--Old version was 1.7.1 -->
         <script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="bin/accounts.js"></script>
         <script type="text/javascript" src="bin/helper.js"></script>
         <link href="css/navbar.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +18,7 @@
         }
         </style>-->
     <head>
-    <body style ="font-family: raleway, serif">
+    <body style ="font-family: raleway, serif" onload="isLoggedIn()">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,7 +38,7 @@
                 <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="about.html">About</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="navCreate">Create <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="createClassForm.html">Create Class</a></li>
                         <li><a href="createStudyGroupForm.html">Create Study Group</a></li>
@@ -54,7 +55,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User<!--will hopefully pull name at some point--> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="navGreet">Welcome, <label id="sayHello"></label><span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="profile.html">View Profile</a></li>
                         <li><a href="javascript:void(0)" onclick = "logout();">Logout</a></li><!--do we have a logout route? -->
@@ -72,9 +73,11 @@
 			<div class="col-md-4 col-md-offset-4">
 				<legend>Create A Class</legend>
 				<form method = "post" action = "javascript:createClass()" role="form">
-					<div class="form-group">
+					<div class="form-group ">
+                        <div class="form-inline">
 						<label for="subject">Department</label>
-						<select type="subject" id = "dept" name = "deptDropdown">
+
+						<select class="form-control" type="subject" id = "dept" name = "deptDropdown">
 							<option value="ACCT">ACCT</option>
 							<option value="ADPR">ADPR</option>
 							<option value="ADRE">ADRE</option>
@@ -193,29 +196,32 @@
 							<option value="WGST">WGST</option>
 							<option value="WL">WL</option>
 						</select>
+                            </div>
 					</div>
-					<div class="form-group">
+					<div class="form-inline">
 						<label for="courseNumber">Course Number:</label>
-						<input type ="number" id="class_num" name="courseNumber" min = "100" max = "9999" required>				
-					</div>
-					<div class="form-group">
+						<input class="form-control" type ="number" id="class_num" name="courseNumber" min = "100" max = "9999" required>
+					</div> <br />
+					<div class="form-inline">
 						<label>Class Time:</label>
-						<input type ="time" placeholder="HH:MM PM" id="time2" name="classTime" required> 
+						<input class="form-control" type ="time" placeholder="HH:MM PM" id="time2" name="classTime" required>
 					</div>
-					<div class="form-group">
+                    <br />
+					<div class="form-inline">
 						<label for="Professor">
-							<div class="form-group">
+							<div class="form-inline">
 								<label type="Professor" for="FirstName"> Professor's First Name:</label>
-								<input type="text" id="profFirst" name="profFirstName" required>
+								<input class="form-control" type="text" id="profFirst" name="profFirstName" required>
 							</div>
+                            <br />
 						
-							<div class="form-group">
+							<div class="form-inline">
 								<label type="Professor" for="LastName">Professor's Last Name:</label>
-								<input type="text" id="profLast" name="profLastName" required> 
+								<input class="form-control" type="text" id="profLast" name="profLastName" required>
 							</div>
 						</label>
 					</div>	
-					<input type = "submit" value = "Create Class">
+					<input class="btn btn-primary btn-lg" type = "submit" value = "Create Class">
 				</form>
 			</div>
 		</div>

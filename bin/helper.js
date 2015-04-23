@@ -226,14 +226,19 @@ function getGroups() {
 
 
 function getGroupMembers() {
+    gid = $_GET('gid');
+    
     $.ajax({
         url:"api/getGroupMembers",
         type: "post",
+        data: {
+            "gid":gid
+        },
         dataType: "json",
         success: function(data) {
             var table = document.getElementById('MemberData');
             for (var i = 0; i < data.length; i++) {
-                $('#memberresults').text("");
+                $('#memberResults').text("");
                 if(!data[i].success)
                     continue
                 var newRow = table.insertRow(-1);

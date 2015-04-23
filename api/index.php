@@ -273,9 +273,9 @@ $app->post('/getGroupMembers', function() use ($database) {
 		return;
 	}
 
-	//this will grab all the uid's of users in the Group
-	//may need to make this a 2-d array
 	$allGroupMembers = $database->query("SELECT f_name, l_name from Users u, GroupEnroll e WHERE e.gid = '$gid' AND u.uid = e.uid;");
+
+	$response = array();
 	if($allGroupMembers->num_rows != 0) {
 		while($row = $allGroupMembers->fetch_assoc())
 			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "error"=>"None");
@@ -377,6 +377,31 @@ $app->post('/getUserInfo', function () use ($database) {
 	else
 		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
     echo json_encode($response);
+});
+
+$app->post('/groupRole', function() use ($database) {
+	$uid = "";
+	 if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+
+	$runQuery $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
+	$result = $runQuery->fetch_assoc();
+
+	if($result === NULL)
+		$response = array("success"=>false, "role"=>"Not Valid", "error"=>"User not logged in");
+	else
+		$response = array("success"=>true, "role"=>$result['role'], "error"=>"None");
+	echo json_encode($response);
 });
 
 //Quincy Schurr - joinStudyGroup branch
@@ -485,6 +510,7 @@ $app->post('/logout', function () {
         $params["path"], $params["domain"],
         $params["secure"], $params["httponly"]);
 	session_destroy(); //Ends session server side
+	echo json_encode(array("success"=>true));
 });
 
 $app->post('/register', function () use ($database) {
@@ -559,6 +585,28 @@ $app->post('/searchByOrg', function() use ($database) {
     }
     else 
     	echo json_encode(array("success"=>false, "error"=>"Insufficient data entered"));
+});
+
+$app->post('/searchByGroup', function() use ($database) {
+	if(!empty($_POST['group'])) {
+		$search = json_decode($_POST['group'],true);
+		$results = $database->query("SELECT gname, gid FROM StudyGroups WHERE gname = '$search';");
+
+		if($results === NULL)
+			echo json_encode(array("success"=>false, "error"=>"Group not found"));
+
+		$response = array()
+		if($results->num_rows!= 0) {
+			while($row = $results->fetch_assoc())
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "gid"=>$row['gid'], "error"=>"None");
+			echo json_encode($response);
+		}
+
+		else echo json_encode(array("success"=>false, "error"=>"No groups found"));
+	}
+
+	else echo json_encode(array("success"=>false, "error"=>"No data entered"));
+
 });
 
 $app->run();
