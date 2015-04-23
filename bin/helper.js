@@ -224,6 +224,38 @@ function getGroups() {
     });
 }
 
+
+function getGroupMembers() {
+    gid = $_GET('gid');
+    
+    $.ajax({
+        url:"api/getGroupMembers",
+        type: "post",
+        data: {
+            "gid":gid
+        },
+        dataType: "json",
+        success: function(data) {
+            var table = document.getElementById('MemberData');
+            for (var i = 0; i < data.length; i++) {
+                $('#memberResults').text("");
+                if(!data[i].success)
+                    continue
+                var newRow = table.insertRow(-1);
+                for(var key in data[i]) {
+                    if(key == "error" || key == "success")
+                        continue;
+
+                    var newCell = newRow.insertCell(-1);
+                    var newText = document.createTextNode(data[i][key]);
+                    newCell.appendChild(newText);
+                }
+            }
+        }
+
+    });
+}
+
 function getOrganizations() {
     $.ajax({
         url: "api/getOrganizations",
@@ -259,20 +291,6 @@ function getOrganizations() {
                 newButton.appendChild(viewButton);
             }
         }
-    });
-}
-
-function getGroupsForProfile() {
-    $ajax({
-        url:"api/GetGroupsRow",
-        type: "post",
-        dataType: "integer",
-        success: function(data) {
-            if(data.success) {
-                var numRows = data.numRows;
-            }
-        }
-
     });
 }
 

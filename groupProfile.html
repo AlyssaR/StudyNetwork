@@ -7,6 +7,7 @@
     <link href="css/navbar.css" rel="stylesheet">
     <link href="css/bootstrap-theme.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 </head>
 <!-- <select method="post" action = "javascript:searchByClass()">
                             <option value="class" id = "class">Class</option>
@@ -14,7 +15,7 @@
                             <option value="group" id = "group">Group</option>
                         </select>
                         <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
-<body bgcolor = "#000000" onload="getGroupInfo('group'), getGroupMembers()"/>
+<body onload = "getGroups(), getGroupMembers()" bgcolor = "#000000" style ="font-family: raleway, serif"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -26,13 +27,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">The Study Network</a>
+            <a class="navbar-brand" href="#">The Study Network</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="about.html">About</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
@@ -60,7 +61,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User<!--will hopefully pull name at some point--> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="profile.html">View Profile</a></li>
-                        <li><a href="javascript:void(0)" onclick = "logout();">Logout</a></li><!--do we have a logout route? -->
+                        <li><a href="#">Logout</a></li><!--do we have a logout route? -->
                     </ul>
                 </li>
             </ul>
@@ -70,51 +71,41 @@
 
 <h1>Group Profile</h1>
 
+
 <div class="container">
 
-    Group Name:    <label id = "cur_gname">Undefined</label>
+    Group Name:    <label id = "cur_gname"> Undefined </label>
 
     <div value="1" id="optDisp1" style="visibility:hidden">
-        <div class="form-inline">
-            <input class="form-control" type = "text" id = "gname" placeholder = "New Group Name">
-            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
-        </div>
-    </div>
+    <div class="form-inline">
+        <input class="form-control" type = "text" id = "gname" placeholder = "New Group Name">
+        <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
 </div>
+    </div>
+    </div>
 <div class="container">
 
 
-    Time:          <label id = "cur_time1">Undefined</label>
+    Time:          <label id = "cur_time1"> Undefined </label>
 
     <div value="1" id="optDisp2" style="visibility:hidden">
-        <div class="form-inline">
-            <input class="form-control" type = "text" id = "time" placeholder = "New Meeting Time">
-            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
+    <div class="form-inline">
+        <input class="form-control" type = "text" id = "time1" placeholder = "HH:MM PM">
+        <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
         </div>
     </div>
-</div>
+    </div>
 
 <div class="container">
-    Location:   <label id = "cur_loc">Undefined</label>
+    Location:   <label id = "cur_loc"> Undefined </label>
 
-    <div value="1" id = "optDisp3" style= "visibility:hidden">
-        <div class="form-inline">
-            <input class="form-control" type = "text" id = "time1" placeholder = "New Meeting Location">
-            <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
+<div value="1" id = "optDisp3" style= "visibility:hidden">
+    <div class="form-inline">
+    <input class="form-control" type = "text" id = "time1" placeholder = "Location">
+    <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
         </div>
-    </div>
 </div>
-
-<hr>
-<h2>Group Members</h2>
-<hr>
-<table class="table table-hover" id="MemberData" width="500px">
-    <tr>
-        <th>{{Member}}</th>
-        <th>{{Name}}</th>
-    </tr>
-</table>
-<label id="memberResults">There are no members in this group.</label>
+</div>
 
 
 <div class="container">
