@@ -14,7 +14,7 @@
                             <option value="group" id = "group">Group</option>
                         </select>
                         <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
-<body bgcolor = "#000000" onload="getGroupInfo('group')"/>
+<body bgcolor = "#000000" onload="getGroupInfo('group'), getGroupMembers()"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -108,13 +108,13 @@
 <hr>
 <h2>Group Members</h2>
 <hr>
-<table class="table" id="MemberData" width="500px">
+<table class="table table-hover" id="MemberData" width="500px">
     <tr>
         <th>{{Member}}</th>
         <th>{{Name}}</th>
     </tr>
 </table>
-<label id="memberresults">There are no members in this group.</label>
+<label id="memberResults">There are no members in this group.</label>
 
 
 <div class="container">
