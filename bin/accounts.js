@@ -173,15 +173,17 @@ function register() {
 }
 
 function setEditableTrue() {
-    document.getElementById('optDisp1').style.visibility = "visible";
-    document.getElementById('optDisp2').style.visibility = "visible";
-    document.getElementById('optDisp3').style.visibility = "visible";
+    document.getElementById('optDisp1').style.display = "block";
+    document.getElementById('optDisp2').style.display = "block";
+    document.getElementById('optDisp3').style.display = "block";
+    document.getElementById('optDisp4').style.display = "block";
 }
 
 function setEditableFalse() {
-    document.getElementById('optDisp1').style.visibility = "hidden";
-    document.getElementById('optDisp2').style.visibility = "hidden";
-    document.getElementById('optDisp3').style.visibility = "hidden";
+    document.getElementById('optDisp1').style.display = "none";
+    document.getElementById('optDisp2').style.display = "none";
+    document.getElementById('optDisp3').style.display = "none";
+    document.getElementById('optDisp4').style.display = "none";
 }
 
 function setProfile(data) {
@@ -202,12 +204,12 @@ function showAllTheThings() {
 }
 
 function toggle(){
-	if (document.getElementById('optDisp1').style.visibility == "hidden") {
+	if (document.getElementById('optDisp1').style.display == "none") {
 		document.getElementById("editableButton").innerHTML="View Profile";
 		setEditableTrue();
 	}
 	else {
-		document.getElementById("editableButton").innerHTML="EditProfile";
+		document.getElementById("editableButton").innerHTML="Edit Profile";
 		setEditableFalse();
 	}
 }

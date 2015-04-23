@@ -69,21 +69,21 @@
 <div class="container text-center">
 
     <h4>First Name:<label id = "cur_f_name">{{FirstName}}</label> </h4>
-    <div value ="1" id="optDisp1" style= "visibility: hidden">
+    <div value ="1" id="optDisp1" style= "display: none">
         <div class="form-inline" >
             <input class="form-control" type = "text" id = "f_name" placeholder = "New First Name">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editProfile('first')" value = "Change">
         </div>
     </div>
     <h4>Last name:	<label id = "cur_l_name">{{LastName}}</label> </h4>
-    <div value ="1" id="optDisp2" style= "visibility: hidden">
+    <div value ="1" id="optDisp2" style= "display: none">
         <div class="form-inline">
             <input class="form-control" type = "text" id = "l_name" placeholder = "New Last Name">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editProfile('last')" value = "Change">
         </div>
     </div>
     <h4>Email:	<label id = "cur_email">{{Email}}</label></h4>
-    <div value ="1" id="optDisp3" style= "visibility: hidden">
+    <div value ="1" id="optDisp3" style= "display: none">
         <div class="form-inline">
             <input class="form-control" type = "text" id = "email" placeholder = "New Email">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editProfile('email')" value = "Change">
@@ -95,6 +95,11 @@
             <h4>Retype Password: <input class="form-control" type = "password" id="password2" onkeyup="validPass(); return false" placeholder = "Re-enter Password"/> </h4>
         </div>
     </div>
+    
+    <input class="btn btn-primary btn center-block" type = "submit" id="optDisp4" style = "display: none" onclick = "javascript:editProfile('password')" value = "Save Changes"><br/>
+    
+    <button class="btn btn-primary btn-lg"  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button><br/>
+
     <hr>
     <h2>Organizations</h2>
     <hr>
@@ -142,11 +147,6 @@
     <hr>
 
     <br/>
-
-    <button class="btn btn-primary btn-lg"  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button><br/>
-    <input class="btn btn-primary" type = "submit" onclick = "javascript:editProfile('password')" value = "Save Changes">
-
-
 </div>
 </body>
 <footer>
