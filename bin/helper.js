@@ -315,6 +315,26 @@ function leaveClass(dept, class_num) {
     });
 }
 
+function joinStudyGroup() {
+    $.ajax({
+        url: "api/joinStudyGroup",
+        type: "post",
+        data: {
+            "gid": $_GET('gid')
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("You have joined the group.");
+                window.location = "profile.html";
+            }
+            else{
+                alert("Error: Could not add you to the group");
+            }
+        }
+    });
+}
+
 function leaveStudyGroup() {
     $.ajax({
         url: "api/leaveStudyGroup",

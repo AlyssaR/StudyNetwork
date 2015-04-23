@@ -104,6 +104,27 @@ function hideAllTheThings() {
     }
 }
 
+function $_GET(q,s) {
+    s = (s) ? s : window.location.search;
+    var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
+    return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
+}
+
+function isInGroup() { 
+    var status = false;
+    $.ajax({
+        url: "api/isInGroup",
+        data: { "gid":$_GET('gid')},
+        dataType: "json",
+        type: "post",
+        success:function(data) {
+            if(data.success)
+                status = true;
+        }
+    });
+    return status;
+}
+
 function isLoggedIn() {
     $.ajax({
         url: "api/getUserID",
@@ -200,6 +221,23 @@ function showAllTheThings() {
     if(document.title == "Study Network") {
         document.getElementById('loginForm').style.display = "none";
         document.getElementById('registerLinkTo').style.display = "none";
+    }
+    else if(document.title == "Group Profile") {
+        if(isInGroup())
+            toggleJoin('leave');
+        else
+            toggleJoin('join');
+    }
+}
+
+function toggleJoin(action){
+    if (action == "leave") {
+        document.getElementById('leaveButton').style.display="block";
+        document.getElementById('joinButton').style.display="none";
+    }
+    else {
+        document.getElementById('leaveButton').style.display="none";
+        document.getElementById('joinButton').style.display="block";
     }
 }
 
