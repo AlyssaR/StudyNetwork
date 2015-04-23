@@ -568,6 +568,26 @@ $app->post('/searchByClass', function() use ($database) {
     	echo json_encode(array("success"=>false, "errorType"=>"Insufficient data entered"));
 });
 
+$app->post('/searchByGroup', function() use ($database) {
+	if(!empty($_POST['group'])) {
+		$gname = $_POST['group'];
+
+		$query = $database->query("SELECT gname, gid FROM StudyGroups WHERE gname = '$gname';");
+
+		$response = array();
+		if($query->num_rows!= 0) {
+			while($row = $query->fetch_assoc())
+				$response[] = array("success"=>true, "gname"=>$row['gname'], "gid"=>$row['gid'], "error"=>"None");
+			echo json_encode($response);
+		}
+
+		else echo json_encode(array("success"=>false, "error"=>"No groups found"));
+	}
+
+	else echo json_encode(array("success"=>false, "error"=>"No data entered"));
+
+});
+
 $app->post('/searchByOrg', function() use ($database) {		
 	if(!empty($_POST['org'])) {
 		$search = $_POST['org']; 	
@@ -587,27 +607,7 @@ $app->post('/searchByOrg', function() use ($database) {
     	echo json_encode(array("success"=>false, "error"=>"Insufficient data entered"));
 });
 
-$app->post('/searchByGroup', function() use ($database) {
-	if(!empty($_POST['group'])) {
-		$search = json_decode($_POST['group'],true);
-		$results = $database->query("SELECT gname, gid FROM StudyGroups WHERE gname = '$search';");
 
-		if($results === NULL)
-			echo json_encode(array("success"=>false, "error"=>"Group not found"));
-
-		$response = array()
-		if($results->num_rows!= 0) {
-			while($row = $results->fetch_assoc())
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "gid"=>$row['gid'], "error"=>"None");
-			echo json_encode($response);
-		}
-
-		else echo json_encode(array("success"=>false, "error"=>"No groups found"));
-	}
-
-	else echo json_encode(array("success"=>false, "error"=>"No data entered"));
-
-});
 
 $app->run();
 ?>
