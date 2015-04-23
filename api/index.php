@@ -485,6 +485,7 @@ $app->post('/logout', function () {
         $params["path"], $params["domain"],
         $params["secure"], $params["httponly"]);
 	session_destroy(); //Ends session server side
+	echo json_encode(array("success"=>true));
 });
 
 $app->post('/register', function () use ($database) {
