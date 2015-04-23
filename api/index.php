@@ -421,7 +421,7 @@ $app->post('/isInGroup', function() use($database) {
 	}
 
 	$query = $database->query("SELECT uid FROM GroupEnroll WHERE gid = '$gid' AND uid = '$uid';");
-	if($uid === NULL && $gid === NULL)
+	if($query->num_rows == 0)
 		$response = array("success"=>false, "errorType"=>"Not a member of this group");
 	else
 		$response = array("success"=>true, "errorType"=>"None");
