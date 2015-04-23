@@ -7,6 +7,7 @@
     <link href="css/navbar.css" rel="stylesheet">
     <link href="css/bootstrap-theme.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>Group Profile</title>
 </head>
 <!-- <select method="post" action = "javascript:searchByClass()">
                             <option value="class" id = "class">Class</option>
@@ -14,7 +15,7 @@
                             <option value="group" id = "group">Group</option>
                         </select>
                         <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
-<body bgcolor = "#000000" onload="getGroupInfo('group'), getGroupMembers()"/>
+<body bgcolor = "#000000" onload="isLoggedIn(),getGroupInfo('group'), getGroupMembers()"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -35,7 +36,7 @@
                 <li class="active"><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
                 <li><a href="about.html">About</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="navCreate">Create <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="createClassForm.html">Create Class</a></li>
                         <li><a href="createStudyGroupForm.html">Create Study Group</a></li>
@@ -57,7 +58,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, User<!--will hopefully pull name at some point--> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="navGreet">Welcome, <label id="sayHello"></label><span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="profile.html">View Profile</a></li>
                         <li><a href="javascript:void(0)" onclick = "logout();">Logout</a></li><!--do we have a logout route? -->
