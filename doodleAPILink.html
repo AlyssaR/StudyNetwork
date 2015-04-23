@@ -5,9 +5,7 @@
 	<script type="text/javascript" src="bin/accounts.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
-	
-	<link href="css/bootstrap-addons.css" rel="stylesheet">
-	
+	<title>Doodle Poll</title>
 	<link rel="stylesheet" href="css/bootstrap.css">
     <link href="css/bootstrap-theme.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -62,19 +60,43 @@
         </div><!-- /.container-fluid -->
     </nav>
     <!--end nav bar -->
-
-	<h4> Meeting Name: <input type="text" id="meet_name"> </h4>
-	
-	<h5> Meeting Day: <input type = "date" id="meet_date"></h5>
-	<h5> Meeting Time: <input type ="time" id = "meet_time"> </h5>
-	
-	<button id = "sub_submit" onclick = "">Add date and time to list</button>
+    <div class="container text-center">
+        <h2>Enter Suggested Dates</h2>
+        <hr>
+        <div class="form-inline">
+	<h4> Meeting Name: <input class="form-control" type="text" id="meet_name"> </h4>
+	</div>
+        <div class="form-inline">
+	<h5> Meeting Day: <input class="form-control" type = "date" id="meet_date"></h5>
+            </div>
+        <div class="form-inline">
+	<h5> Meeting Time: <input class="form-control" type ="time" id = "meet_time"> </h5>
+	</div>
+	<button class="btn btn-default" id = "sub_submit" onclick = "">Add date and time to list</button>
+        <br/>
+        <br/>
 
 	<!-- The submitted data will go here to be displayed back to the user -->
+        <table class="table table-hover" id="doodleTime" width="100%">
+            <tr>
+                <th>Meeting Date: {{Meeting Date}}</th>
+                <th>Meeting Time: {{Meeting Time}}</th>
+                <th></th>
+            </tr>
+        </table>
 	
-	<button id= "doodle_submit" onclick = ""> Post to Doodle </button>
+	<button class="btn btn-primary btn-lg" id= "doodle_submit" onclick = ""> Post to Doodle </button>
 
-
+</div>
 
 </body>
+<header>
+    <hr>
+    <p style="text-align: center">&copy; Genius Loading</p>
+</header>
+<style>
+    .table th {
+        text-align:center;
+    }
+</style>
 </html>
