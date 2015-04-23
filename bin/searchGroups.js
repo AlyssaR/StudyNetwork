@@ -12,7 +12,7 @@ function getGroupsSearch() {
                 // Insert a row in the table at row index 0
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     // Insert a cell in the row at index 0
                     var newCell  = newRow.insertCell(-1);
