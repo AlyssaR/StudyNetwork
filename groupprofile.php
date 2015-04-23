@@ -14,14 +14,8 @@
                             <option value="group" id = "group">Group</option>
                         </select>
                         <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
-<body bgcolor = "#000000" />
+<body bgcolor = "#000000" onload="getGroupInfo('group')"/>
 
-<?php
-$gid = $_GET['gid'];
-$gname = $_GET['gname'];
-$time1 = $_GET['time1'];
-$loc = $_GET['loc'];
-?>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -76,11 +70,9 @@ $loc = $_GET['loc'];
 
 <h1>Group Profile</h1>
 
-<label id = "gid" style="visibility:hidden"><?php echo $gid; ?></label><br /><br />
-
 <div class="container">
 
-    Group Name:    <label id = "cur_gname"> <?php echo $gname; ?> </label>
+    Group Name:    <label id = "cur_gname">Undefined</label>
 
     <div value="1" id="optDisp1" style="visibility:hidden">
         <div class="form-inline">
@@ -92,7 +84,7 @@ $loc = $_GET['loc'];
 <div class="container">
 
 
-    Time:          <label id = "cur_time1"> <?php echo $time1; ?> </label>
+    Time:          <label id = "cur_time1">Undefined</label>
 
     <div value="1" id="optDisp2" style="visibility:hidden">
         <div class="form-inline">
@@ -103,7 +95,7 @@ $loc = $_GET['loc'];
 </div>
 
 <div class="container">
-    Location:   <label id = "cur_loc"> <?php echo $loc; ?> </label>
+    Location:   <label id = "cur_loc">Undefined</label>
 
     <div value="1" id = "optDisp3" style= "visibility:hidden">
         <div class="form-inline">
