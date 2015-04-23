@@ -419,6 +419,8 @@ $app->post('/isInGroup', function() use($database) {
 		echo json_encode(array("success"=>false,"errorType"=>"No group id provided."));
 		return;
 	}
+
+	$query = $database->query("SELECT uid FROM GroupEnroll WHERE gid = '$gid' AND uid = '$uid';");
 	if($uid === NULL && $gid === NULL)
 		$response = array("success"=>false, "errorType"=>"Not a member of this group");
 	else
