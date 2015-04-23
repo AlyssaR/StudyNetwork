@@ -49,6 +49,7 @@ function searchByClass() {
             }
             else
                 alert("Error: " + data.errorType);
+
         }
     });
 }
