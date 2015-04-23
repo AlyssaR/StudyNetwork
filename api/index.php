@@ -404,6 +404,27 @@ $app->post('/groupRole', function() use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('isInGroup', function() use($database) {
+	$uid = "";
+	if(isset($_SESSION["uid"]))
+	    $uid = $_SESSION["uid"];
+	else {
+		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		return;
+	}
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+	if($uid === NULL && $gid === NULL)
+		$response = array("success"=>false, "errorType"=>"Not a member of this group");
+	else
+		$response = array("success"=>true, "errorType"="None");
+	echo json_encode($response)
+});
+
 //Quincy Schurr - joinStudyGroup branch
 $app->post('/joinStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
