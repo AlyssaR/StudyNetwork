@@ -75,7 +75,7 @@
 
     Group Name:    <label id = "cur_gname">Undefined</label>
 
-    <div value="1" id="optDisp1" style="visibility:hidden">
+    <div value="1" id="optDisp1" style="display:none">
         <div class="form-inline">
             <input class="form-control" type = "text" id = "gname" placeholder = "New Group Name">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('GroupName')" value = "Change"><br />
@@ -87,7 +87,7 @@
 
     Time:          <label id = "cur_time1">Undefined</label>
 
-    <div value="1" id="optDisp2" style="visibility:hidden">
+    <div value="1" id="optDisp2" style="display:none">
         <div class="form-inline">
             <input class="form-control" type = "text" id = "time" placeholder = "New Meeting Time">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('time1')" value = "Change"><br />
@@ -98,7 +98,7 @@
 <div class="container">
     Location:   <label id = "cur_loc">Undefined</label>
 
-    <div value="1" id = "optDisp3" style= "visibility:hidden">
+    <div value="1" id = "optDisp3" style= "display:none">
         <div class="form-inline">
             <input class="form-control" type = "text" id = "time1" placeholder = "New Meeting Location">
             <input class="btn btn-default btn-sm" type = "submit" onclick = "javascript:editGroup('loc')" value = "Change"><br />
@@ -120,7 +120,7 @@
 
 <div class="container">
 
-    <button class="btn btn-primary btn-sm "  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
+    <button class="btn btn-primary btn-sm center-block"  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
     <br></br>
     <input class="btn btn-primary btn-sm center-block" type = "button" id="leaveButton" style = "display:none" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group">
     <input class="btn btn-primary btn-sm center-block" type = "button" id="joinButton" style = "display:block" onclick = "javascript:joinStudyGroup()" value = "Join Study Group">

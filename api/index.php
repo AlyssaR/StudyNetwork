@@ -381,6 +381,7 @@ $app->post('/getUserInfo', function () use ($database) {
 
 $app->post('/groupRole', function() use ($database) {
 	$uid = "";
+	$gid = "";
 	 if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -390,7 +391,7 @@ $app->post('/groupRole', function() use ($database) {
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
 	else {
-		echo json_encode(array("gid"=>$_POST['gid']));
+		echo json_encode(array("success"=>false, "error"=>"No group entered."));
 		return;
 	}
 
@@ -398,7 +399,7 @@ $app->post('/groupRole', function() use ($database) {
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
-		$response = array("success"=>false, "role"=>"Not Valid", "error"=>"User not logged in");
+		$response = array("success"=>false, "role"=>"Not Valid", "error"=>"User not in group.");
 	else
 		$response = array("success"=>true, "role"=>$result['role'], "error"=>"None");
 	echo json_encode($response);
