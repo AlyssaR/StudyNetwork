@@ -174,20 +174,20 @@ code, pre {
 
 code {
   padding: 0 3px;
-  background-color: #f2f2f2;
+  background-color: #008080;
   border: solid 1px #ddd;
 }
 
 pre {
   padding: 20px;
   overflow: auto;
-  color: #f2f2f2;
+  color: #008080;
   text-shadow: none;
   background: #466675;
 }
 pre code {
   padding: 0;
-  color: #f2f2f2;
+  color: #008080;
   background-color: #466675;
   border: none;
 }
@@ -233,7 +233,7 @@ td {
 
 form {
   padding: 20px;
-  background: #f2f2f2;
+  background: #008080;
 
 }
 
