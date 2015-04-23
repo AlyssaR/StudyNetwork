@@ -394,7 +394,7 @@ $app->post('/groupRole', function() use ($database) {
 		return;
 	}
 
-	$runQuery $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
+	$runQuery = $database->query("SELECT role from GroupEnroll WHERE uid = '$uid' AND gid = '$gid';");
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
@@ -595,7 +595,7 @@ $app->post('/searchByGroup', function() use ($database) {
 		if($results === NULL)
 			echo json_encode(array("success"=>false, "error"=>"Group not found"));
 
-		$response = array()
+		$response = array();
 		if($results->num_rows!= 0) {
 			while($row = $results->fetch_assoc())
 				$response[] = array("success"=>true, "gname"=>$row['gname'], "gid"=>$row['gid'], "error"=>"None");
