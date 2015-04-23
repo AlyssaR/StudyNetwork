@@ -404,8 +404,9 @@ $app->post('/groupRole', function() use ($database) {
 	echo json_encode($response);
 });
 
-$app->post('isInGroup', function() use($database) {
+$app->post('/isInGroup', function() use($database) {
 	$uid = "";
+	$gid = "";
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
@@ -415,7 +416,7 @@ $app->post('isInGroup', function() use($database) {
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
 	else {
-		echo json_encode(array("gid"=>$_POST['gid']));
+		echo json_encode(array("success"=>false,"errorType"=>"No group id provided."));
 		return;
 	}
 	if($uid === NULL && $gid === NULL)
