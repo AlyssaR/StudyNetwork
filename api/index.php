@@ -421,7 +421,7 @@ $app->post('isInGroup', function() use($database) {
 	if($uid === NULL && $gid === NULL)
 		$response = array("success"=>false, "errorType"=>"Not a member of this group");
 	else
-		$response = array("success"=>true, "errorType"="None");
+		$response = array("success"=>true, "errorType"=>"None");
 	echo json_encode($response)
 });
 
