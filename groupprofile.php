@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <head>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="bin/helper.js"></script>
     <script type="text/javascript" src="bin/accounts.js"></script>
+    <script type="text/javascript" src="bin/centralNavbar.js"></script>
+    <script type="text/javascript" src="bin/helper.js"></script>
+    <script type="text/javascript" src="bin/searchGroups.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+
     <link href="css/navbar.css" rel="stylesheet">
-    <link href="css/bootstrap-theme.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href = "css/signin.css" rel = "stylesheet">
+    <link href = "css/navbar.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <title>Group Profile</title>
 </head>
-<!-- <select method="post" action = "javascript:searchByClass()">
-                            <option value="class" id = "class">Class</option>
-                            <option value="prof" id = "prof">Prof</option>
-                            <option value="group" id = "group">Group</option>
-                        </select>
-                        <a href="searchGroups.html"><input type="submit" value="Search"></a>-->
-<body bgcolor = "#000000" onload="isLoggedIn(),getGroupInfo('group'), getGroupMembers()"/>
+<body bgcolor = "#000000" onload="loadCentralNav(),isLoggedIn(),getGroupInfo('group'), getGroupMembers()"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
