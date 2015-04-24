@@ -600,7 +600,7 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '%$gname[0]%';");
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '$gname[0]%';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
@@ -621,6 +621,7 @@ $app->post('/searchByOrg', function() use ($database) {
 		$org_name = $_POST['org']; 	
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
+  		//I think this is the problem. It returns more than one uid sometimes.
 		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '$org_name[0]%' AND u.orgid = o.orgid;"); 
 		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND active = TRUE;");
     	

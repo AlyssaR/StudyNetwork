@@ -167,9 +167,7 @@ function searchByOrganization() {
 				},
         dataType: "json",
         success: function(data) {
-				populateSearchResults
-
-(data);
+				populateSearchResults(data);
         }
     });
 }
