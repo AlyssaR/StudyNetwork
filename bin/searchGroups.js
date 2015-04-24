@@ -151,3 +151,25 @@ function searchByGroup() {
         }
     });
 }
+
+function searchByOrganization() {
+	var sPageURL = window.location.search.substring(1);
+	var sURLVariables = sPageURL.split('&');
+	var org = sURLVariables[0].split('=');
+	org = org[1];
+	alert(org);
+	
+    $.ajax({
+        url: "api/searchByOrg",
+        type: "post",
+		data: 	{
+					"org": org
+				},
+        dataType: "json",
+        success: function(data) {
+				populateSearchResults
+
+(data);
+        }
+    });
+}
