@@ -620,21 +620,21 @@ $app->post('/searchByOrg', function() use ($database) {
 	if(!empty($_POST['org'])) {
 		$org_name = $_POST['org']; 	
   		
-  		//this gets UserId. This will return more than 1 result, if needed
-		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '%$org_name[0]%' AND u.orgid = o.orgid;"); 
+  		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
+		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '$org_name[0]%' AND u.orgid = o.orgid;"); 
 		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND active = TRUE;");
     	
     	$response = array();
-    	if ($query->num_rows != 0) {
+    	if($query->num_rows != 0) {
 			while($row = $query->fetch_assoc()) 
 				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
 		else
-			echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
+			echo json_encode(array("success"=>false, "gname"=>"NOT VALID", "time1"=>"NOT VALID", "loc"=>"NOT VALID", "gid"=>"NOT VALID", "errorType"=>"No groups found"));
     }
     else 
-    	echo json_encode(array("success"=>false, "errorType"=>"Insufficient data entered"));
+    	echo json_encode(array("success"=>false, "gname"=>"NOT VALID", "time1"=>"NOT VALID", "loc"=>"NOT VALID", "gid"=>"NOT VALID", "errorType"=>"Insufficient data entered"));
 });
 
 

@@ -140,7 +140,7 @@ function searchByGroup() {
 	alert(group);
 	
     $.ajax({
-        url: "api/searchByClass",
+        url: "api/searchByGroup",
         type: "post",
 		data: 	{
 					"group": group,
