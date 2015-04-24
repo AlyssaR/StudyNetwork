@@ -126,6 +126,24 @@ $app->post('/addOrganization', function() use ($database) {
 
 });
 
+$app->post('/deleteGroup', function() use ($database) {
+	$gid = "";
+	$num_members = 0;
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+
+	$mems = $database->query("SELECT uid from GroupEnroll WHERE gid = '$gid' AND active = TRUE;");
+	$database->query("UPDATE StudyGroups SET active = FALSE, num_members = '$num_members' WHERE gid = '$gid';");
+	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE uid = '$mems';");
+	echo json_encode(array("success"=>true));
+
+
+});
+
 $app->post('/editprofile', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
@@ -600,7 +618,7 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '$gname[0]%';");
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '%$gname[0]%';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
