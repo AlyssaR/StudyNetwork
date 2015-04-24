@@ -599,7 +599,8 @@ $app->post('/searchByGroup', function() use ($database) {
 	if(!empty($_POST['group'])) {
 		$gname = $_POST['group'];
 
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '$gname';");
+		//should show more results...
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '%$gname[1]%';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
