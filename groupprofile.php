@@ -69,7 +69,8 @@
 
 <div class="container">
 
-    <button class="btn btn-primary btn-sm center-block"  id="editableButton" type = "button" onclick = "javascript:toggle()"> Edit Profile </button>
+    <button class="btn btn-primary btn-sm center-block"  id="editableButton" type = "button" onclick = "javascript:toggle()">Edit Profile</button>
+	<button class="btn btn-primary btn-sm center-block"  id="deleteStudyGroupButton" type = "button" onclick = "javascript:deleteStudyGroup()">Delete Group</button>
     <br></br>
     <input class="btn btn-primary btn-sm center-block" type = "button" id="leaveButton" style = "display:none" onclick = "javascript:leaveStudyGroup()" value = "Leave Study Group">
     <input class="btn btn-primary btn-sm center-block" type = "button" id="joinButton" style = "display:block" onclick = "javascript:joinStudyGroup()" value = "Join Study Group">

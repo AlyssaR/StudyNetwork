@@ -376,6 +376,28 @@ function leaveStudyGroup() {
     });
 }
 
+function deleteStudyGroup() {
+    $.ajax({
+        url: "api/deleteGroup",
+        type: "post",
+        data: {
+            "gid": $_GET('gid')
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("You have deleted the group.");
+                window.location = "profile.html";
+            }
+            else{
+                alert("Error: Could not delete your group");
+            }
+        }
+    });
+}
+
+
+
 function leaveOrganization(orgid) {
     $.ajax({ 
         url: "api/leaveOrganization",
