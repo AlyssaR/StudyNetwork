@@ -578,7 +578,9 @@ $app->post('/searchByClass', function() use ($database) {
 		$dept = $_POST['dept'];
   		$class_num = $_POST['class_num'];
 
-    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); //use cid to get list of groups
+    	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
+    	//now we may be getting a whole list of similar searches!!
+    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE '$dept[1]%' AND class_num = '$class_num' AND active = TRUE;");
     	
     	$response = array();
     	if ($query->num_rows != 0) {
