@@ -600,7 +600,7 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '%$gname[0]%';");
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '%$gname[0]%';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
