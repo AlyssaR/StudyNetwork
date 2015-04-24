@@ -41,6 +41,19 @@ function redirectToClass() {
     window.location = "createClassForm.html";
 }
 
+function searchForStudyGroup() {
+	var searchByOption = $("#searchBy").val();
+	if (searchByOption == "group") {
+		searchByGroup();
+	}
+	else if (searchByOption == "class") {
+		searchByClass();
+	}
+	else if (searchByOption == "organization") {
+		searchByOrganization();
+	}
+}
+
 
 function searchByClass() {
 	
