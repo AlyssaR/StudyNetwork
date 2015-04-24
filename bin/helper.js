@@ -70,8 +70,8 @@ function createOrganization() {
 }
 
 function editGroup(changes) { 
-    editS = {"gid":$('#gid').text(),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
-
+    editS = {"gid":$_GET('gid'),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
+    
     //Change variables
     if (changes === "GroupName") { //also "GroupName is probably tied to HTML"
         editS['gname'] = document.getElementById("gname").value;
@@ -224,28 +224,6 @@ function getGroups() {
     });
 }
 
-function getDoodleData()
-{
-	var DoodleData = {};
-	var times = [];
-	var dates = [];
-	
-	times[0] = document.getElementById("meet_time").value;
-	dates[0] = document.getElementById("meet_date").value;
-	
-	DoodleData.grpName = document.getElementById("meet_name").value;
-	DoodleData.times = times;//.push(document.getElementById("meet_time").value);
-	DoodleData.dates = dates;//.push(document.getElementById("meet_date").value);
-	
-	
-	
-	console.log(DoodleData);
-	console.log(document.getElementById("meet_time").value);
-	
-	
-	
-}
-
 function getGroupMembers() {
     gid = $_GET('gid');
     
@@ -376,6 +354,28 @@ function leaveStudyGroup() {
     });
 }
 
+function deleteStudyGroup() {
+    $.ajax({
+        url: "api/deleteGroup",
+        type: "post",
+        data: {
+            "gid": $_GET('gid')
+        },
+        dataType: "json",
+        success: function(data) {
+            if(data.success) {
+                alert("You have deleted the group.");
+                window.location = "profile.html";
+            }
+            else{
+                alert("Error: Could not delete your group");
+            }
+        }
+    });
+}
+
+
+
 function leaveOrganization(orgid) {
     $.ajax({ 
         url: "api/leaveOrganization",
@@ -400,10 +400,6 @@ function redirectToClass() {
     window.location = "createClassForm.html";
 }
 
-function redirectToDoodle() {
-	window.location = "doodleAPILink.html";
-}
-
 function redirectToGroup() {
     window.location = "createStudyGroupForm.html";
 }
@@ -421,7 +417,7 @@ function validClass(){
         return true;
 }
 
-function validFName() {
+function validProfFName() {
     var regex = /[A-Z][a-z]+/;
     var name = document.getElementById("profFirst").value;
     if(regex.test(name))
@@ -433,7 +429,7 @@ function validFName() {
 }
 
 
-function validLName() { 
+function validProfLName() { 
     var regex = /[A-Z][a-zA-Z]+/;
     var name = document.getElementById("profLast").value;
     if(regex.test(name))

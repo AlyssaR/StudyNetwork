@@ -126,6 +126,22 @@ $app->post('/addOrganization', function() use ($database) {
 
 });
 
+$app->post('/deleteGroup', function() use ($database) {
+	$gid = "";
+	$num_members = 0;
+	if(isset($_POST['gid']))
+		$gid = $_POST['gid'];
+	else {
+		echo json_encode(array("gid"=>$_POST['gid']));
+		return;
+	}
+
+	$database->query("UPDATE StudyGroups SET active = FALSE, num_members = '$num_members' WHERE gid = '$gid';");
+	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE gid = '$gid';");
+	echo json_encode(array("success"=>true));
+
+});
+
 $app->post('/editprofile', function () use ($database) {
 	$fName = $_POST['f_name'];
 	$lName = $_POST['l_name'];
@@ -621,6 +637,7 @@ $app->post('/searchByOrg', function() use ($database) {
 		$org_name = $_POST['org']; 	
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
+  		//I think this is the problem. It returns more than one uid sometimes.
 		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '$org_name[0]%' AND u.orgid = o.orgid;"); 
 		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND g.active = TRUE;");
     	
