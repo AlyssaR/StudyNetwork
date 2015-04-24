@@ -1,49 +1,40 @@
-<DOCUMENT html>
+<!DOCTYPE html>
 <head>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="bin/searchGroups.js"></script>
-  <link href="css/navbar.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/create.js"></script>
+    <script type="text/javascript" src="js/files.txt"></script>
+    <script type="text/javascript" src="js/gui.js"></script>
+    <script type="text/javascript" src="js/manage.js"></script>
+    <script type="text/javascript" src="js/navbar.js"></script>
+    <script type="text/javascript" src="js/redirect.js"></script>
+    <script type="text/javascript" src="js/retrieve.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/validate.js"></script>
+
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href = "css/signin.css" rel = "stylesheet">
+    <link href = "css/navbar.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <title> Search </title>
 </head>
-<body bgcolor="#000000" />
+
+<body onload="loadCentralNav(),isLoggedIn(),searchForStudyGroup()" bgcolor="#000000" style ="font-family: raleway, serif">
+    <div id="centralNavBar"></div>	
+	<legend class="text-center">Results</legend>
 	
-	<div class="navbar">
-		<nav>
-			<ul>
-			    <li><a href="index.html">Home</a></li>
-			    <li><a href="about.html">About</a></li>
-			    <li><a href="editprofile.html">View Profile</a></li>
-			</ul>
-		 </nav>
-	</div>
-      
-  <div id = formData>
-
-  <h1>Search for a Study Group</h1>
-
-      <select method="post" action = "javascript:searchByClass()">
-        <option value="class" id = "class">Class</option>
-        <option value="prof" id = "prof">Prof</option>
-        <option value="group" id = "group">Group</option>
-      </select>
-
-      <form method = "post" action = "javascript:searchByClass()">
-      <p>
-        Search By:
-        <input type="text" name="searchGroups">
-        <input type="submit" value="Search">
-      </p>
-      </form>
-
-  </div>
+	<table class="table table-bordered" align="center" id="searchResults">
+		<thead>
+			<tr>
+			<th>Study Group Name</th>
+			<th>Class Name</th>
+			<th>Meeting Time</th>
+			<th>View Group</th>
+			</tr>
+		</thead>
+	</table>
+	<label id="results">No Results Found.</label>
+</body>
 </html>
-
-<style>
-#formData {
-    background-color:black;
-    color:lime;
-    text-align:center;
-    padding:100px;
-  font-family:courier;
-}
-</style>
