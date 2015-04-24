@@ -243,8 +243,12 @@ function showAllTheThings() {
         document.getElementById('editableButton').style.display="none";
         if(isInGroup()) {
             toggleJoin('leave');
-            if(isAdmin())
+            if(isAdmin()) {
+                document.getElementById('deleteStudyGroupButton').style.display="block";
                 document.getElementById('editableButton').style.display="block";
+                document.getElementById('leaveButton').style.display="none";
+            }
+
         }
         else
             toggleJoin('join');
