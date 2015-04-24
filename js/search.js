@@ -25,22 +25,6 @@ function getGroupsSearch() {
     });
 }
 
-
-function redirectToSearchGroups() {
-	var queryInput = $("#searchInput").val();
-	var splitQueryInput = queryInput.split(" ");
-	var urlLocation = "searchGroups.html?";
-	for (var x = 0; x < splitQueryInput.length; ++x) {
-		urlLocation +=  "param" + x + "=" + splitQueryInput[x] + "&";
-		alert(urlLocation);
-	}
-    window.location = urlLocation;
-}
-
-function redirectToClass() {
-    window.location = "createClassForm.html";
-}
-
 function searchForStudyGroup() {
 	var searchByOption = $("#searchBy").val();
 	if (searchByOption == "group") {
@@ -80,42 +64,6 @@ function searchByClass() {
     });
 }
 
-function redirectToGroup() {
-    window.location = "createStudyGroupForm.html";
-}
-
-function getGroupInfo(gid) {
-    var getInfo = false;
-    if(gid == "group") {
-        gid = $_GET('gid');
-        getInfo = true;
-    }
-
-    $.ajax({
-        url: "api/getGroupInfo",
-        type: "post",
-        data: {
-            "gid":gid
-        },
-        dataType: "json",
-        success: function(data) {
-            if(data.success) {
-                if(getInfo) {
-                    $('#cur_gname').text(data.gname);
-                    $('#cur_loc').text(data.loc);
-                    $('#cur_time1').text(data.time1);
-                }
-                else
-                    window.location="groupprofile.php?gid="+gid;
-            }
-            else {
-                alert("Error: Could not retrieve your group.")
-                window.location = "profile.html";
-            }
-        }
-    });
-}
-
 function populateSearchResults(data) {
 	var table = document.getElementById('searchResults');
 	var gidStr;
@@ -150,7 +98,6 @@ function searchByGroup() {
 	var sURLVariables = sPageURL.split('&');
 	var group = sURLVariables[0].split('=');
 	group = group[1];
-	alert(group);
 	
     $.ajax({
         url: "api/searchByGroup",
@@ -170,7 +117,6 @@ function searchByOrganization() {
 	var sURLVariables = sPageURL.split('&');
 	var org = sURLVariables[0].split('=');
 	org = org[1];
-	alert(org);
 	
     $.ajax({
         url: "api/searchByOrg",
