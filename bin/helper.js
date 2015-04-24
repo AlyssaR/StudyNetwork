@@ -224,6 +224,27 @@ function getGroups() {
     });
 }
 
+function getDoodleData()
+{
+	var DoodleData = {};
+	var times = [];
+	var dates = [];
+	
+	times[0] = document.getElementById("meet_time").value;
+	dates[0] = document.getElementById("meet_date").value;
+	
+	DoodleData.grpName = document.getElementById("meet_name").value;
+	DoodleData.times = times;//.push(document.getElementById("meet_time").value);
+	DoodleData.dates = dates;//.push(document.getElementById("meet_date").value);
+	
+	
+	
+	console.log(DoodleData);
+	console.log(document.getElementById("meet_time").value);
+	
+	
+	
+}
 
 function getGroupMembers() {
     gid = $_GET('gid');

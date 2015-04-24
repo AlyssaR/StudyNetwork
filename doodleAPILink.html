@@ -72,15 +72,15 @@
         <div class="form-inline">
 	<h5> Meeting Time: <input class="form-control" type ="time" id = "meet_time"> </h5>
 	</div>
-	<button class="btn btn-default" id = "sub_submit" onclick = "">Add date and time to list</button>
+	<button class="btn btn-default" id = "sub_submit" onclick = "getDoodleData()">Add date and time to list</button>
         <br/>
         <br/>
 
 	<!-- The submitted data will go here to be displayed back to the user -->
         <table class="table table-hover" id="doodleTime" width="100%">
             <tr>
-                <th>Meeting Date: {{Meeting Date}}</th>
-                <th>Meeting Time: {{Meeting Time}}</th>
+                <th id="doodleTimeDate">Meeting Date: </th>
+                <th id="doodleTimeTime">Meeting Time: </th>
                 <th></th>
             </tr>
         </table>
