@@ -30,6 +30,11 @@ function loadCentralNav() {
 	                "<div class='form-group'>"+
 	                    "<!-- No functionality currently -->"+
 	                    "<input type='text' id='searchInput' class='form-control' placeholder='Search'>"+
+						"<select class='form-control' type='subject' id ='searchBy'>"+
+							"<option value='group'>SearchByGroup</option>"+
+							"<option value='class'>SearchByClass</option>"+
+							"<option value='organization'>SearchByOrganization</option>"+
+						"</select>"+
 	                "</div>"+
 	                "<button type='submit' class='btn btn-default'>Search</button>"+
 	            "</form>"+
