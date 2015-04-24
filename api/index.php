@@ -580,7 +580,7 @@ $app->post('/searchByClass', function() use ($database) {
 
     	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
     	//now we may be getting a whole list of similar searches!!
-    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE '$dept[1]%' AND class_num = '$class_num' AND active = TRUE;");
+    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE '$dept[0]%' AND class_num = '$class_num' AND active = TRUE;");
     	
     	$response = array();
     	if ($query->num_rows != 0) {
@@ -600,7 +600,7 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '%$gname[1]%';");
+		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname = '%$gname[0]%';");
 
 		$response = array();
 		if($query->num_rows!= 0) {
@@ -621,7 +621,7 @@ $app->post('/searchByOrg', function() use ($database) {
 		$org_name = $_POST['org']; 	
   		
   		//this gets UserId. This will return more than 1 result, if needed
-		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name = '$org_name' AND u.orgid = o.orgid;"); 
+		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '%$org_name[0]%' AND u.orgid = o.orgid;"); 
 		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND active = TRUE;");
     	
     	$response = array();
