@@ -241,28 +241,20 @@ function showAllTheThings() {
     }
     else if(document.title == "Group Profile") {
         document.getElementById('editableButton').style.display="none";
+        document.getElementById('deleteStudyGroupButton').style.display="none";
         if(isInGroup()) {
-            toggleJoin('leave');
+            document.getElementById('leaveButton').style.display="block";
+            document.getElementById('joinButton').style.display="none";
             if(isAdmin()) {
                 document.getElementById('deleteStudyGroupButton').style.display="block";
                 document.getElementById('editableButton').style.display="block";
                 document.getElementById('leaveButton').style.display="none";
             }
-
         }
-        else
-            toggleJoin('join');
-    }
-}
-
-function toggleJoin(action){
-    if (action == "leave") {
-        document.getElementById('leaveButton').style.display="block";
-        document.getElementById('joinButton').style.display="none";
-    }
-    else {
-        document.getElementById('leaveButton').style.display="none";
-        document.getElementById('joinButton').style.display="block";
+        else {
+            document.getElementById('leaveButton').style.display="none";
+            document.getElementById('joinButton').style.display="block";
+        }
     }
 }
 

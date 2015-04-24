@@ -136,14 +136,8 @@ $app->post('/deleteGroup', function() use ($database) {
 		return;
 	}
 
-	$memArray = array();
-	$mems = $database->query("SELECT uid from GroupEnroll WHERE gid = '$gid' AND active = TRUE;");
-	while ($row = $mems->fetch_assoc()) {
-		array_push($memArray, $row['uid']);
-
-	}
 	$database->query("UPDATE StudyGroups SET active = FALSE, num_members = '$num_members' WHERE gid = '$gid';");
-	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE uid IN '$memArray';");
+	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE gid = '$gid';");
 	echo json_encode(array("success"=>true));
 
 });
