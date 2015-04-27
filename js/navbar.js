@@ -26,7 +26,7 @@ function loadCentralNav() {
 	                    "</ul>"+
 	                "</li>"+
 	            "</ul>"+
-	            "<form class='navbar-form navbar-left' role='search' action='javascript:redirectToSearchGroups()'>"+
+	            "<form class='navbar-form navbar-left' role='search' action='javascript:goSearch()'>"+
 	                "<div class='form-group'>"+
 	                    "<!-- No functionality currently -->"+
 	                    "<input type='text' id='searchInput' class='form-control' placeholder='Search'>"+

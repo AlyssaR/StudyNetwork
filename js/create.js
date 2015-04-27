@@ -14,7 +14,7 @@ function createClass() {
             success: function(data) {
                 if(data.success) {
                     alert("Class added successfully!");
-                    window.location = "profile.html";
+                    goToProfile();
                 }
                 else
                     alert("Error: " + data.errorType);
@@ -38,7 +38,7 @@ function createGroup() {
         success: function(data) {
             if(data.success) {
                 alert("Group added successfully!");
-                window.location = "profile.html";
+                goToProfile();
             }
             else
                 alert("Error: " + data.errorType);
@@ -58,11 +58,11 @@ function createOrganization() {
             success: function(data) {
                 if(data.success) {
                     alert("Organization added successfully!");
-                    window.location = "profile.html";
+                    goToProfile();
                 }
                 else {
                     alert(data.errorType);
-                    window.location = "profile.html";
+                    goToProfile();
                 }
             }
         });
@@ -84,7 +84,7 @@ function register() {
             success: function(data) {
                 if(data.success) {
                     alert("Welcome, " + data.f_name + "!");
-                    window.location = "profile.html";
+                    goToProfile();
                 }
                 else
                     alert("Error: " + data.errorType);

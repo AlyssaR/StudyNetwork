@@ -9,7 +9,7 @@ function deleteStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have deleted the group.");
-                window.location = "profile.html";
+                goToProfile();
             }
             else{
                 alert("Error: Could not delete your group");
@@ -114,7 +114,7 @@ function joinStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have joined the group.");
-                window.location = "profile.html";
+                goToProfile();
             }
             else{
                 alert("Error: Could not add you to the group");
@@ -135,7 +135,7 @@ function leaveClass(dept, class_num) {
         success: function(data) {
             if (data.success) {
                 alert("Class removed from profile.");
-                window.location = "profile.html";
+                goToProfile();
             }
             else{
                 alert("Error: Could not remove class");
@@ -155,7 +155,7 @@ function leaveStudyGroup() {
         success: function(data) {
             if(data.success) {
                 alert("You have left the group.");
-                window.location = "profile.html";
+                goToProfile();
             }
             else{
                 alert("Error: Could not remove you from group");
@@ -175,7 +175,7 @@ function leaveOrganization(orgid) {
         success: function(data) {
             if(data.success) {
                 alert("You have removed the organization from your profile.");
-                window.location = "profile.html";
+                goToProfile();
             }
             else {
                 alert("Error: " + data.errorType);
