@@ -78,7 +78,7 @@ function getGroupInfo(gid) {
             }
             else {
                 alert("Error: Could not retrieve your group.")
-                window.location = "profile.html";
+                goToProfile();
             }
         }
     });
@@ -168,7 +168,7 @@ function getProfile(caller) {
                     setProfile(data);
             }
             else if (document.title != "Study Network")
-                window.location = "index.html";
+                goHome();
             else
                 alert("You are not logged in.");
         }

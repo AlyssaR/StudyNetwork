@@ -1,24 +1,24 @@
-function LandingPageRedirect() {
+function goHome() {
 	window.location = "index.html";
 }
 
-function redirect() {
-    window.location = "register.html";
+function goRegister() {
+	window.location = "reigster.html";
 }
 
-function redirectToClass() {
-    window.location = "createClassForm.html";
+function goToClass() {
+	window.location = "createClassForm.html";
 }
 
-function redirectToGroup() {
+function goToGroup() {
     window.location = "createStudyGroupForm.html";
 }
 
-function redirectToSearchResults() {
-	window.location = "searchGroups.html";
+function goToProfile() {
+	window.location = "profile.html";
 }
 
-function redirectToSearchGroups() {
+function goSearch() {
 	var queryInput = $("#searchInput").val();
 	var splitQueryInput = queryInput.split(" ");
 	var urlLocation = "searchGroups.html?";

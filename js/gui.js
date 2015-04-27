@@ -5,7 +5,7 @@ function hideAllTheThings() {
     if(document.title == "Profile" || document.title == "Group Profile" 
         || document.title == "Create a Class" || document.title == "Create a Study Group") {
         alert("You do not have permission to view this page.\nPlease log in or create an account.");
-        window.location = "index.html";
+        goHome();
     }
 }
 
