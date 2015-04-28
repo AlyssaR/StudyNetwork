@@ -16,7 +16,6 @@ function loadCentralNav() {
 	        "<!-- Collect the nav links, forms, and other content for toggling -->"+
 	        "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>"+
 	            "<ul class='nav navbar-nav'>"+
-	                "<li class='active'><a href='index.html'>Home <span class='sr-only'>(current)</span></a></li>"+
 	                "<li><a href='about.html'>About</a></li>"+
 	                "<li class='dropdown'>"+
 	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id = 'navCreate'>Create <span class='caret'></span></a>"+
