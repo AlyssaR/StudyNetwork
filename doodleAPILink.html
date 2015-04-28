@@ -17,7 +17,6 @@
 </head>
 <body style ="font-family: raleway, serif" onload="loadCentralNav()">
     <div id="centralNavBar"></div>
-
     <div class="container text-center">
         <h2>Enter Suggested Dates</h2>
         <hr>
@@ -30,7 +29,7 @@
         <div class="form-inline">
 	<h5> Meeting Time: <input class="form-control" type ="time" id = "meet_time"> </h5>
 	</div>
-	<button class="btn btn-default" id = "sub_submit" onclick = "getDoodleData()">Add date and time to list</button>
+	<button class="btn btn-default" id = "sub_submit" onclick = "populateDoodleData()">Add date and time to list</button>
         <br/>
         <br/>
 
@@ -42,6 +41,12 @@
                 <th></th>
             </tr>
         </table>
+        <label id="doodle"></label>
+	
+	<button class="btn btn-default btn-sm" id="arrayTimes" onclick="ArrayTheThings()">grab Thyme </button>
+	<button class="btn btn-default btn-sm" id="arrayDates" onclick="ArrayTheThings()">grab Dates </button>
+	
+	<br/> <br/>
 	
 	<button class="btn btn-primary btn-lg" id= "doodle_submit" onclick = ""> Post to Doodle </button>
 

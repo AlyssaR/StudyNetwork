@@ -1,5 +1,8 @@
 <?php
 require 'vendor/autoload.php';
+require_once "google-api-php-client/src/Google_Client.php";
+require_once "google-api-php-client/src/contrib/Google_PlusService.php";
+session_start();
 
 session_cache_limiter(false);
 $cookieParams = session_get_cookie_params(); // Gets current cookies params.
@@ -124,6 +127,60 @@ $app->post('/addOrganization', function() use ($database) {
 	$response = array("success"=>$success, "org_name"=>$org_name, "errorType"=>$error);
 	echo json_encode($response);
 
+});
+
+$app->post('/doodle', function() use ($database){
+	session_start();
+
+	$dates = array();
+	$times = array();
+	if(isset($_POST('times')) & $_POST('title')) {
+		$array = json_decode($_POST('doodle', true));
+		$title = $array[0];
+		$dates = $array[1];
+		$times = $array[2];
+
+		$url = "http://doodle.com/polls/wizard.html?type=date&locale=en&title=";
+
+		/* puts title into URL */
+		$title_split = explode(" ", $title)
+		for($x = 0; $x < sizeof($title_split); $x++) {
+			$url = $url + $title_split[x];
+			if($x < sizeof($title_split) - 1)
+				$url = $url + "%20";
+
+		/*puts dates and times into URL */
+		$dates_added = array();
+		for($x = 0; $x < sizeof($dates); $x++) {
+			$counter = 0;
+			$cur_date = $dates[x];
+			if(!in_array($cur_date, $dates_added)){
+				$indexes = array();
+				$dates_added = $cur_date;			//date that it is finding time for
+				$indexes[] = $x;					//add index of the date so we can find the corresponding time
+				$y = $x + 1;						//only search dates after current index
+				while($y < sizeof($dates)) {
+					if($dates[$y] === $cur_date)	//look for all dates that are the same as the current one
+						$indexes[] = $y;			//add its index to array
+					$y = $y + 1;
+				}
+				$cur_date_split = explode($cur_date);
+				$url = $url + "&" + $cur_date_split[2] + $cur_date_split[0] + $cur_date_split[1];	//adds date to url
+
+				for($x = 0; $x < sizeof($indexes); $x++) {
+					$cur_time = $times[$x];
+					$amPm = $explode(" ", $cur_time);
+					$hrMin = $explode (":", $amPM[1]);
+					if($x > 0) {
+						$url = $url + "%7C%7C";
+					}
+					$url = $url + $hrMin[0] + $hrMin[1];
+					if($amPm === "PM" OR $amPm === "pm")
+						$url = $url + "PM";
+				}
+			}
+		}
+	}
 });
 
 $app->post('/editprofile', function () use ($database) {
@@ -636,7 +693,6 @@ $app->post('/searchByOrg', function() use ($database) {
     else 
     	echo json_encode(array("success"=>false, "gname"=>"NOT VALID", "time1"=>"NOT VALID", "loc"=>"NOT VALID", "gid"=>"NOT VALID", "errorType"=>"Insufficient data entered"));
 });
-
 
 $app->run();
 ?>

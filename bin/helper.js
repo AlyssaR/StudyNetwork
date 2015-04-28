@@ -1,3 +1,18 @@
+function ArrayTheThings()
+{ //function is nonscalable, but it does grab all the entries
+	var myTableArray = [];
+
+	$("table#doodleTime tr").each(function() {
+    var arrayOfThisRow = [];
+    var tableData = $(this).find('td');
+    if (tableData.length > 0) {
+        tableData.each(function() { arrayOfThisRow.push($(this).text()); });
+        myTableArray.push(arrayOfThisRow);
+    }
+});
+	alert(myTableArray); //super ugly data but it can be cleaned up in the object's build sequence
+}
+
 function createClass() {
     if(validClass()) {
         $.ajax({
@@ -68,6 +83,62 @@ function createOrganization() {
         });
     }
 }
+
+function doodleAPI() {
+    $.ajax({
+        url: "api/doodle",
+        type: "post",
+		data: 	{
+					"name": $("#meet_name").val(),
+			
+				},
+        dataType: "json",
+        success: function(data) {
+				alert(data);
+                }
+    });
+}
+
+
+/*
+function getGroups() {
+    $.ajax({
+        url: "api/getGroups",
+        type: "post",
+        dataType: "json",
+        success: function(data) {
+            var table  = document.getElementById('GroupData');//.style.textAlign = "center";
+            for(var i = 0; i < data.length; i++) {
+                $('#groupresults').text("");
+                if(!data[i].success)
+                    continue;                
+                // Insert a row in the table at row index 0
+                var newRow = table.insertRow(-1);
+                for(var key in data[i]) {
+                    if(key == "error" || key == "success")
+                        continue;
+                    if(key == "gid") {
+                        var gidStr = data[i][key];
+                        continue;
+                    }
+
+                    // Insert a cell in the row at index 0
+                    var newCell  = newRow.insertCell(-1);
+                    // Append a text node to the cell
+                    var newText  = document.createTextNode(data[i][key]);
+                    newCell.appendChild(newText);
+                }
+                var newButton = newRow.insertCell(-1);
+                var viewButton = document.createElement("button");
+                var addName = document.createTextNode("View Group");
+                viewButton.appendChild(addName);
+                viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
+                newButton.appendChild(viewButton);
+            }
+        }
+    });
+}
+*/
 
 function editGroup(changes) { 
     editS = {"gid":$('#gid').text(),"gname":"ignore", "time1":"ignore", "loc":"ignore"};
@@ -224,26 +295,22 @@ function getGroups() {
     });
 }
 
-function getDoodleData()
-{
-	var DoodleData = {};
-	var times = [];
-	var dates = [];
+function populateDoodleData() {
+	var table = document.getElementById('doodleTime');
 	
-	times[0] = document.getElementById("meet_time").value;
-	dates[0] = document.getElementById("meet_date").value;
+	var newRow = table.insertRow(-1);
+	// Insert a cell in the row at index 0
+	var newCellOne  = newRow.insertCell(-1);
+	var newCellTwo = newRow.insertCell(-1);
 	
-	DoodleData.grpName = document.getElementById("meet_name").value;
-	DoodleData.times = times;//.push(document.getElementById("meet_time").value);
-	DoodleData.dates = dates;//.push(document.getElementById("meet_date").value);
-	
-	
-	
-	console.log(DoodleData);
-	console.log(document.getElementById("meet_time").value);
-	
-	
-	
+	var newTextOne  = document.createTextNode
+
+	($("#meet_date").val());
+	var newTextTwo  = document.createTextNode
+
+	($("#meet_time").val());
+	newCellOne.appendChild(newTextOne);
+	newCellTwo.appendChild(newTextTwo);
 }
 
 function getGroupMembers() {
