@@ -3,7 +3,6 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/create.js"></script>
-    <script type="text/javascript" src="js/files.txt"></script>
     <script type="text/javascript" src="js/gui.js"></script>
     <script type="text/javascript" src="js/manage.js"></script>
     <script type="text/javascript" src="js/navbar.js"></script>
