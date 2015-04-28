@@ -17,7 +17,7 @@ function getClasses() {
                     continue;
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "dept"){
                         var deptStr = data[i][key];
@@ -98,7 +98,7 @@ function getGroups() {
                 // Insert a row in the table at row index 0
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "gid") {
                         var gidStr = data[i][key];
@@ -140,7 +140,7 @@ function getGroupMembers() {
                     continue
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
 
                     var newCell = newRow.insertCell(-1);
@@ -189,7 +189,7 @@ function getOrganizations() {
                     continue;
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "orgid") {
                         var oidStr = data[i][key];
