@@ -64,8 +64,8 @@
 <hr>
 <table class="table table-hover" id="MemberData" width="500px">
     <tr>
-        <th>{{Member}}</th>
-        <th>{{Name}}</th>
+        <th>Member</th>
+        <th>Name</th>
     </tr>
 </table>
 <label id="memberResults">There are no members in this group.</label>
