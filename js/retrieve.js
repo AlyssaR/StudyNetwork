@@ -17,7 +17,7 @@ function getClasses() {
                     continue;
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "dept"){
                         var deptStr = data[i][key];
@@ -78,7 +78,7 @@ function getGroupInfo(gid) {
             }
             else {
                 alert("Error: Could not retrieve your group.")
-                window.location = "profile.html";
+                goToProfile();
             }
         }
     });
@@ -98,7 +98,7 @@ function getGroups() {
                 // Insert a row in the table at row index 0
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "gid") {
                         var gidStr = data[i][key];
@@ -140,7 +140,7 @@ function getGroupMembers() {
                     continue
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
 
                     var newCell = newRow.insertCell(-1);
@@ -168,7 +168,7 @@ function getProfile(caller) {
                     setProfile(data);
             }
             else if (document.title != "Study Network")
-                window.location = "index.html";
+                goHome();
             else
                 alert("You are not logged in.");
         }
@@ -189,7 +189,7 @@ function getOrganizations() {
                     continue;
                 var newRow = table.insertRow(-1);
                 for(var key in data[i]) {
-                    if(key == "error" || key == "success")
+                    if(key == "errorType" || key == "success")
                         continue;
                     if(key == "orgid") {
                         var oidStr = data[i][key];

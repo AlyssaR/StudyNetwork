@@ -16,7 +16,6 @@ function loadCentralNav() {
 	        "<!-- Collect the nav links, forms, and other content for toggling -->"+
 	        "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>"+
 	            "<ul class='nav navbar-nav'>"+
-	                "<li class='active'><a href='index.html'>Home <span class='sr-only'>(current)</span></a></li>"+
 	                "<li><a href='about.html'>About</a></li>"+
 	                "<li class='dropdown'>"+
 	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id = 'navCreate'>Create <span class='caret'></span></a>"+
@@ -26,7 +25,7 @@ function loadCentralNav() {
 	                    "</ul>"+
 	                "</li>"+
 	            "</ul>"+
-	            "<form class='navbar-form navbar-left' role='search' action='javascript:redirectToSearchGroups()'>"+
+	            "<form class='navbar-form navbar-left' role='search' action='javascript:goSearch()'>"+
 	                "<div class='form-group'>"+
 	                    "<!-- No functionality currently -->"+
 	                    "<input type='text' id='searchInput' class='form-control' placeholder='Search'>"+

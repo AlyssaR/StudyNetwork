@@ -69,7 +69,7 @@ function login() {
         var data = authenticate();
         if(data.success) {
             alert("Welcome, " + data.f_name + "!");
-            window.location = "profile.html";
+            goToProfile();
         }
         else
             alert("Error logging in.\nPlease check your email/password or create an account.");
@@ -83,7 +83,7 @@ function logout() {
         dataType: "json",
         success:function(data) {
             if(data.success)
-                window.location = "index.html";
+                goHome();
         },
     });
 }
