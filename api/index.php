@@ -31,15 +31,22 @@ $app->post('/addClass', function() use ($database){
 		return;
 	}
 
-	$checkClass = $database->query("SELECT dept, class_num FROM Classes where dept = '$dept' AND class_num = '$class_num';");
+	$checkClass = $database->prepare("SELECT dept, class_num FROM Classes where dept = ? AND class_num = ?;");
+	$checkClass->bind_param('si', $dept, $class_num);
+	$checkClass->execute();
 
-	if($checkClass->num_rows > 0){
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
+	if($checkClass->num_rows == 0){
+		$checkClass->close();
+		$createClass = $database->prepare("INSERT INTO Classes VALUES (?, ?, ?, ?, ?);");
+		$createClass->bind_param('sisss', $dept, $class_num, $time2, $profFirst, $profLast);
+		$createClass->execute();
+		$createClass->close();
 	}
-	else {
-		$database->query("INSERT INTO Classes VALUES ('$dept', '$class_num', '$time2', '$profFirst', '$profLast');");
-		$database->query("INSERT INTO ClassEnroll VALUES ('$uid', '$dept', '$class_num');");
-	}
+
+	$addIt = $database->prepare("INSERT INTO ClassEnroll VALUES (?, ?, ?);");
+	$addIt->bind_param('isi', $uid, $dept, $class_num);
+	$addIt->execute();
+	$addIt->close();
 
 	$response = array("success"=>$success, "dept"=>$dept, "errorType"=>$error);
 	echo json_encode($response);
