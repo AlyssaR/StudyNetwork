@@ -102,23 +102,46 @@ $app->post('/addOrganization', function() use ($database) {
 		$orgid = $lastOID['orgid'] + 1;
 	}
 
-	$checkForOrg = $database->query("SELECT orgid FROM Organizations WHERE org_name = '$org_name';");
+	$checkForOrg = $database->prepare("SELECT orgid FROM Organizations WHERE org_name = ?;");
+	$checkForOrg->bind_param('s', $org_name);
+	$checkForOrg->execute();
+
 	//check to see if Organization already exists in database
 	if($checkForOrg->num_rows > 0) {
 		$result = $checkForOrg->fetch_assoc();
+		$checkForOrg->close();
 		$orgid = $result['orgid'];
 		//check to see if user was ever in org before
-		$checkHistory = $database->query("SELECT active FROM OrgEnroll WHERE uid = '$uid' AND orgid = '$orgid';");
-		if($checkHistory->num_rows > 0)
-			$database->query("UPDATE OrgEnroll SET active = TRUE WHERE uid = '$uid' AND orgid = '$orgid';");
-		else
-			$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
+		$checkHistory = $database->prepare("SELECT active FROM OrgEnroll WHERE uid = ? AND orgid = ?;");
+		$checkHistory->bind_param('ii', $uid, $orgid);
+		$checkHistory->execute();
+		if($checkHistory->num_rows > 0) {
+			$checkHistory->close();
+			$updateDB = $database->prepare("UPDATE OrgEnroll SET active = TRUE WHERE uid = ? AND orgid = ?;");
+			$updateDB->bind_param('ii', $uid, $orgid);
+			$updateDB->execute();
+			$updateDB->close();
+		}
+		else {
+			$checkHistory->close();
+			$insertDB = $database->prepare("INSERT INTO OrgEnroll VALUES (?, ?, TRUE);");
+			$insertDB->bind_param('ii', $uid, $orgid);
+			$insertDB->execute();
+			$insertDB->close();
+		}
 		$success = false;
 		$error = "[Notice] Organization already exists. You've been added to pre-existing group.";
 	}
 	else{
-		$database->query("INSERT INTO Organizations VALUES ('$orgid', '$org_name');");
-		$database->query("INSERT INTO OrgEnroll VALUES ('$uid', '$orgid', TRUE);");
+		$checkForOrg->close();
+		$insertOrg = $database->prepare('INSERT INTO Organizations VALUES (?, ?);');
+		$insertOrg->bind_param('is', $orgid, $org_name);
+		$insertOrg->execute();
+		$insertOrg->close();
+		$insertDB = $database->prepare('INSERT INTO OrgEnroll VALUES (?, ?, TRUE);');
+		$insertDB->bind_param('ii', $uid, $orgid);
+		$insertDB->execute();
+		$insertDB->close();
 	}
 
 	$response = array("success"=>$success, "org_name"=>$org_name, "errorType"=>$error);
