@@ -36,6 +36,7 @@ function searchForStudyGroup() {
 	else if (searchByOption == "organization") {
 		searchByOrganization();
 	}
+
 }
 
 

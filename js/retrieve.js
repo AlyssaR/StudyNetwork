@@ -241,31 +241,3 @@ function pullGroup(dept, class_num) {
     })
 }
 
-function populateSearchResults(data) {
-    var table = document.getElementById('searchResults');
-    var gidStr;
-    for(var i = 0; i < data.length; i++) {
-        $('#results').text("");
-        if(!data[i].success)
-            continue;
-        var newRow = table.insertRow(-1);
-        for(var key in data[i]) {
-            if(key == "errorType" || key == "success")
-                continue;
-            if (key == "gid") {
-                gidStr = data[i][key];
-                continue;
-            }
-            var newCell = newRow.insertCell(-1);
-            var newText  = document.createTextNode(data[i][key]);
-            newCell.appendChild(newText);
-        }
-
-        var newButton = newRow.insertCell(-1);
-        var viewButton = document.createElement("button");
-        var addName = document.createTextNode("View Group");
-        viewButton.appendChild(addName);
-        viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
-        newButton.appendChild(viewButton);
-    }
-}
