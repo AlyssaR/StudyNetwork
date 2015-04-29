@@ -246,7 +246,10 @@ $app->post('/editStudyGroup', function() use ($database){
 	if($loc === "ignore")
 		$loc = $resultEG['loc'];
 
-	$database->query("UPDATE StudyGroups SET gname = '$gname', time1 = '$time1', loc = '$loc' WHERE gid = '$gid';");
+	$updateTheThing = $database->prepare("UPDATE StudyGroups SET gname = ?, time1 = ?, loc = ? WHERE gid = ?;");
+	$updateTheThing->bind_param('sssi', $gname, $time1, $loc, $gid);
+	$updateTheThing->execute();	
+	$updateTheThing->close();
 	$runQueryEG = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid';");
 	$resultEG = $runQueryEG->fetch_assoc();
 
