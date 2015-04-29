@@ -281,12 +281,11 @@ $app->post('/getClasses', function() use ($database) {
 	}
 	else
 		echo json_encode(array("success"=>false, "errorType"=> "No classes found"));
-
 });
 
+//Not used
 $app->post('/getClassInfo', function() use ($database) {
-	if(isset($_POST['dept']))
-	{
+	if(isset($_POST['dept'])) {
 		$dept = $_POST['dept'];
 		$class_num = $_POST['class_num'];
 	}
@@ -295,15 +294,17 @@ $app->post('/getClassInfo', function() use ($database) {
 		return;
 	}
 
-	$runQuery = $database->query("SELECT dept, class_num FROM Classes WHERE dept = '$dept' AND class_num = '$class_num';");
+	$runQuery = $database->prepare("SELECT dept, class_num FROM Classes WHERE dept = '$dept' AND class_num = '$class_num';");
+	$runQuery->bind_param('si', $dept, $class_num);
+	$runQuery->execute();		
 	$result = $runQuery->fetch_assoc();
+	$runQuery->close();
 
 	if($result === NULL)
 		$response = array ("success"=> false, "dept"=>"Not Valid", "class_num"=>"Not Valid", "errorType"=>"This class doesn't exist");
 	else
 		$response = array ("success"=>true, "dept"=>$result['dept'], "class_num"=>$result['class_num'], "errorType"=>"None");
 	echo json_encode($response);
-
 });
 
 //This is to get groups to redirect to group profile page
