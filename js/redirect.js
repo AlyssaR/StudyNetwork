@@ -3,7 +3,7 @@ function goHome() {
 }
 
 function goRegister() {
-	window.location = "reigster.html";
+	window.location = "register.html";
 }
 
 function goToClass() {

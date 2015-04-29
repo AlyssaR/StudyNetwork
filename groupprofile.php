@@ -3,7 +3,6 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/create.js"></script>
-    <script type="text/javascript" src="js/files.txt"></script>
     <script type="text/javascript" src="js/gui.js"></script>
     <script type="text/javascript" src="js/manage.js"></script>
     <script type="text/javascript" src="js/navbar.js"></script>
@@ -65,8 +64,8 @@
 <hr>
 <table class="table table-hover" id="MemberData" width="500px">
     <tr>
-        <th>{{Member}}</th>
-        <th>{{Name}}</th>
+        <th>Member</th>
+        <th>Name</th>
     </tr>
 </table>
 <label id="memberResults">There are no members in this group.</label>

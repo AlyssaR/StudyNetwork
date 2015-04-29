@@ -151,7 +151,7 @@ $app->post('/editprofile', function () use ($database) {
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 	$success = true;
@@ -222,7 +222,7 @@ $app->post('/getClasses', function() use ($database) {
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 
@@ -231,11 +231,11 @@ $app->post('/getClasses', function() use ($database) {
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
-			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "profFirst"=>$row['profFirst'], "profLast"=>$row['profLast'], "error"=>"None");
+			$response[] = array("success"=>true, "dept"=>$row['dept'], "class_num"=>$row['class_num'], "time2"=>$row['time2'], "profFirst"=>$row['profFirst'], "profLast"=>$row['profLast'], "errorType"=>"None");
 		echo json_encode($response);
 	}
 	else
-		echo json_encode(array("success"=>false, "error"=> "No classes found"));
+		echo json_encode(array("success"=>false, "errorType"=> "No classes found"));
 
 });
 
@@ -254,9 +254,9 @@ $app->post('/getClassInfo', function() use ($database) {
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
-		$response = array ("success"=> false, "dept"=>"Not Valid", "class_num"=>"Not Valid", "error"=>"This class doesn't exist");
+		$response = array ("success"=> false, "dept"=>"Not Valid", "class_num"=>"Not Valid", "errorType"=>"This class doesn't exist");
 	else
-		$response = array ("success"=>true, "dept"=>$result['dept'], "class_num"=>$result['class_num'], "error"=>"None");
+		$response = array ("success"=>true, "dept"=>$result['dept'], "class_num"=>$result['class_num'], "errorType"=>"None");
 	echo json_encode($response);
 
 });
@@ -275,9 +275,9 @@ $app->post('/getGroupInfo', function () use ($database) {
 
 	//some response
 	if($result === NULL)
-		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "error"=>"This is not the correct group");
+		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "errorType"=>"This is not the correct group");
 	else
-		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "error"=>"None");
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "errorType"=>"None");
 	echo json_encode($response);
 });
 
@@ -294,11 +294,11 @@ $app->post('/getGroupMembers', function() use ($database) {
 	$response = array();
 	if($allGroupMembers->num_rows != 0) {
 		while($row = $allGroupMembers->fetch_assoc())
-			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "error"=>"None");
+			$response[] = array("success"=>true, "f_name"=>$row['f_name'], "l_name"=>$row['l_name'], "errorType"=>"None");
 		echo json_encode($response);
 	}
 	else
-		echo json_encode(array("success"=>false, "error"=>"No members found"));
+		echo json_encode(array("success"=>false, "errorType"=>"No members found"));
 });
 
 //This is to get Groups for the user profile page
@@ -308,7 +308,7 @@ $app->post('/getGroups', function () use ($database) {
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 	//again only returning groups that they are still a part of...hopefully 
@@ -317,12 +317,12 @@ $app->post('/getGroups', function () use ($database) {
 	$response = array();
 	if ($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "error"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 
 		echo json_encode($response);
 	}
 	else
-		echo json_encode(array("success"=>false, "error"=>"No groups found"));
+		echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
 });
 
 $app->post('/getOrganizations', function() use ($database) {
@@ -330,7 +330,7 @@ $app->post('/getOrganizations', function() use ($database) {
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 
@@ -340,12 +340,12 @@ $app->post('/getOrganizations', function() use ($database) {
 	$response = array();
 	if($allOrgs->num_rows != 0) {
 		while($row = $allOrgs->fetch_assoc())
-			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "orgid"=>$row['orgid'], "error"=>"None");
+			$response[] = array("success"=>true, "org_name"=>$row['org_name'], "orgid"=>$row['orgid'], "errorType"=>"None");
 
 		echo json_encode($response);
 	}
 	else 
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 
 });
 
@@ -362,9 +362,9 @@ $app->post('/getOrganizationInfo', function() use ($database) {
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
-		$response = array("success"=>false, "org_name"=>"Not Valid", "error"=>"This organizaiton doesn't exist");
+		$response = array("success"=>false, "org_name"=>"Not Valid", "errorType"=>"This organizaiton doesn't exist");
 	else
-		$response = array("success"=>true, "org_name"=>$result['org_name'], "error"=>"None");
+		$response = array("success"=>true, "org_name"=>$result['org_name'], "errorType"=>"None");
 	echo json_encode($response);
 });
 
@@ -380,7 +380,7 @@ $app->post('/getUserInfo', function () use ($database) {
     if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 
@@ -389,9 +389,9 @@ $app->post('/getUserInfo', function () use ($database) {
 
     //Frame response
     if($result === NULL)
-    	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid", "error"=>"User ID not valid.");
+    	$response = array("success"=>false, "id"=>0,"f_name"=>"Not Valid","l_name"=>"Not Valid", "errorType"=>"User ID not valid.");
 	else
-		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "error"=>"None");
+		$response = array("success"=>true, "f_name"=>$result['f_name'],"l_name"=>$result['l_name'], "email"=>$result['email'], "errorType"=>"None");
     echo json_encode($response);
 });
 
@@ -401,13 +401,13 @@ $app->post('/groupRole', function() use ($database) {
 	 if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"No group entered."));
+		echo json_encode(array("success"=>false, "errorType"=>"No group entered."));
 		return;
 	}
 
@@ -415,9 +415,9 @@ $app->post('/groupRole', function() use ($database) {
 	$result = $runQuery->fetch_assoc();
 
 	if($result === NULL)
-		$response = array("success"=>false, "role"=>"Not Valid", "error"=>"User not in group.");
+		$response = array("success"=>false, "role"=>"Not Valid", "errorType"=>"User not in group.");
 	else
-		$response = array("success"=>true, "role"=>$result['role'], "error"=>"None");
+		$response = array("success"=>true, "role"=>$result['role'], "errorType"=>"None");
 	echo json_encode($response);
 });
 
@@ -427,7 +427,7 @@ $app->post('/isInGroup', function() use($database) {
 	if(isset($_SESSION["uid"]))
 	    $uid = $_SESSION["uid"];
 	else {
-		echo json_encode(array("success"=>false, "error"=>"Not logged in"));
+		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
 		return;
 	}
 	if(isset($_POST['gid']))
