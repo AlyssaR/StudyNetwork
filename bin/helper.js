@@ -467,7 +467,7 @@ function validLName() {
 }
 
 function validOrgName() {
-    var regex = /[A-Z][a-zA-Z0-9]+/;
+    var regex = /[A-Z][-'a-zA-Z0-9]+/;
     var name = document.getElementById("org_name").value;
     if(regex.test(name))
         return true;
