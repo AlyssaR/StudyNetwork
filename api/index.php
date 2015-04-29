@@ -160,11 +160,11 @@ $app->post('/addOrganization', function() use ($database) {
 
 	$response = array("success"=>$success, "org_name"=>$org_name, "errorType"=>$error);
 	echo json_encode($response);
-
 });
 
+//Not SQLi protected
 $app->post('/deleteGroup', function() use ($database) {
-	$gid = "";
+	$gid = 0;
 	$num_members = 0;
 	if(isset($_POST['gid']))
 		$gid = $_POST['gid'];
@@ -176,7 +176,6 @@ $app->post('/deleteGroup', function() use ($database) {
 	$database->query("UPDATE StudyGroups SET active = FALSE, num_members = '$num_members' WHERE gid = '$gid';");
 	$database->query("UPDATE GroupEnroll SET active = FALSE WHERE gid = '$gid';");
 	echo json_encode(array("success"=>true));
-
 });
 
 $app->post('/editprofile', function () use ($database) {
@@ -202,8 +201,11 @@ $app->post('/editprofile', function () use ($database) {
 	if($email === "ignore")
 		$email = $result['email'];
 	else { //If email already exists in database
-		$runQuery = $database->query("SELECT COUNT(*) as count FROM Users WHERE email = '$email' LIMIT 1;");
+		$runQuery = $database->prepare("SELECT COUNT(*) as count FROM Users WHERE email = ? LIMIT 1;");
+		$runQuery->bind_param('s', $email);
+		$runQuery->execute();	
 		$checkQuery = $runQuery->fetch_assoc();
+		$runQuery->close();
 		if($checkQuery['count'] > 0) {
 			$response = array("success"=>false, "uid"=>0, "f_name"=>0, "l_name"=>0, "email"=>0, "errorType"=>"Error: Email is already associated with an account.");
 			echo json_encode($response);
@@ -213,7 +215,10 @@ $app->post('/editprofile', function () use ($database) {
 	if($pass === "ignore")
 		$pass = $result['passwd'];
 
-	$database->query("UPDATE Users SET f_name = '$fName', l_name = '$lName', email = '$email', passwd = '$pass' WHERE uid = '$uid';");
+	$updateTheThing = $database->prepare("UPDATE Users SET f_name = ?, l_name = ?, email = ?, passwd = ? WHERE uid = ?;");
+	$updateTheThing->bind_param('ssssi', $fName, $lName, $email, $pass, $uid);
+	$updateTheThing->execute();	
+	$updateTheThing->close();
 
 	$runQuery = $database->query("SELECT f_name, l_name, email FROM Users WHERE uid = '$uid';");
 	$result = $runQuery->fetch_assoc();
