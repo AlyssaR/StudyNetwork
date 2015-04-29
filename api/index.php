@@ -589,6 +589,29 @@ $app->post('/register', function () use ($database) {
 	echo json_encode($response);
 });
 
+$app->post('/pullGroup', function() use ($database) {
+	if(isset($_POST['dept'])){
+		$dept = $_POST['dept'];
+		$class_num = $_POST['class_num'];
+	}
+	else {
+		echo json_encode(array("dept"=>$_POST['dept'], "class_num"=>$_POST['class_num']));
+		return;
+	}
+
+	$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;");
+	$response = array();
+	if($query->num_rows != 0) {
+		while($row = $query->fetch_assoc())
+			$response[] = $response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+		echo json_encode($response);
+	}
+
+	else
+		echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
+
+});
+
 $app->post('/searchByClass', function() use ($database) {
 	if(!empty($_POST['dept']) && !empty($_POST['class_num'])) {
 		$dept = $_POST['dept'];

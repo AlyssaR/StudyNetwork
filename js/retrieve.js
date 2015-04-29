@@ -3,7 +3,6 @@ function $_GET(q,s) {
     var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
     return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
 }
-
 function getClasses() {
     $.ajax({
         url: "api/getClasses",
@@ -40,11 +39,23 @@ function getClasses() {
                 }
 
                 var newButton = newRow.insertCell(-1);
+                var buttonTwo = newRow.insertCell(-1);
+
                 var viewButton = document.createElement("button");
+                var viewTwo = document. createElement("button");
+
                 var addName = document.createTextNode("Remove Class");
+                var nameTwo = document.createTextNode("Search for Related Groups");
+
                 viewButton.appendChild(addName);
+                viewTwo.appendChild(nameTwo);
+
                 viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
+                viewTwo.onclick=function(deptStr, classStr) { return function() { pullGroup(deptStr, classStr); }; }(deptStr, classStr);
+
+                buttonTwo.appendChild(viewTwo);
                 newButton.appendChild(viewButton);
+
 
 
             }
@@ -212,4 +223,49 @@ function getOrganizations() {
             }
         }
     });
+}
+
+function pullGroup(dept, class_num) {
+    $.ajax({ 
+        url: "api/pullGroup",
+        type: "post",
+        data: {
+            "dept": dept,
+            "class_num": class_num
+        },
+        dataType: "json",
+        success: function(data) {
+            populateSearchResults(data)
+        }
+
+    })
+}
+
+function populateSearchResults(data) {
+    var table = document.getElementById('searchResults');
+    var gidStr;
+    for(var i = 0; i < data.length; i++) {
+        $('#results').text("");
+        if(!data[i].success)
+            continue;
+        var newRow = table.insertRow(-1);
+        for(var key in data[i]) {
+            if(key == "errorType" || key == "success")
+                continue;
+            if (key == "gid") {
+                gidStr = data[i][key];
+                continue;
+            }
+            var newCell = newRow.insertCell(-1);
+            var newText  = document.createTextNode(data[i][key]);
+            newCell.appendChild(newText);
+        }
+
+        var newButton = newRow.insertCell(-1);
+        var viewButton = document.createElement("button");
+        var addName = document.createTextNode("View Group");
+        viewButton.appendChild(addName);
+        viewButton.onclick=function(gidStr) { return function() { getGroupInfo(gidStr); }; }(gidStr);
+        newButton.appendChild(viewButton);
+    }
 }
