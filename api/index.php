@@ -58,7 +58,7 @@ $app->post('/addGroup', function() use ($database){
 	$loc = $_POST['loc'];
 	$dept = $_POST['dept'];
 	$class_num = $_POST['class_num'];
-	$uid = "";
+	$uid = 0;
 	$gid = 0;
 	//Assign incremented ID
 	$gidStart = $database->query("SELECT gid FROM StudyGroups ORDER BY gid DESC LIMIT 1;");
@@ -76,8 +76,15 @@ $app->post('/addGroup', function() use ($database){
 		return;
 	}
 
-	$database->query("INSERT INTO StudyGroups (gid, dept, class_num, admin_id, gname, time1, loc, num_members, active) VALUES ('$gid', '$dept', '$class_num', '$uid', '$gname', '$time1', '$loc', 1, TRUE);");
-	$database->query("INSERT INTO GroupEnroll VALUES ('$uid', '$gid', '$role', TRUE);");
+	$createGroup = $database->prepare("INSERT INTO StudyGroups (gid, dept, class_num, admin_id, gname, time1, loc, num_members, active) VALUES (?, ?, ?, ?, ?, ?, ?, 1, TRUE);");
+	$createGroup->bind_param('isiisss', $gid, $dept, $class_num, $uid, $gname, $time1, $loc);
+	$createGroup->execute();
+	$createGroup->close();
+	
+	$enroll = $database->prepare("INSERT INTO GroupEnroll VALUES (?, ?, ?, TRUE);");
+	$enroll->bind_param('iis', $uid, $gid, $role);
+	$enroll->execute();
+	$enroll->close();
 	
 	$response = array("success"=>$success, "gname"=>$gname, "errorType"=>$error);
 	echo json_encode($response);
