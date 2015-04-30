@@ -603,7 +603,7 @@ $app->post('/pullGroup', function() use ($database) {
 	$response = array();
 	if($query->num_rows != 0) {
 		while($row = $query->fetch_assoc())
-			$response[] = $response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "errorType"=>"None");
 		echo json_encode($response);
 	}
 
