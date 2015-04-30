@@ -110,25 +110,25 @@ function validEmail(email) {
 }
 
 function validFName() {
-    var regex = /^[A-Z][-a-zA-Z]+$/;
+    /*var regex = /^[A-Z][-a-zA-Z]+$/;
     var name = document.getElementById("f_name").value;
-    if(regex.test(name))
+    if(regex.test(name))*/
         return true;
-    else {
+   /* else {
         alert("Your first name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
-    }
+    }*/
 }
 
 function validLName() { 
-    var regex = /^[A-Z][-'a-zA-Z]+$/;
-    var name = document.getElementById("l_name").value;
-    if(regex.test(name))
+   // var regex = /^[A-Z][-'a-zA-Z]+$/;
+    //var name = document.getElementById("l_name").value;
+    //if(regex.test(name))
         return true;
-    else {
-        alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
-        return false;
-    }
+    //else {
+     //   alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
+     //   return false;
+    //}
 }
 
 function validLogin() {

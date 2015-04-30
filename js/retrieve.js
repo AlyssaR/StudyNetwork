@@ -52,7 +52,6 @@ function getClasses() {
 
                 viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
                 viewTwo.onclick=function(deptStr, classStr) { return function() { pullGroup(deptStr, classStr); }; }(deptStr, classStr);
-
                 buttonTwo.appendChild(viewTwo);
                 newButton.appendChild(viewButton);
 
@@ -226,6 +225,7 @@ function getOrganizations() {
 }
 
 function pullGroup(dept, class_num) {
+	
     $.ajax({ 
         url: "api/pullGroup",
         type: "post",
@@ -235,7 +235,15 @@ function pullGroup(dept, class_num) {
         },
         dataType: "json",
         success: function(data) {
-            populateSearchResults(data)
+			if (data.success) {
+				alert("Groups Found!");
+			}
+			else {
+				alert("Nothing Found");
+			}
+			window.location = "searchGroups.html";
+            populateSearchResults(data);
+			
         }
 
     })
