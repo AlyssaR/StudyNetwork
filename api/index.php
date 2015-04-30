@@ -525,9 +525,11 @@ $app->post('/leaveClass', function() use ($database) {
 	$error = "None";
 	$success = true;
 
-	$database->query("DELETE FROM ClassEnroll WHERE uid = '$uid' AND dept = '$dept' AND class_num = '$class_num';");
+	$enroll = $database->prepare("DELETE FROM ClassEnroll WHERE uid = ? AND dept = ? AND class_num = ?;");
+	$enroll->bind_param('isi', $uid, $dept, $class_num);
+	$enroll->execute();
+	$enroll->close();
 	echo json_encode(array("success"=>$success));
-
 });
 
 $app->post('/leaveOrganization', function() use ($database) {
@@ -577,9 +579,12 @@ $app->post('/login', function () use ($database) {
     $password = $_POST['password'];
 
     //Remove duplicates
-    $runQuery = $database->query("SELECT uid, f_name, l_name FROM Users WHERE email = '$email' AND passwd = '$password' LIMIT 1;");
-    $result = $runQuery->fetch_assoc();
-
+    $runQuery = $database->prepare("SELECT uid, f_name, l_name FROM Users WHERE email = ? AND passwd = ? LIMIT 1;");
+    $runQuery->bind_param('ss', $email, $password);
+	$runQuery->execute();
+	$result = $runQuery->fetch_assoc();
+	$runQuery->close();
+	
     //Frame response
     if($result === NULL)
     	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
@@ -618,15 +623,22 @@ $app->post('/register', function () use ($database) {
 	$success = true;
 
 	//Check for duplicates
-	$results = $database->query("SELECT * FROM Users WHERE email = '$email';");
+	$results = $database->prepare("SELECT * FROM Users WHERE email = ?;");
+	$results->bind_param('s', $email);
+	$results->execute();
 	if($results->num_rows > 0) {
+		$results->close();
 		$error = "User already exists";
 		$success = false;
 	}
 	//Add user
 	else {
+		$results->close()
 		//added active to this query as well
-		$database->query("INSERT INTO Users (uid, f_name, l_name, email, passwd, active) VALUES ('$uid', '$fName', '$lName', '$email', '$password', TRUE);");
+		$runQuery = $database->prepare("INSERT INTO Users (uid, f_name, l_name, email, passwd, active) VALUES (?, ?, ?, ?, ?, TRUE);");
+		$runQuery->bind_param('issss', $uid, $fName, $lName, $email, $password);
+		$runQuery->execute();
+		$runQuery->close();	
 		$_SESSION["uid"] = $uid;
 	}
 
