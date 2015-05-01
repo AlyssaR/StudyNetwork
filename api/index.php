@@ -654,10 +654,11 @@ $app->post('/searchByClass', function() use ($database) {
 
     	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
     	//now we may be getting a whole list of similar searches!!
-    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ?% AND class_num = ? AND active = TRUE;");
-    	$query->bind_param('si', $dept[0], $class_num);
+    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND class_num = ? AND active = TRUE;");
+    	$query->bind_param('si', $dept, $class_num);
 		$query->execute();
-		$runQuery->bind_result($gname, $time1, $loc, $gid);
+		$query->bind_result($gname, $time1, $loc, $gid);
+		$query->store_result();
 	
     	$response = array();
     	if ($query->num_rows != 0) {
