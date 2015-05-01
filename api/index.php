@@ -392,7 +392,6 @@ $app->post('/getOrganizations', function() use ($database) {
 	}
 	else 
 		echo json_encode(array("success"=>false, "errorType"=>"Not logged in"));
-
 });
 
 //for if we want to pull one organizaiton at a time
@@ -582,14 +581,15 @@ $app->post('/login', function () use ($database) {
     $runQuery = $database->prepare("SELECT uid, f_name, l_name FROM Users WHERE email = ? AND passwd = ? LIMIT 1;");
     $runQuery->bind_param('ss', $email, $password);
 	$runQuery->execute();
-	$result = $runQuery->fetch_assoc();
+	$runQuery->bind_result($uid, $f_name, $l_name);
+	$result = $runQuery->fetch();
 	$runQuery->close();
 	
     //Frame response
     if($result === NULL)
     	$response = array("success"=>false, "uid"=>-1,"f_name"=>"Not Valid","l_name"=>"Not Valid");
 	else {
-		$response = array("success"=>true, "uid"=>$result['uid'], "f_name"=>$result['f_name'],"l_name"=>$result['l_name']);
+		$response = array("success"=>true, "uid"=>$uid, "f_name"=>$f_name,"l_name"=>$l_name);
 		$_SESSION["uid"] = $response["uid"];
 	}
     echo json_encode($response);
@@ -633,7 +633,7 @@ $app->post('/register', function () use ($database) {
 	}
 	//Add user
 	else {
-		$results->close()
+		$results->close();
 		//added active to this query as well
 		$runQuery = $database->prepare("INSERT INTO Users (uid, f_name, l_name, email, passwd, active) VALUES (?, ?, ?, ?, ?, TRUE);");
 		$runQuery->bind_param('issss', $uid, $fName, $lName, $email, $password);
@@ -654,8 +654,10 @@ $app->post('/searchByClass', function() use ($database) {
 
     	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
     	//now we may be getting a whole list of similar searches!!
-    	$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE '$dept[0]%' AND class_num = '$class_num' AND active = TRUE;");
-    	
+    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ?% AND class_num = ? AND active = TRUE;");
+    	$query->bind_param('si', $dept[0], $class_num);
+		$query->execute();
+	
     	$response = array();
     	if ($query->num_rows != 0) {
 			while($row = $query->fetch_assoc()) 
@@ -664,6 +666,7 @@ $app->post('/searchByClass', function() use ($database) {
 		}
 		else
 			echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
+		$query->close();
     }
     else 
     	echo json_encode(array("success"=>false, "errorType"=>"Insufficient data entered"));
