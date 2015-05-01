@@ -97,7 +97,7 @@ function populateSearchResults(data) {
 function searchByGroup() {
 	var sPageURL = window.location.search.substring(1);
 	var sURLVariables = sPageURL.split('&');
-	var group = sURLVariables[0].split('=');
+	var group = sURLVariables[1].split('=');
 	group = group[1];
 	
     $.ajax({
@@ -116,7 +116,7 @@ function searchByGroup() {
 function searchByOrganization() {
 	var sPageURL = window.location.search.substring(1);
 	var sURLVariables = sPageURL.split('&');
-	var org = sURLVariables[0].split('=');
+	var org = sURLVariables[1].split('=');
 	org = org[1];
 	
     $.ajax({

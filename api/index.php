@@ -679,14 +679,16 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ?;");
-		$query->bind_param('s', $gname[0]);
+		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ? AND active = TRUE;");
+		$query->bind_param('s', $gname);
 		$query->execute();
+		$query->bind_result($gname, $time1, $loc, $gid);
+		$query->store_result();
 	
 		$response = array();
-		if($query->num_rows!= 0) {
-			while($row = $query->fetch_assoc())
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+		if($query->num_rows != 0) {
+			while($row = $query->fetch())
+				$response[] = array("success"=>true, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "gid"=>$gid, "errorType"=>"None");
 			echo json_encode($response);
 		}
 		else echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
@@ -702,9 +704,15 @@ $app->post('/searchByOrg', function() use ($database) {
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
   		//I think this is the problem. It returns more than one uid sometimes.
-		$uidGet = $database->query("SELECT uid from OrgEnroll e, Organizations o WHERE o.org_name LIKE '$org_name[0]%' AND u.orgid = o.orgid;"); 
-		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$uidGet' AND s.gid = g.gid AND g.active = TRUE;");
-    	
+		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE;"); 
+		$uidGet->bind_param('s', $org_name);
+		$uidGet->execute();
+		$uidGet->bind_result($gotUID);
+		$uidGet->store_result();
+		$uidGet->fetch();
+
+		$query = $database->query("SELECT s.gname, s.time1, s.loc, s.gid FROM StudyGroups s, GroupEnroll g WHERE g.uid = '$gotUID' AND s.gid = g.gid AND g.active = TRUE;");
+		
     	$response = array();
     	if($query->num_rows != 0) {
 			while($row = $query->fetch_assoc()) 
@@ -717,7 +725,6 @@ $app->post('/searchByOrg', function() use ($database) {
     else 
     	echo json_encode(array("success"=>false, "gname"=>"NOT VALID", "time1"=>"NOT VALID", "loc"=>"NOT VALID", "gid"=>"NOT VALID", "errorType"=>"Insufficient data entered"));
 });
-
 
 $app->run();
 ?>
