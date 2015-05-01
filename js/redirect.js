@@ -24,5 +24,6 @@ function goSearch() {
 	var urlLocation = "searchGroups.html?";
 	for (var x = 0; x < splitQueryInput.length; ++x)
 		urlLocation +=  "param" + x + "=" + splitQueryInput[x] + "&";
+	urlLocation = urlLocation + "searchBy=" + $("#searchBy").val();
     window.location = urlLocation;
 }

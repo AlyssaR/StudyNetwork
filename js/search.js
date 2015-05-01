@@ -26,7 +26,8 @@ function getGroupsSearch() {
 }
 
 function searchForStudyGroup() {
-	var searchByOption = $("#searchBy").val();
+	var searchByOption = $_GET('searchBy');
+	alert(searchByOption);
 	if (searchByOption == "group") {
 		searchByGroup();
 	}

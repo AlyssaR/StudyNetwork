@@ -657,11 +657,12 @@ $app->post('/searchByClass', function() use ($database) {
     	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ?% AND class_num = ? AND active = TRUE;");
     	$query->bind_param('si', $dept[0], $class_num);
 		$query->execute();
-		
+		$runQuery->bind_result($gname, $time1, $loc, $gid);
+	
     	$response = array();
     	if ($query->num_rows != 0) {
 			while($row = $query->fetch()) 
-				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+				$response[] = array("success"=>true, "gname"=>$gname, "time1"=>$time1, "loc"=>$loc, "gid"=>$gid, "errorType"=>"None");
 			echo json_encode($response);
 		}
 		else
