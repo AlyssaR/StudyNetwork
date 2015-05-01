@@ -1,6 +1,6 @@
 function $_GET(q,s) {
     s = (s) ? s : window.location.search;
-    var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
+    var re = new RegExp('&amp;'+q+'=([^&;]*)','i');//removed amp from parenthetical group because it broke things
     return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
 }
 

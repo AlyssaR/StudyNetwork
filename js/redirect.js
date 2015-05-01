@@ -20,10 +20,10 @@ function goToProfile() {
 
 function goSearch() {
 	var queryInput = $("#searchInput").val();
+	alert("Search by:" + $("#searchBy").val());
 	var splitQueryInput = queryInput.split(" ");
-	var urlLocation = "searchGroups.html?";
+	var urlLocation = "searchGroups.html?searchBy=" + $("#searchBy").val() + "&";
 	for (var x = 0; x < splitQueryInput.length; ++x)
 		urlLocation +=  "param" + x + "=" + splitQueryInput[x] + "&";
-	urlLocation = urlLocation + "searchBy=" + $("#searchBy").val();
     window.location = urlLocation;
 }
