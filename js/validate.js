@@ -90,9 +90,9 @@ function logout() {
 
 
 function validClass(){
-    if(!validFName())
+    if(!validProfFName())
         return false;
-    if(!validLName())
+    if(!validProfLName())
         return false;
     else
         return true;

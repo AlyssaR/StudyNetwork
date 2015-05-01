@@ -26,7 +26,8 @@ function getGroupsSearch() {
 }
 
 function searchForStudyGroup() {
-	var searchByOption = $("#searchBy").val();
+	var searchByOption = $_GET('searchBy');
+
 	if (searchByOption == "group") {
 		searchByGroup();
 	}
@@ -44,12 +45,12 @@ function searchByClass() {
 	var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
 	
-	var dept = sURLVariables[0].split('=');
+	var dept = sURLVariables[1].split('=');
 	dept = dept[1];
 	
-	var courseNumber = sURLVariables[1].split('=');
+	var courseNumber = sURLVariables[2].split('=');
 	courseNumber = courseNumber[1];
-	
+
 	$.ajax({
         url: "api/searchByClass",
         type: "post",
@@ -59,7 +60,7 @@ function searchByClass() {
 				},
         dataType: "json",
         success: function(data) {
-			populateSearchResults(data);
+        	populateSearchResults(data);
 		}
     });
 }
@@ -96,7 +97,7 @@ function populateSearchResults(data) {
 function searchByGroup() {
 	var sPageURL = window.location.search.substring(1);
 	var sURLVariables = sPageURL.split('&');
-	var group = sURLVariables[0].split('=');
+	var group = sURLVariables[1].split('=');
 	group = group[1];
 	
     $.ajax({
@@ -115,7 +116,7 @@ function searchByGroup() {
 function searchByOrganization() {
 	var sPageURL = window.location.search.substring(1);
 	var sURLVariables = sPageURL.split('&');
-	var org = sURLVariables[0].split('=');
+	var org = sURLVariables[1].split('=');
 	org = org[1];
 	
     $.ajax({
