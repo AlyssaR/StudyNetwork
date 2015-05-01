@@ -657,10 +657,10 @@ $app->post('/searchByClass', function() use ($database) {
     	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ?% AND class_num = ? AND active = TRUE;");
     	$query->bind_param('si', $dept[0], $class_num);
 		$query->execute();
-	
+		
     	$response = array();
     	if ($query->num_rows != 0) {
-			while($row = $query->fetch_assoc()) 
+			while($row = $query->fetch()) 
 				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
@@ -677,20 +677,21 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE '%$gname[0]%';");
-
+		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ?;");
+		$query->bind_param('s', $gname[0]);
+		$query->execute();
+	
 		$response = array();
 		if($query->num_rows!= 0) {
 			while($row = $query->fetch_assoc())
 				$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
 			echo json_encode($response);
 		}
-
 		else echo json_encode(array("success"=>false, "errorType"=>"No groups found"));
+		$query->close();
 	}
 
 	else echo json_encode(array("success"=>false, "errorType"=>"No data entered"));
-
 });
 
 $app->post('/searchByOrg', function() use ($database) {		
