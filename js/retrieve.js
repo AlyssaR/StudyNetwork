@@ -3,7 +3,6 @@ function $_GET(q,s) {
     var re = new RegExp('&amp;'+q+'=([^&;]*)','i');//removed amp from parenthetical group because it broke things
     return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
 }
-
 function getClasses() {
     $.ajax({
         url: "api/getClasses",
@@ -40,11 +39,22 @@ function getClasses() {
                 }
 
                 var newButton = newRow.insertCell(-1);
+                var buttonTwo = newRow.insertCell(-1);
+
                 var viewButton = document.createElement("button");
+                var viewTwo = document. createElement("button");
+
                 var addName = document.createTextNode("Remove Class");
+                var nameTwo = document.createTextNode("Search for Related Groups");
+
                 viewButton.appendChild(addName);
+                viewTwo.appendChild(nameTwo);
+
                 viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
+                viewTwo.onclick=function(deptStr, classStr) { return function() { goSearchFromClass(deptStr, classStr); }; }(deptStr, classStr);
+                buttonTwo.appendChild(viewTwo);
                 newButton.appendChild(viewButton);
+
 
 
             }
@@ -213,3 +223,29 @@ function getOrganizations() {
         }
     });
 }
+
+function pullGroup(dept, class_num) {
+	
+    $.ajax({ 
+        url: "api/pullGroup",
+        type: "post",
+        data: {
+            "dept": dept,
+            "class_num": class_num
+        },
+        dataType: "json",
+        success: function(data) {
+			if (data.success) {
+				alert("Groups Found!");
+			}
+			else {
+				alert("Nothing Found");
+			}
+			window.location = "searchGroups.html";
+            populateSearchResults(data);
+			
+        }
+
+    })
+}
+
