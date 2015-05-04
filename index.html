@@ -19,7 +19,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
         <title> Study Network</title>
     </head>
-    <body style ="font-family: raleway, serif" onload = "loadCentralNav(), isLoggedIn()">
+    <body style ="font-family: raleway, serif; background-color:#ECECEA" onload = "loadCentralNav(), isLoggedIn()">
     <div id = "centralNavBar"></div>
 
     <div id = formData>
@@ -69,27 +69,46 @@
     </html>
 
     <style>
-        .btn {
-            background-color:#32CD32;
-            color:#FFFFF0;
-            border-color:#32CD32;
+        .btn-primary {
+            background-color: #D9853B;
+            border-color: #D9853B;
         }
-        .btn:hover {
-            background-color:#008000;
-            border-color:#008000;
-            color:#FFFFF0;
+        .btn-primary:hover {
+            background-color: #D76603;
+            border-color: #D76603;
+        }
+        .btn-primary:focus {
+            background-color: #D76603;
+            border-color: #D76603;
+        }
+        .btn-primary:active {
+            background-color: #D76603;
+            border-color: #D76603;
         }
         .form-control {
-            border-color:#32CD32;
+            border-color:#D9853B;
 
+        }
+        .form-control:focus {
+            border-color:#D9853B;
+        }
+        .form-control:active {
+            border-color:#D9853B;
+        }
+        .form-signin:focus {
+            border-color:#D9853B;
+        }
+        .form-signin:active {
+            border-color: #D76603;
         }
         .form-signin {
-            border-color:#32CD32;
+            border-color:#D9853B;
         }
-
+        .form-signin input[type="email"] {
+            border-color:#D9853B;
+        }
         .container {
             border-style:outset;
-            border-color:#32CD32;
             width:500px;
 
         }
