@@ -51,7 +51,7 @@ function getClasses() {
                 viewTwo.appendChild(nameTwo);
 
                 viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
-                viewTwo.onclick=function(deptStr, classStr) { return function() { pullGroup(deptStr, classStr); }; }(deptStr, classStr);
+                viewTwo.onclick=function(deptStr, classStr) { return function() { goSearchFromClass(deptStr, classStr); }; }(deptStr, classStr);
                 buttonTwo.appendChild(viewTwo);
                 newButton.appendChild(viewButton);
 

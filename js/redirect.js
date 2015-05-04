@@ -22,7 +22,13 @@ function goSearch() {
 	var queryInput = $("#searchInput").val();
 	var splitQueryInput = queryInput.split(" ");
 	var urlLocation = "searchGroups.html?";
+	urlLocation += "searchBy=" + $("#searchBy").val() + "&";
 	for (var x = 0; x < splitQueryInput.length; ++x)
 		urlLocation +=  "param" + x + "=" + splitQueryInput[x] + "&";
     window.location = urlLocation;
+}
+
+function goSearchFromClass(dept, courseNumber) {
+	var urlLocation = "searchGroups.html?searchBy=class&param1=" + dept + "&param2=" + courseNumber;
+	window.location = urlLocation;
 }
