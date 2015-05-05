@@ -20,8 +20,8 @@ function loadCentralNav() {
 	                "<li class='dropdown'>"+
 	                    "<a style='color:#cccccc' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id = 'navCreate'>Create <span class='caret'></span></a>"+
 	                    "<ul style='background-color:#558C89' class='dropdown-menu' role='menu'>"+
-	                        "<li><a href='createClassForm.html'>Create Class</a></li>"+
-	                        "<li><a href='createStudyGroupForm.html'>Create Study Group</a></li>"+
+	                        "<li><a style='color:#cccccc' href='createClassForm.html'>Create Class</a></li>"+
+	                        "<li><a style='color:#cccccc' href='createStudyGroupForm.html'>Create Study Group</a></li>"+
 	                    "</ul>"+
 	                "</li>"+
 	            "</ul>"+
@@ -40,7 +40,7 @@ function loadCentralNav() {
 	            "<ul class='nav navbar-nav navbar-right'>"+
 
 	                "<li class='dropdown'>"+
-	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id='navGreet'>Welcome, <label id='sayHello'></label><span class='caret'></span></a>"+
+	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' style='color:#cccccc' id='navGreet'>Welcome, <label id='sayHello'></label><span class='caret'></span></a>"+
 	                    "<ul style='background-color: #558C89' class='dropdown-menu' role='menu'>"+
 	                        "<li><a href='profile.html'>View Profile</a></li>"+
 	                        "<li><a href='javascript:void(0)' onclick = 'logout();'>Logout</a></li>"+
