@@ -14,23 +14,28 @@
         <link href="css/navbar.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href = "css/signin.css" rel = "stylesheet">
-        <link href = "css/navbar.css" rel="stylesheet">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
         <title> Study Network</title>
     </head>
-    <body style ="font-family: raleway, serif; background-color:#ECECEA" onload = "loadCentralNav(), isLoggedIn()">
+    <body style ="font-family: raleway, serif; background-color:#222930;" onload = "loadCentralNav(), isLoggedIn()">
     <div id = "centralNavBar"></div>
+
+    <hr style="height:30px;border:none;color:#4EB1BA;background-color:#4EB1BA;">
 
     <div id = formData>
 
-        <h1>The StudyNetwork</h1>
+
+         <font color=#E9E9E9 size=30pt>
+            <h1>The StudyNetwork</h1>
+         </font>
 
 
         <div class="container">
 
             <form class="form-signin" action = "javascript:login()" id="loginForm">
-                <h2 class="form-signin-heading">Please sign in</h2>
+                <font color=#E9E9E9 size=10pt>
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                </font>
                 <label for="email" class="sr-only">Email address</label>
                 <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
                 <label for="password" class="sr-only">Password</label>
@@ -39,11 +44,14 @@
             </form>
 
         </div>
-
-        <h3> The StudyNetwork is a service to connect classmates and mentors in relevant study groups! </h3>
+        <font color=#E9E9E9 size=10pt>
+            <h3> The StudyNetwork is a service to connect students and form study groups </h3>
+        </font>
+    
     </div>
     <div class="container" id = "registerLinkTo">
-        <p> Need an account? </p>
+
+         <font color=#E9E9E9 size=4pt>Need an account?</font>
         <form class="form-signin">
             <button class=" btn btn-primary btn-block" type = "button" onclick ="javascript:goRegister()"> Register </button>
         </form>
@@ -62,54 +70,56 @@
     </body>
 
     <footer>
-        <hr>
-        <p>&copy; Genius Loading</p>
+        <hr style="height:1px;border:none;color:#222930;background-color:#222930;">
+        <font color=#E9E9E9 size=2pt>&copy; Genius Loading</font>
     </footer>
 
     </html>
 
     <style>
         .btn-primary {
-            background-color: #D9853B;
-            border-color: #D9853B;
+            background-color: #4EB1BA;
+            border-color: #4EB1BA;
         }
         .btn-primary:hover {
-            background-color: #D76603;
-            border-color: #D76603;
+            background-color: #16AAB8;
+            border-color: #16AAB8;
         }
         .btn-primary:focus {
-            background-color: #D76603;
-            border-color: #D76603;
+            background-color: #16AAB8;
+            border-color: #16AAB8;
         }
         .btn-primary:active {
-            background-color: #D76603;
-            border-color: #D76603;
+            background-color: #16AAB8;
+            border-color: #16AAB8;
         }
         .form-control {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
 
         }
         .form-control:focus {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
         }
         .form-control:active {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
         }
         .form-signin:focus {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
         }
         .form-signin:active {
-            border-color: #D76603;
+            border-color: #E9E9E9;
         }
         .form-signin {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
         }
         .form-signin input[type="email"] {
-            border-color:#D9853B;
+            border-color:#E9E9E9;
         }
         .container {
-            border-style:outset;
+            border-style:dotted;
             width:500px;
+            border-color: #4EB1BA;
+            padding-bottom: 40px;
 
         }
     </style>
