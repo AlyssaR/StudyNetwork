@@ -24,27 +24,32 @@ function getGroupsSearch() {
         }
     });
 }
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
 
 function searchForStudyGroup() {
-	var searchByOption = $_GET('searchBy');
+	var searchByOption = getQueryVariable("searchBy");
 
 	if (searchByOption == "group") {
-		var group = sURLVariables[1].split('=');
-		group = group[1];
+		group = getQueryVariable("param0");
 		searchByGroup(group);
 	}
 	else if (searchByOption == "class") {
-		var dept = sURLVariables[1].split('=');
-		dept = dept[1];
-
-		var courseNumber = sURLVariables[2].split('=');
-		courseNumber = courseNumber[1];
+		var dept = getQueryVariable("param0");
+		var courseNumber = getQueryVariable("param1");
 		searchByClass(dept, courseNumber);
 	}
 	else if (searchByOption == "organization") {
-		var org = sURLVariables[1].split('=');
-		org = org[1];
-		searchByOrganization();
+		org = getQueryVariable("param0");
+		searchByOrganization(org);
 	}
 }
 
