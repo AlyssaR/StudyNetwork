@@ -490,7 +490,6 @@ $app->post('/isInGroup', function() use($database) {
 	echo json_encode($response);
 });
 
-//Quincy Schurr - joinStudyGroup branch
 $app->post('/joinStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
     $gid = $_POST['gid'];
@@ -676,8 +675,8 @@ $app->post('/searchByClass', function() use ($database) {
   		$class_num = $_POST['class_num'];
 
     	//now we may be getting a whole list of similar searches!!
-    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND active = TRUE;");//AND class_num = ? 
-    	$query->bind_param('si', $dept); // I want it to match groups with the first letter or two of the dept so it used to be dept[0], $class_num
+    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND class_num = ? AND active = TRUE;");
+    	$query->bind_param('si', $dept, $class_num); 
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
@@ -701,8 +700,9 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ? AND active = TRUE;");
-		$query->bind_param('s', $gname);
+		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ? AND active = TRUE ORDER BY num_members DESC;");
+		$searchStr = $gname[0] . $gname[1] . "%";
+		$query->bind_param('s', $searchStr);
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
@@ -726,8 +726,9 @@ $app->post('/searchByOrg', function() use ($database) {
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
   		//I think this is the problem. It returns more than one uid sometimes.
-		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE;"); 
-		$uidGet->bind_param('s', $org_name);
+		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE ORDER BY num_members DESC;"); 
+		$searchStr = $org_name[0] . $org_name[1] . "%";
+		$uidGet->bind_param('s', $searchStr);
 		$uidGet->execute();
 		$uidGet->bind_result($gotUID);
 		$uidGet->store_result();
