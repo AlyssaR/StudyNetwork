@@ -113,14 +113,14 @@ function validEmail(email) {
 }
 
 function validFName() {
-    /*var regex = /^[A-Z][-a-zA-Z]+$/;
+    var regex = /^[A-Z][-a-zA-Z]+$/;
     var name = document.getElementById("f_name").value;
-    if(regex.test(name))*/
+    if(regex.test(name))
         return true;
-   /* else {
+    else {
         alert("Your first name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
-    }*/
+    }
 }
 
 function validGroup() {
@@ -131,14 +131,14 @@ function validGroup() {
 }
 
 function validLName() { 
-   // var regex = /^[A-Z][-'a-zA-Z]+$/;
-    //var name = document.getElementById("l_name").value;
-    //if(regex.test(name))
+    var regex = /^[A-Z][-'a-zA-Z]+$/;
+    var name = document.getElementById("l_name").value;
+    if(regex.test(name))
         return true;
-    //else {
-     //   alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
-     //   return false;
-    //}
+    else {
+        alert("Your last name must start with an uppercase letter and be followed by only letters from the English alphabet.");
+        return false;
+    }
 }
 
 function validLogin() {
@@ -239,23 +239,23 @@ function validRegister() {
 }
 
 function validTime1() {
-    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    /*var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
     var name = document.getElementById("time1").value;
-    if(regex.test(name))
+    if(regex.test(name))*/
         return true;
-    else {
+    /*else {
         alert("Time must be formatted HH:MM followed by AM/PM");
         return false;
-    }
+    }*/
 }
 
 function validTime2() {
-    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    /*var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
     var name = document.getElementById("time2").value;
-    if(regex.test(name))
+    if(regex.test(name))*/
         return true;
-    else {
+    /*else {
         alert("Time must be formatted HH:MM followed by AM/PM");
-        return false;
-    }
+        return false; 
+    }*/
 }
