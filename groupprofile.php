@@ -59,6 +59,10 @@
     </div>
 </div>
 
+<div class="container">
+    Class:   <label id = "cur_class">Undefined</label>
+</div>
+
 <hr>
 <h2>Group Members</h2>
 <hr>

@@ -77,11 +77,18 @@ function getGroupInfo(gid) {
         },
         dataType: "json",
         success: function(data) {
+			//Please delete this if statement once you have the PHP working correctly.
+			if (data.dept == undefined && data.courseNumber == undefined) {
+				data.dept = " if you see this, your PHP Function is not pulling up data.dept and data.courseNumber... :-P";
+				data.courseNumber = "Quincy Schools at PHP";
+			}
             if(data.success) {
                 if(getInfo) {
                     $('#cur_gname').text(data.gname);
                     $('#cur_loc').text(data.loc);
                     $('#cur_time1').text(data.time1);
+					//@Quincy - new line appended to call. 
+					$('#cur_class').text(data.dept + " " + data.courseNumber);
                 }
                 else
                     window.location="groupprofile.php?gid="+gid;
