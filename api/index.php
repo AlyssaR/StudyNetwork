@@ -677,7 +677,7 @@ $app->post('/searchByClass', function() use ($database) {
 
     	//now we may be getting a whole list of similar searches!!
     	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND active = TRUE;");//AND class_num = ? 
-    	$query->bind_param('si', $dept[0] . $dept[1]); //, $class_num
+    	$query->bind_param('si', $dept); // I want it to match groups with the first letter or two of the dept so it used to be dept[0], $class_num
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
