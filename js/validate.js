@@ -239,23 +239,23 @@ function validRegister() {
 }
 
 function validTime1() {
-    /*var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
     var name = document.getElementById("time1").value;
-    if(regex.test(name))*/
+    if(regex.test(name))
         return true;
-    /*else {
+    else {
         alert("Time must be formatted HH:MM followed by AM/PM");
         return false;
-    }*/
+    }
 }
 
 function validTime2() {
-    /*var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
     var name = document.getElementById("time2").value;
-    if(regex.test(name))*/
+    if(regex.test(name))
         return true;
-    /*else {
+    else {
         alert("Time must be formatted HH:MM followed by AM/PM");
         return false; 
-    }*/
+    }
 }
