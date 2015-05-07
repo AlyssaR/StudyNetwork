@@ -358,12 +358,12 @@ $app->post('/getGroups', function () use ($database) {
 		return;
 	}
 	//again only returning groups that they are still a part of...hopefully 
-	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
+	$runQuery = $database->query("SELECT gname, time1, loc, dept, class_num, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "dept"=>$row['dept'], "class_num"=>$row['class_num'], "gid"=>$row['gid'], "errorType"=>"None");
 
 		echo json_encode($response);
 	}
@@ -675,10 +675,9 @@ $app->post('/searchByClass', function() use ($database) {
 		$dept = $_POST['dept'];
   		$class_num = $_POST['class_num'];
 
-    	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
     	//now we may be getting a whole list of similar searches!!
-    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND class_num = ? AND active = TRUE;");
-    	$query->bind_param('si', $dept, $class_num);
+    	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND active = TRUE;");//AND class_num = ? 
+    	$query->bind_param('si', $dept[0]); //, $class_num
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
