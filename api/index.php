@@ -316,14 +316,14 @@ $app->post('/getGroupInfo', function () use ($database) {
 		return;
 	}
 	//only want to pull up groups that are active, hopefully this works
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' and active = TRUE LIMIT 1;");
+	$runQuery = $database->query("SELECT gname, time1, loc, dept, class_num FROM StudyGroups WHERE gid = '$gid' and active = TRUE LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
 	//some response
 	if($result === NULL)
 		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "errorType"=>"This is not the correct group");
 	else
-		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "errorType"=>"None");
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "dept"=>$result['dept'], "class_num"=>$result['class_num'], "errorType"=>"None");
 	echo json_encode($response);
 });
 
@@ -657,11 +657,11 @@ $app->post('/pullGroup', function() use ($database) {
 		return;
 	}
 
-	$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;");
+	$query = $database->query("SELECT gname, time1, loc, dept, class_num FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;");
 	$response = array();
 	if($query->num_rows != 0) {
 		while($row = $query->fetch_assoc())
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "errorType"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "dept"=>$row['dept'], "class_num"=>$row['class_num'], "errorType"=>"None");
 		echo json_encode($response);
 	}
 

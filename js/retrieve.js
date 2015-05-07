@@ -78,10 +78,10 @@ function getGroupInfo(gid) {
         dataType: "json",
         success: function(data) {
 			//Please delete this if statement once you have the PHP working correctly.
-			if (data.dept == undefined && data.class_num == undefined) {
-				data.dept = " if you see this, your PHP Function is not pulling up data.dept and data.courseNumber... :-P";
-				data.courseNumber = "Quincy Schools at PHP";
-			}
+			//if (data.dept == undefined && data.class_num == undefined) {
+				//data.dept = " if you see this, your PHP Function is not pulling up data.dept and data.courseNumber... :-P";
+				//data.class_num = "Quincy Schools at PHP";
+			//}
             if(data.success) {
                 if(getInfo) {
                     $('#cur_gname').text(data.gname);
