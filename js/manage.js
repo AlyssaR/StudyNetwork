@@ -66,7 +66,7 @@ function editProfile(toChange) {
             theDeets['l_name'] = document.getElementById("l_name").value;
     }
     else if (toChange === "email") {
-        if(!validEmail())
+        if(!validEmail(document.getElementById("email").value))
             return;
         else
             theDeets['email'] = document.getElementById("email").value;

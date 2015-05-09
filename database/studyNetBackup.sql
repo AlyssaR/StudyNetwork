@@ -36,7 +36,7 @@ CREATE TABLE `ClassEnroll` (
 
 LOCK TABLES `ClassEnroll` WRITE;
 /*!40000 ALTER TABLE `ClassEnroll` DISABLE KEYS */;
-INSERT INTO `ClassEnroll` VALUES (1,'ACCT',1004),(1,'ACCT',1234),(1,'ACCT',1334),(1,'ARHS',1003),(1,'BIOL',1301),(1,'BIOL',3524),(1,'CELL',2143),(1,'CHEM',3452);
+INSERT INTO `ClassEnroll` VALUES (1,'ACCT',1004),(1,'ACCT',1234),(1,'ACCT',1334),(1,'ARHS',1003),(1,'BIOL',1301),(1,'BIOL',3524),(1,'CELL',2143),(1,'CHEM',3452),(3,'EDU',2315),(4,'ADPR',2345);
 /*!40000 ALTER TABLE `ClassEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `Classes` (
 
 LOCK TABLES `Classes` WRITE;
 /*!40000 ALTER TABLE `Classes` DISABLE KEYS */;
-INSERT INTO `Classes` VALUES ('ACCT',1234,'09:30 AM','Test','Prof');
+INSERT INTO `Classes` VALUES ('ACCT',1234,'05:00 PM','Now ','Working'),('ACCT',1234,'09:00 AM','Who','CARES'),('ACCT',1234,'09:10 AM','Whooo','Cares'),('ACCT',1234,'09:30 AM','Test','Prof'),('ADPR',2345,'10:00 AM','Again','Not'),('BLI',3324,'09:10 AM','Trying','Profs'),('BLI',3324,'11:00 AM','Nice','Try'),('EDU',2315,'09:20 AM','Mac','What');
 /*!40000 ALTER TABLE `Classes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ CREATE TABLE `GroupEnroll` (
 
 LOCK TABLES `GroupEnroll` WRITE;
 /*!40000 ALTER TABLE `GroupEnroll` DISABLE KEYS */;
-INSERT INTO `GroupEnroll` VALUES (1,0,'admin',0),(1,1,'admin',0),(1,2,'admin',0),(1,3,'admin',0),(1,4,'admin',0),(1,5,'admin',1),(1,6,'admin',0),(1,7,'admin',0),(1,8,'admin',0),(1,9,'admin',0),(1,10,'admin',0),(1,11,'admin',1),(1,12,'admin',1);
+INSERT INTO `GroupEnroll` VALUES (3,0,'admin',0),(3,1,'member',0),(3,3,'admin',1),(4,0,'member',0),(4,1,'admin',1),(4,2,'admin',1),(5,0,'member',0),(5,4,'admin',1),(6,0,'member',0),(6,3,'member',1);
 /*!40000 ALTER TABLE `GroupEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +114,7 @@ CREATE TABLE `OrgEnroll` (
 
 LOCK TABLES `OrgEnroll` WRITE;
 /*!40000 ALTER TABLE `OrgEnroll` DISABLE KEYS */;
-INSERT INTO `OrgEnroll` VALUES (1,0,0),(1,1,1),(1,2,0),(1,3,1),(1,4,0),(1,5,0),(1,6,1),(1,7,1);
+INSERT INTO `OrgEnroll` VALUES (1,0,0),(1,1,1),(1,2,0),(1,3,1),(1,4,0),(1,5,0),(1,6,1),(1,7,1),(3,8,1),(4,9,1),(5,10,1),(6,11,1);
 /*!40000 ALTER TABLE `OrgEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +138,7 @@ CREATE TABLE `Organizations` (
 
 LOCK TABLES `Organizations` WRITE;
 /*!40000 ALTER TABLE `Organizations` DISABLE KEYS */;
-INSERT INTO `Organizations` VALUES (0,'Merp'),(1,'Band'),(2,'Error'),(3,'This'),(4,'Trying'),(5,'Hello'),(6,'Alpha'),(7,'Eric');
+INSERT INTO `Organizations` VALUES (0,'Merp'),(1,'Band'),(2,'Error'),(3,'This'),(4,'Trying'),(5,'Hello'),(6,'Alpha'),(7,'Eric'),(8,'Wizardry'),(9,'Football'),(10,'Alpha Chi Omega'),(11,'Avenging');
 /*!40000 ALTER TABLE `Organizations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,6 +169,7 @@ CREATE TABLE `StudyGroups` (
 
 LOCK TABLES `StudyGroups` WRITE;
 /*!40000 ALTER TABLE `StudyGroups` DISABLE KEYS */;
+INSERT INTO `StudyGroups` VALUES (0,'EDU',2315,3,'Let\'s Learn','09:10 PM','A Place',0,0),(1,'ACCT',1234,4,'This','08:30 PM','Whatever',-1,1),(2,'BLI',3324,4,'What','10:00 PM','Now',1,1),(3,'BIOL',3234,3,'That','08:00 AM','Test',2,1),(4,'CHEM',2344,5,'Than','10:00 PM','Trying',1,1);
 /*!40000 ALTER TABLE `StudyGroups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,14 +181,14 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Users` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `f_name` varchar(30) DEFAULT NULL,
-  `l_name` varchar(30) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `passwd` varchar(64) DEFAULT NULL,
-  `active` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `uid` int(11) NOT NULL DEFAULT '0',
+  `f_name` varchar(30) NOT NULL DEFAULT '',
+  `l_name` varchar(30) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `passwd` varchar(64) NOT NULL DEFAULT '',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`,`f_name`,`l_name`,`email`,`passwd`,`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +197,6 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'Tom','Brady','tbrady@smu.edu','patriots',NULL),(2,'Quincy','Schurr','qschurr@smu.edu','qrstuvwx',NULL),(3,'Harry','Potter','hpotter@smu.edu','hogwarts',1);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -209,4 +209,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-02  5:13:11
+-- Dump completed on 2015-05-09  3:39:05
