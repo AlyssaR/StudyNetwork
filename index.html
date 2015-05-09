@@ -19,7 +19,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
         <title> Study Network</title>
     </head>
-    <body style ="font-family: raleway, serif" onload = "loadCentralNav(), isLoggedIn()">
+    <body style ="font-family: raleway, serif; background-color:#ECECEA" onload = "loadCentralNav(), isLoggedIn()">
     <div id = "centralNavBar"></div>
 
     <div id = formData>
@@ -49,6 +49,16 @@
         </form>
        </div>
 
+       <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-62035610-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
     </body>
 
     <footer>
@@ -59,27 +69,46 @@
     </html>
 
     <style>
-        .btn {
-            background-color:#32CD32;
-            color:#FFFFF0;
-            border-color:#32CD32;
+        .btn-primary {
+            background-color: #D9853B;
+            border-color: #D9853B;
         }
-        .btn:hover {
-            background-color:#008000;
-            border-color:#008000;
-            color:#FFFFF0;
+        .btn-primary:hover {
+            background-color: #D76603;
+            border-color: #D76603;
+        }
+        .btn-primary:focus {
+            background-color: #D76603;
+            border-color: #D76603;
+        }
+        .btn-primary:active {
+            background-color: #D76603;
+            border-color: #D76603;
         }
         .form-control {
-            border-color:#32CD32;
+            border-color:#D9853B;
 
+        }
+        .form-control:focus {
+            border-color:#D9853B;
+        }
+        .form-control:active {
+            border-color:#D9853B;
+        }
+        .form-signin:focus {
+            border-color:#D9853B;
+        }
+        .form-signin:active {
+            border-color: #D76603;
         }
         .form-signin {
-            border-color:#32CD32;
+            border-color:#D9853B;
         }
-
+        .form-signin input[type="email"] {
+            border-color:#D9853B;
+        }
         .container {
             border-style:outset;
-            border-color:#32CD32;
             width:500px;
 
         }

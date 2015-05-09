@@ -24,32 +24,36 @@ function getGroupsSearch() {
         }
     });
 }
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
 
 function searchForStudyGroup() {
-	var searchByOption = $("#searchBy").val();
+	var searchByOption = getQueryVariable("searchBy");
+
 	if (searchByOption == "group") {
-		searchByGroup();
+		group = getQueryVariable("param0");
+		searchByGroup(group);
 	}
 	else if (searchByOption == "class") {
-		searchByClass();
+		var dept = getQueryVariable("param0");
+		var courseNumber = getQueryVariable("param1");
+		searchByClass(dept, courseNumber);
 	}
 	else if (searchByOption == "organization") {
-		searchByOrganization();
+		org = getQueryVariable("param0");
+		searchByOrganization(org);
 	}
 }
 
-
-function searchByClass() {
-	
-	var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-	
-	var dept = sURLVariables[0].split('=');
-	dept = dept[1];
-	
-	var courseNumber = sURLVariables[1].split('=');
-	courseNumber = courseNumber[1];
-	
+function searchByClass(dept, courseNumber) {
 	$.ajax({
         url: "api/searchByClass",
         type: "post",
@@ -59,7 +63,7 @@ function searchByClass() {
 				},
         dataType: "json",
         success: function(data) {
-			populateSearchResults(data);
+        	populateSearchResults(data);
 		}
     });
 }
@@ -93,12 +97,7 @@ function populateSearchResults(data) {
 	}
 }
 
-function searchByGroup() {
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	var group = sURLVariables[0].split('=');
-	group = group[1];
-	
+function searchByGroup(group) {
     $.ajax({
         url: "api/searchByGroup",
         type: "post",
@@ -112,12 +111,7 @@ function searchByGroup() {
     });
 }
 
-function searchByOrganization() {
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	var org = sURLVariables[0].split('=');
-	org = org[1];
-	
+function searchByOrganization(org) {
     $.ajax({
         url: "api/searchByOrg",
         type: "post",

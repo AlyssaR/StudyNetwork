@@ -1,6 +1,6 @@
 function loadCentralNav() {
 	document.getElementById('centralNavBar').innerHTML = "<!--Navigation bar and Header-->"+
-	"<nav class='navbar navbar-default'>"+
+	"<nav style='background-color: #558C89' class='navbar navbar-default'>"+
 	    "<div class='container-fluid'>"+
 	        "<!-- Brand and toggle get grouped for better mobile display -->"+
 	        "<div class='navbar-header'>"+
@@ -10,18 +10,18 @@ function loadCentralNav() {
 	                "<span class='icon-bar'></span>"+
 	                "<span class='icon-bar'></span>"+
 	            "</button>"+
-	            "<a class='navbar-brand' href='index.html'>The Study Network</a>"+
+	            "<a class='navbar-brand' style='color:#CCCCCC' href='index.html'>The Study Network</a>"+
 	        "</div>"+
 
 	        "<!-- Collect the nav links, forms, and other content for toggling -->"+
 	        "<div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>"+
 	            "<ul class='nav navbar-nav'>"+
-	                "<li><a href='about.html'>About</a></li>"+
+	                "<li><a style='color:#cccccc' href='about.html'>About</a></li>"+
 	                "<li class='dropdown'>"+
-	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id = 'navCreate'>Create <span class='caret'></span></a>"+
-	                    "<ul class='dropdown-menu' role='menu'>"+
-	                        "<li><a href='createClassForm.html'>Create Class</a></li>"+
-	                        "<li><a href='createStudyGroupForm.html'>Create Study Group</a></li>"+
+	                    "<a style='color:#cccccc' href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id = 'navCreate'>Create <span class='caret'></span></a>"+
+	                    "<ul style='background-color:#558C89' class='dropdown-menu' role='menu'>"+
+	                        "<li><a style='color:#cccccc' href='createClassForm.html'>Create Class</a></li>"+
+	                        "<li><a style='color:#cccccc' href='createStudyGroupForm.html'>Create Study Group</a></li>"+
 	                    "</ul>"+
 	                "</li>"+
 	            "</ul>"+
@@ -40,8 +40,8 @@ function loadCentralNav() {
 	            "<ul class='nav navbar-nav navbar-right'>"+
 
 	                "<li class='dropdown'>"+
-	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' id='navGreet'>Welcome, <label id='sayHello'></label><span class='caret'></span></a>"+
-	                    "<ul class='dropdown-menu' role='menu'>"+
+	                    "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false' style='color:#cccccc' id='navGreet'>Welcome, <label id='sayHello'></label><span class='caret'></span></a>"+
+	                    "<ul style='background-color: #558C89' class='dropdown-menu' role='menu'>"+
 	                        "<li><a href='profile.html'>View Profile</a></li>"+
 	                        "<li><a href='javascript:void(0)' onclick = 'logout();'>Logout</a></li>"+
 	                    "</ul>"+

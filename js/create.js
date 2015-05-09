@@ -24,6 +24,7 @@ function createClass() {
 }
 
 function createGroup() {
+    if(validGroup()) {
     $.ajax({
         url: "api/addGroup",
         type: "post",
@@ -44,6 +45,7 @@ function createGroup() {
                 alert("Error: " + data.errorType);
         }
     });  
+}
 }
 
 function createOrganization() {

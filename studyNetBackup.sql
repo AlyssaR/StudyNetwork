@@ -36,7 +36,7 @@ CREATE TABLE `ClassEnroll` (
 
 LOCK TABLES `ClassEnroll` WRITE;
 /*!40000 ALTER TABLE `ClassEnroll` DISABLE KEYS */;
-INSERT INTO `ClassEnroll` VALUES (1,'ACCT',1004),(1,'ACCT',1234),(1,'ACCT',1334),(1,'ARHS',1003),(1,'BIOL',1301),(1,'BIOL',3524),(1,'CELL',2143),(1,'CHEM',3452);
+INSERT INTO `ClassEnroll` VALUES (1,'ACCT',1004),(1,'ACCT',1334),(1,'ARHS',1003),(1,'BIOL',1301);
 /*!40000 ALTER TABLE `ClassEnroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `Classes`;
 CREATE TABLE `Classes` (
   `dept` varchar(6) NOT NULL DEFAULT '',
   `class_num` int(11) NOT NULL DEFAULT '0',
-  `time2` varchar(10) NOT NULL DEFAULT '',
+  `time2` time NOT NULL DEFAULT '00:00:00',
   `profFirst` varchar(30) NOT NULL DEFAULT '',
   `profLast` varchar(30) NOT NULL DEFAULT '',
   PRIMARY KEY (`dept`,`class_num`,`time2`,`profFirst`,`profLast`)
@@ -63,7 +63,6 @@ CREATE TABLE `Classes` (
 
 LOCK TABLES `Classes` WRITE;
 /*!40000 ALTER TABLE `Classes` DISABLE KEYS */;
-INSERT INTO `Classes` VALUES ('ACCT',1234,'09:30 AM','Test','Prof');
 /*!40000 ALTER TABLE `Classes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +154,7 @@ CREATE TABLE `StudyGroups` (
   `class_num` int(11) DEFAULT NULL,
   `admin_id` int(11) DEFAULT NULL,
   `gname` varchar(40) DEFAULT NULL,
-  `time1` varchar(10) DEFAULT NULL,
+  `time1` time DEFAULT NULL,
   `loc` varchar(40) DEFAULT NULL,
   `num_members` int(11) DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
@@ -209,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-02  5:13:11
+-- Dump completed on 2015-04-29 19:03:36

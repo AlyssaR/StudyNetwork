@@ -1,9 +1,8 @@
 function $_GET(q,s) {
     s = (s) ? s : window.location.search;
-    var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
+    var re = new RegExp('&amp;'+q+'=([^&;]*)','i');//removed amp from parenthetical group because it broke things
     return (s=s.replace(/^\?/,'&amp;').match(re)) ? s=s[1] : s='';
 }
-
 function getClasses() {
     $.ajax({
         url: "api/getClasses",
@@ -40,11 +39,22 @@ function getClasses() {
                 }
 
                 var newButton = newRow.insertCell(-1);
+                var buttonTwo = newRow.insertCell(-1);
+
                 var viewButton = document.createElement("button");
+                var viewTwo = document. createElement("button");
+
                 var addName = document.createTextNode("Remove Class");
+                var nameTwo = document.createTextNode("Search for Related Groups");
+
                 viewButton.appendChild(addName);
+                viewTwo.appendChild(nameTwo);
+
                 viewButton.onclick=function(deptStr, classStr) { return function() { leaveClass(deptStr, classStr); }; }(deptStr, classStr);
+                viewTwo.onclick=function(deptStr, classStr) { return function() { goSearchFromClass(deptStr, classStr); }; }(deptStr, classStr);
+                buttonTwo.appendChild(viewTwo);
                 newButton.appendChild(viewButton);
+
 
 
             }
@@ -67,11 +77,18 @@ function getGroupInfo(gid) {
         },
         dataType: "json",
         success: function(data) {
+			//Please delete this if statement once you have the PHP working correctly.
+			//if (data.dept == undefined && data.class_num == undefined) {
+				//data.dept = " if you see this, your PHP Function is not pulling up data.dept and data.courseNumber... :-P";
+				//data.class_num = "Quincy Schools at PHP";
+			//}
             if(data.success) {
                 if(getInfo) {
                     $('#cur_gname').text(data.gname);
                     $('#cur_loc').text(data.loc);
                     $('#cur_time1').text(data.time1);
+					//@Quincy - new line appended to call. 
+					$('#cur_class').text(data.dept + " " + data.class_num);
                 }
                 else
                     window.location="groupprofile.php?gid="+gid;
@@ -213,3 +230,29 @@ function getOrganizations() {
         }
     });
 }
+
+function pullGroup(dept, class_num) {
+	
+    $.ajax({ 
+        url: "api/pullGroup",
+        type: "post",
+        data: {
+            "dept": dept,
+            "class_num": class_num
+        },
+        dataType: "json",
+        success: function(data) {
+			if (data.success) {
+				alert("Groups Found!");
+			}
+			else {
+				alert("Nothing Found");
+			}
+			window.location = "searchGroups.html";
+            populateSearchResults(data);
+			
+        }
+
+    })
+}
+

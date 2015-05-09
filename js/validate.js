@@ -90,22 +90,25 @@ function logout() {
 
 
 function validClass(){
-    if(!validFName())
+    if(!validProfFName())
         return false;
-    if(!validLName())
+    if(!validProfLName())
+        return false;
+    if(!validTime2())
         return false;
     else
         return true;
 }
 
 function validEmail(email) {
-    var regex = /\w+@smu\.edu/;
+    var regex = /^([A-Za-z0-9_\-\.]){1,}\@smu.edu$/;
     
-    if(regex.test(email))
-        return true;
-    else {
-        alert("You must enter an SMU email address.");
+    if(regex.test(email) == false) {
+		alert("You must enter a valid SMU email address.");
         return false;
+	}
+    else {
+        return true;
     }
 }
 
@@ -118,6 +121,13 @@ function validFName() {
         alert("Your first name must start with an uppercase letter and be followed by only letters from the English alphabet.");
         return false;
     }
+}
+
+function validGroup() {
+    if(!validTime1())
+        return false;
+    else
+        return true;
 }
 
 function validLName() { 
@@ -226,4 +236,26 @@ function validRegister() {
         return false;
     else 
         return true;
+}
+
+function validTime1() {
+    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    var name = document.getElementById("time1").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Time must be formatted HH:MM followed by AM/PM");
+        return false;
+    }
+}
+
+function validTime2() {
+    var regex = /[0-1][0-9]:[0-5][0-9]\s[A|P]M/;
+    var name = document.getElementById("time2").value;
+    if(regex.test(name))
+        return true;
+    else {
+        alert("Time must be formatted HH:MM followed by AM/PM");
+        return false; 
+    }
 }
