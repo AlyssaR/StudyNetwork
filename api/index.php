@@ -726,9 +726,8 @@ $app->post('/searchByOrg', function() use ($database) {
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
   		//I think this is the problem. It returns more than one uid sometimes.
-		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE ORDER BY num_members DESC;"); 
-		$searchStr = $org_name[0] . $org_name[1] . "%";
-		$uidGet->bind_param('s', $searchStr);
+		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE;"); 
+		$uidGet->bind_param('s', $org_name);
 		$uidGet->execute();
 		$uidGet->bind_result($gotUID);
 		$uidGet->store_result();
