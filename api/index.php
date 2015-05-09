@@ -316,14 +316,14 @@ $app->post('/getGroupInfo', function () use ($database) {
 		return;
 	}
 	//only want to pull up groups that are active, hopefully this works
-	$runQuery = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE gid = '$gid' and active = TRUE LIMIT 1;");
+	$runQuery = $database->query("SELECT gname, time1, loc, dept, class_num FROM StudyGroups WHERE gid = '$gid' and active = TRUE LIMIT 1;");
 	$result = $runQuery->fetch_assoc();
 
 	//some response
 	if($result === NULL)
 		$response = array("success"=>false, "gname"=>"Not Valid", "time1"=>"Not Valid", "loc"=>"Not Valid", "errorType"=>"This is not the correct group");
 	else
-		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "errorType"=>"None");
+		$response = array("success"=>true, "gname"=>$result['gname'], "time1"=>$result['time1'], "loc"=>$result['loc'], "dept"=>$result['dept'], "class_num"=>$result['class_num'], "errorType"=>"None");
 	echo json_encode($response);
 });
 
@@ -358,12 +358,12 @@ $app->post('/getGroups', function () use ($database) {
 		return;
 	}
 	//again only returning groups that they are still a part of...hopefully 
-	$runQuery = $database->query("SELECT gname, time1, loc, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
+	$runQuery = $database->query("SELECT gname, time1, loc, dept, class_num, g.gid FROM StudyGroups s, GroupEnroll g WHERE s.gid = g.gid AND g.active = TRUE AND g.uid = '$uid';");
 	
 	$response = array();
 	if ($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc()) 
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "gid"=>$row['gid'], "errorType"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "dept"=>$row['dept'], "class_num"=>$row['class_num'], "gid"=>$row['gid'], "errorType"=>"None");
 
 		echo json_encode($response);
 	}
@@ -490,7 +490,6 @@ $app->post('/isInGroup', function() use($database) {
 	echo json_encode($response);
 });
 
-//Quincy Schurr - joinStudyGroup branch
 $app->post('/joinStudyGroup', function() use ($database) {
 	$uid = $_SESSION['uid'];
     $gid = $_POST['gid'];
@@ -657,11 +656,11 @@ $app->post('/pullGroup', function() use ($database) {
 		return;
 	}
 
-	$query = $database->query("SELECT gname, time1, loc FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;");
+	$query = $database->query("SELECT gname, time1, loc, dept, class_num FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;");
 	$response = array();
 	if($query->num_rows != 0) {
 		while($row = $query->fetch_assoc())
-			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "errorType"=>"None");
+			$response[] = array("success"=>true, "gname"=>$row['gname'], "time1"=>$row['time1'], "loc"=>$row['loc'], "dept"=>$row['dept'], "class_num"=>$row['class_num'], "errorType"=>"None");
 		echo json_encode($response);
 	}
 
@@ -675,10 +674,9 @@ $app->post('/searchByClass', function() use ($database) {
 		$dept = $_POST['dept'];
   		$class_num = $_POST['class_num'];
 
-    	//$query = $database->query("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept = '$dept' AND class_num = '$class_num' AND active = TRUE;"); 
     	//now we may be getting a whole list of similar searches!!
     	$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE dept LIKE ? AND class_num = ? AND active = TRUE;");
-    	$query->bind_param('si', $dept, $class_num);
+    	$query->bind_param('si', $dept, $class_num); 
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
@@ -702,8 +700,9 @@ $app->post('/searchByGroup', function() use ($database) {
 		$gname = $_POST['group'];
 
 		//should show more results...
-		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ? AND active = TRUE;");
-		$query->bind_param('s', $gname);
+		$query = $database->prepare("SELECT gname, time1, loc, gid FROM StudyGroups WHERE gname LIKE ? AND active = TRUE ORDER BY num_members DESC;");
+		$searchStr = $gname[0] . $gname[1] . "%";
+		$query->bind_param('s', $searchStr);
 		$query->execute();
 		$query->bind_result($gname, $time1, $loc, $gid);
 		$query->store_result();
@@ -727,8 +726,9 @@ $app->post('/searchByOrg', function() use ($database) {
   		
   		//this gets UserId. This will return more than 1 result, if needed, so then what do we do?
   		//I think this is the problem. It returns more than one uid sometimes.
-		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE;"); 
-		$uidGet->bind_param('s', $org_name);
+		$uidGet = $database->prepare("SELECT uid from OrgEnroll e, Organizations o WHERE org_name LIKE ? AND e.orgid = o.orgid AND e.active = TRUE ORDER BY num_members DESC;"); 
+		$searchStr = $org_name[0] . $org_name[1] . "%";
+		$uidGet->bind_param('s', $searchStr);
 		$uidGet->execute();
 		$uidGet->bind_result($gotUID);
 		$uidGet->store_result();

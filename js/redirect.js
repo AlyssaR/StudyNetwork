@@ -28,6 +28,6 @@ function goSearch() {
 }
 
 function goSearchFromClass(dept, courseNumber) {
-	var urlLocation = "searchGroups.html?searchBy=class&param1=" + dept + "&param2=" + courseNumber;
+	var urlLocation = "searchGroups.html?searchBy=class&param0=" + dept + "&param1=" + courseNumber + "&";
 	window.location = urlLocation;
 }
