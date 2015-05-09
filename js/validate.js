@@ -101,10 +101,10 @@ function validClass(){
 }
 
 function validEmail(email) {
-    var regex = /^([A-Za-z0-9_\-\.]){1,}\@smu.edu$/;
+    var regex = /^([A-Za-z0-9_\-\.]){1,}\@smu\.edu$/;
     
-    if(regex.test(email) == false) {
-		alert("You must enter a valid SMU email address.");
+    if(!regex.test(email)) {
+		alert("You must enter a valid SMU email address." + email);
         return false;
 	}
     else {
