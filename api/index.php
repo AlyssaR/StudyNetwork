@@ -31,8 +31,8 @@ $app->post('/addClass', function() use ($database){
 		return;
 	}
 
-	$checkClass = $database->prepare("SELECT dept, class_num FROM Classes where dept = ? AND class_num = ?;");
-	$checkClass->bind_param('si', $dept, $class_num);
+	$checkClass = $database->prepare("SELECT dept, class_num FROM Classes where dept = ? AND class_num = ? AND time2 = ? AND profFirst = ? AND profLast = ?;");
+	$checkClass->bind_param('sisss', $dept, $class_num, $time, $profFirst, $profLast);
 	$checkClass->execute();
 
 	if($checkClass->num_rows == 0){
@@ -272,7 +272,7 @@ $app->post('/getClasses', function() use ($database) {
 	}
 
 	//returning all classes a User has enrolled in
-	$runQuery = $database->query("SELECT c.dept, c.class_num, time2, c.profFirst, c.profLast FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
+	$runQuery = $database->query("SELECT c.dept, c.class_num, c.time2, c.profFirst, c.profLast FROM Classes c, ClassEnroll e WHERE c.dept = e.dept AND c.class_num = e.class_num AND e.uid = '$uid';");
 	$response = array();
 	if($runQuery->num_rows != 0) {
 		while($row = $runQuery->fetch_assoc())
